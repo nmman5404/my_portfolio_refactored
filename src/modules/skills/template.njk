@@ -1,0 +1,27 @@
+<section id="skills" class="min-h-screen flex flex-col justify-center py-20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+{% if locale == "en" %}            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 flex items-center" reveal delay-100>
+{% else %}            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 flex items-center reveal delay-100">
+{% endif %}                <span class="text-blue-600 dark:text-blue-500 font-mono text-xl mr-2">{{ modules.skills.number }}</span> {{ localized(modules.skills.heading, locale) | safe }}
+            </h2>
+            
+            <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal delay-150">
+{% for group in modules.skills.groups %}                <div class="skill-card bg-slate-50/90 backdrop-blur-md dark:bg-gray-800/80 p-6 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm backdrop-blur-sm group relative overflow-hidden transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 z-10">{% if loop.first and locale == "en" %}                    {% elif loop.first %}                    
+                    {% else %}
+                    {% endif %}<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ group.iconPath }}"></path></svg>
+                        {{ localized(group.title, locale) | safe }}
+                    </h3>
+                    <div class="flex flex-wrap gap-2 reveal delay-{{ group.revealDelay or 200 }}">
+{% for skill in group.skills %}                        <span class="px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
+{% endfor %}                    </div>{% for tag in group.tags %}
+                    <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mt-4 mb-2">{{ localized(tag.title, locale) | safe }}</h4>
+                    <div class="flex flex-wrap gap-2">
+{% for skill in tag.skills %}                        <span class="px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
+{% endfor %}                    </div>{% endfor %}
+                </div>{% if not loop.last %}
+
+
+{% endif %}{% endfor %}
+
+            </div>
+        </section>

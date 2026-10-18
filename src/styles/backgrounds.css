@@ -1,0 +1,8 @@
+        :root .theme-bg {
+            background-image: url('/thumbnail_png/light_bg.jpg');
+        }
+    
+        html.dark .theme-bg {
+            background-image: url('/thumbnail_png/dark_bg.jpg');
+        }
+

@@ -1,0 +1,10 @@
+---
+pagination:
+  data: site.locales
+  size: 1
+  alias: locale
+permalink: "assets/js/home-{{ locale }}.js"
+eleventyExcludeFromCollections: true
+---
+import { initHome } from './home.js';
+initHome({{ clientConfig(modules, locale, sections | activeSections(collections.publishedBlog, locale)) | jsonLiteral | safe }});

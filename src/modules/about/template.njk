@@ -1,0 +1,30 @@
+<section id="about" class="min-h-screen flex flex-col justify-center py-20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 flex items-center reveal delay-100">
+                <span class="text-blue-600 dark:text-blue-500 font-mono text-xl mr-2">{{ modules.about.number }}</span> {{ localized(modules.about.heading, locale) | safe }}
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch">               
+                <div class="md:col-span-2 edu-card reveal delay-200 bg-slate-50/90 backdrop-blur-md dark:bg-gray-800/50 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] relative overflow-hidden z-10 flex flex-col cursor-pointer">
+                    <div class="relative z-20 flex flex-col h-full">
+                    <div class="w-full mb-6 relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700" >
+                        <img src="{{ modules.about.avatar.src }}" alt="{{ localized(modules.about.avatar.alt, locale) }}" class="w-full h-auto object-cover transition-transform duration-500 hover:scale-105" >                        
+                    </div>
+                        <div class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed text-center italic mt-auto">
+                            <p>
+                                {{ localized(modules.about.quote, locale) | safe }}
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="md:col-span-3 edu-card reveal delay-200 bg-slate-50/90 backdrop-blur-md dark:bg-gray-800/50 p-8 rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] relative overflow-hidden z-10 flex flex-col cursor-pointer">                    
+                    <div class="relative z-20 prose prose-lg dark:prose-invert text-gray-600 dark:text-gray-400 max-w-none leading-relaxed h-full">
+{% for paragraph in modules.about.paragraphs %}                        <p>
+{% if loop.index0 == 1 and locale == "en" %}                           {% else %}                            {% endif %}{{ localized(paragraph, locale) | safe }}
+                        </p>{% if not loop.last %}
+{% endif %}{% endfor %}
+                    </div>                    
+                </div>
+            </div>
+        </section>

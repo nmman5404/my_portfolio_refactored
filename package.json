@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-refactored",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs"
+  },
+  "dependencies": {
+    "@google/generative-ai": "0.24.1"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.7",
+    "nunjucks": "3.2.4"
+  }
+}

@@ -1,0 +1,128 @@
+/* Only Markdown articles opt into this stylesheet and the .blog-content scope. */
+.blog-content {
+    --blog-text: #4b5563;
+    --blog-heading: #111827;
+    --blog-link: #2563eb;
+    --blog-border: #d1d5db;
+    --blog-muted: #f3f4f6;
+    color: var(--blog-text);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+html.dark .blog-content {
+    --blog-text: #9ca3af;
+    --blog-heading: #f9fafb;
+    --blog-link: #60a5fa;
+    --blog-border: #374151;
+    --blog-muted: #1f2937;
+}
+
+.blog-content :where(h1, h2, h3, h4, h5, h6) {
+    margin: 2em 0 0.7em;
+    color: var(--blog-heading);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.blog-content h1 { font-size: 2em; }
+.blog-content h2 { font-size: 1.6em; }
+.blog-content h3 { font-size: 1.3em; }
+.blog-content :where(h4, h5, h6) { font-size: 1.1em; }
+.blog-content > :first-child { margin-top: 0; }
+.blog-content > :last-child { margin-bottom: 0; }
+.blog-content p { margin: 1.1em 0; }
+.blog-content strong { color: var(--blog-heading); font-weight: 700; }
+.blog-content em { font-style: italic; }
+
+.blog-content a {
+    color: var(--blog-link);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.blog-content :where(ul, ol) { margin: 1.1em 0; padding-left: 1.6em; }
+.blog-content ul { list-style-type: disc; }
+.blog-content ol { list-style-type: decimal; }
+.blog-content li { margin: 0.35em 0; padding-left: 0.2em; }
+.blog-content li > :where(ul, ol) { margin: 0.4em 0; }
+.blog-content li > p { margin: 0.6em 0; }
+
+.blog-content blockquote {
+    margin: 1.5em 0;
+    padding: 0.25em 1.25em;
+    border-left: 3px solid var(--blog-link);
+}
+
+.blog-content blockquote > :first-child { margin-top: 0; }
+.blog-content blockquote > :last-child { margin-bottom: 0; }
+
+.blog-content :where(code, pre, kbd, samp) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.blog-content :where(code, kbd, samp) {
+    padding: 0.15em 0.35em;
+    border-radius: 0.25rem;
+    background: var(--blog-muted);
+    color: var(--blog-heading);
+    font-size: 0.875em;
+}
+
+.blog-content pre {
+    max-width: 100%;
+    margin: 1.5em 0;
+    padding: 1.25em;
+    overflow-x: auto;
+    border: 1px solid var(--blog-border);
+    border-radius: 0.5rem;
+    background: var(--blog-muted);
+    color: var(--blog-heading);
+    font-size: 0.875em;
+    line-height: 1.65;
+    white-space: pre;
+    overflow-wrap: normal;
+}
+
+.blog-content pre code {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-size: inherit;
+    white-space: inherit;
+}
+
+.blog-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5em auto;
+}
+
+.blog-content table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5em 0;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9375em;
+}
+
+.blog-content :where(th, td) {
+    padding: 0.625em 0.875em;
+    border: 1px solid var(--blog-border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.blog-content th {
+    background: var(--blog-muted);
+    color: var(--blog-heading);
+    font-weight: 600;
+}
+
+.blog-content hr { margin: 2em 0; border: 0; border-top: 1px solid var(--blog-border); }

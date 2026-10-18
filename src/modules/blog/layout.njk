@@ -1,0 +1,24 @@
+{% set bodyContent %}<main class="max-w-4xl mx-auto px-6 pt-32 pb-20">
+        <p class="text-blue-600 dark:text-blue-400 font-mono mb-3">{{ modules.blog.labels.vi.heading }}</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">{{ title | escape }}</h1>
+        <time class="text-gray-500 dark:text-gray-400" datetime="{{ date | displayDate }}">{{ date | displayDate }}</time>
+        <div class="mt-10 mb-12 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+            <img src="{{ thumbnail | escape }}" alt="{{ title | escape }}" class="w-full h-auto object-cover">
+        </div>
+        <article class="blog-content max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
+            {{ content | safe }}
+        </article>
+    </main>{% endset %}{% set article = {
+  title: title,
+  lang: "vi",
+  backLabel: modules.blog.labels.vi.back,
+  bodyContent: bodyContent,
+  themeInit: "modules/article/scripts/article-theme-init.js",
+  style: "modules/article/styles/article.css",
+  contentStyle: "/assets/css/blog/markdown.css",
+  navigation: "modules/article/components/article-navigation-default.njk",
+  footer: "modules/article/components/article-footer-default.njk",
+  themeToggle: "modules/article/scripts/article-theme-toggle.js",
+  backScript: "modules/article/scripts/article-back.js",
+  clientEntry: modules.blog.clientEntry
+} %}{% include "modules/article/layouts/article.njk" %}

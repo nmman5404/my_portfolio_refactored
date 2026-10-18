@@ -1,0 +1,1 @@
+{% if kind == "project" %}{% set article = articlePage(title, preset, content) %}{% include article.layout %}{% else %}{% include "modules/blog/layout.njk" %}{% endif %}

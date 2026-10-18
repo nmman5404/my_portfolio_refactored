@@ -1,0 +1,24 @@
+<section id="profile" class="min-h-screen flex flex-col justify-center py-20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+            <p class="text-blue-600 dark:text-blue-500 mb-4 font-mono text-lg">{{ localized(modules.profile.greeting, locale) | safe }}</p>
+            
+            <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-4 flex items-center min-h-[60px] md:min-h-[84px]">
+                <span id="typewriter-name"></span>
+                <span id="name-cursor" class="cursor-blink inline-block w-[3px] h-[1em] bg-blue-600 dark:bg-blue-500 ml-2"></span>
+            </h1>            
+            
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-700 dark:text-gray-500 mb-8 min-h-[40px] md:min-h-[60px] flex items-center flex-wrap">
+                <span class="mr-3">{{ localized(modules.profile.rolePrefix, locale) | safe }}</span>
+                <span id="rotating-text" class="text-blue-600 dark:text-blue-500"></span>
+                <span id="role-cursor" class="cursor-blink inline-block w-[3px] h-[1em] bg-gray-500 ml-1 hidden"></span>
+            </h2>
+            
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mb-10 leading-relaxed">
+                {{ localized(modules.profile.description, locale) | safe }}
+            </p>
+
+            <div class="flex space-x-4">
+{% for action in modules.profile.actions %}                <a href="{{ action.href }}" class="{% if action.variant == 'primary' or (not action.variant and loop.first) %}px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40{% else %}px-6 py-3 border border-gray-400 dark:border-gray-500 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg{% endif %}">
+                    {{ localized(action.label, locale) | safe }}
+                </a>
+{% endfor %}            </div>
+        </section>

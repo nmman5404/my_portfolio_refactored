@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ article.lang or 'vi' }}" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title | safe }}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>{{ source("modules/article/scripts/article-tailwind-config.js") }}</script>
+    <script>{{ source(article.themeInit) }}</script>
+    <link rel="stylesheet" href="{{ article.style | articleStyleUrl }}">{% if article.contentStyle %}
+    <link rel="stylesheet" href="{{ article.contentStyle }}">{% endif %}
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 font-sans antialiased transition-colors duration-300">
+
+    <!-- Navbar tối giản cho trang Blog -->
+    {% include article.navigation %}
+
+    <!-- NỘI DUNG BÀI VIẾT -->
+    {{ article.bodyContent | safe }}
+
+    {% include article.footer %}
+
+    <!-- SCRIPT DARK MODE -->
+    <script type="module" src="{{ article.clientEntry }}"></script>
+</body>
+</html>

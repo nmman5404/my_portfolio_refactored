@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.cache/
+test-results/
+artifacts/
+.env
+.env.*
+!.env.example
+.vercel/
+.DS_Store
+Thumbs.db
+*.log

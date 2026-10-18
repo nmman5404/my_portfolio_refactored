@@ -1,0 +1,43 @@
+<nav class="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 z-50 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex justify-center md:justify-end items-center h-16 space-x-4 md:space-x-6 text-sm font-medium">
+{% for section in visibleSections %}{% if modules[section.id].navigation or section.nav %}{% include "components/nav-link.njk" %}{% endif %}{% endfor %}
+                <div class="w-px h-5 bg-gray-300 dark:bg-gray-700 hidden md:block"></div>
+
+{% if locale == "en" %}                <a id="lang-switch" href="/vi" class="flex items-center space-x-2 group cursor-pointer" title="{{ modules.interface.languageTitle | localized(locale) }}">
+                    <span class="text-gray-900 dark:text-white font-bold">EN</span>
+                    <div class="w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full relative flex items-center p-1 group-hover:bg-gray-400 dark:group-hover:bg-gray-600 transition-colors">
+                        <div class="bg-white w-4 h-4 rounded-full shadow-md"></div>
+{% else %}                <a id="lang-switch" href="/" class="flex items-center space-x-2 group cursor-pointer" title="{{ modules.interface.languageTitle | localized(locale) }}">
+                    <span class="text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">EN</span>
+                    <!-- Cập nhật nút gạt sang phải (translate-x-5) biểu thị đang ở chế độ VI -->
+                    <div class="w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full relative flex items-center p-1 transition-colors">
+                        <div class="bg-white w-4 h-4 rounded-full shadow-md transform translate-x-5"></div>
+{% endif %}                    </div>
+{% if locale == "en" %}                    <span class="text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">VI</span>
+{% else %}                    <!-- Chữ VI nổi bật lên -->
+                    <span class="text-gray-900 dark:text-white font-bold transition-colors">VI</span>
+{% endif %}                </a>
+
+{% if locale == "en" %}                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition-colors ml-2" title="{{ modules.interface.themeTitle | localized(locale) }}">
+{% else %}                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition-colors ml-2" title="{{ modules.interface.themeTitle | localized(locale) }}">
+{% endif %}                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+                    </svg>
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+{% if locale == "en" %}                <!-- NÚT BẬT/TẮT NHẠC NỀN -->
+                <button id="music-toggle" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition-colors ml-4" title="{{ modules.interface.musicTitle | localized(locale) }}">
+{% else %}                                <!-- NÚT BẬT/TẮT NHẠC NỀN -->
+                <button id="music-toggle" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition-colors ml-4" title="{{ modules.interface.musicTitle | localized(locale) }}">
+{% endif %}                    <!-- Icon Đang phát (Volume Up) -->
+                    <svg id="music-icon-on" class="hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"></path></svg>
+                    <!-- Icon Tắt tiếng (Volume Mute) -->
+                    <svg id="music-icon-off" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>

@@ -1,0 +1,9 @@
+---
+pagination:
+  data: articleClientEntries
+  size: 1
+  alias: client
+permalink: "{{ client.output }}"
+eleventyExcludeFromCollections: true
+---
+{{ client.source | safe }}

@@ -1,0 +1,30 @@
+{% set projects = modules.projects %}<section id="projects" class="min-h-screen flex flex-col justify-center py-20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 overflow-visible">            
+            <div class="w-full mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center reveal delay-100">
+                    <span class="text-blue-600 dark:text-blue-500 font-mono text-xl mr-2">02.</span> {{ projects.labels[locale].heading }}
+                </h2>
+            </div>
+            
+            <div class="relative w-[100vw] left-1/2 -translate-x-1/2 overflow-hidden py-4">                
+                <div class="absolute inset-y-0 left-0 w-16 md:w-40 bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute inset-y-0 right-0 w-16 md:w-40 bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
+                <div id="project-slider" class="flex overflow-x-auto hide-scrollbar cursor-grab w-full reveal delay-200">                    
+                    <!-- GROUP 1-->
+                    <div class="flex gap-8 pr-8 shrink-0 w-max">   
+
+                        {% set projectGroup = "primary" %}{% for project in projects.items %}{% if not loop.first %}{{ project.legacy.commentGap[locale][projectGroup] | default(projects.legacy.cardGap) }}{% endif %}<!-- Dự Án {{ loop.index }} -->
+                        {% set localProject = project.locales[locale] %}{% include "modules/projects/card.njk" %}{% endfor %}
+                    </div> <!-- End Group 1 -->
+
+
+                    <!-- {{ projects.labels[locale].duplicateComment }} -->
+                    <div class="flex gap-8 pr-8 shrink-0 w-max" aria-hidden="true">
+                        
+                        {% set projectGroup = "duplicate" %}{% for project in projects.items %}{% if not loop.first %}{{ project.legacy.commentGap[locale][projectGroup] | default(projects.legacy.cardGap) }}{% endif %}<!-- Dự Án {{ loop.index }} -->
+                        {% set localProject = project.locales[locale] %}{% include "modules/projects/card.njk" %}{% endfor %}
+                    </div> <!-- END GROUP 2 -->
+
+                    </div> 
+                </div>
+            </div>
+        </section>

@@ -1,0 +1,27 @@
+<section id="contact" class="min-h-screen flex flex-col justify-center items-center py-20 transition-colors duration-300">
+            <h2 class="text-blue-600 dark:text-blue-500 font-mono text-lg mb-4 reveal delay-100">{{ localized(modules.contact.heading, locale) | safe }}</h2>
+
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center reveal delay-150 flex items-center justify-center flex-wrap min-h-[80px] md:min-h-[60px]">
+                <span class="mr-3">{{ localized(modules.contact.invitation, locale) | safe }}</span>
+                <span id="contact-rotating-text" class="text-blue-600 dark:text-blue-500"></span>
+                <span id="contact-cursor" class="cursor-blink inline-block w-[3px] h-[1em] bg-blue-600 dark:bg-blue-500 ml-1"></span>
+            </h2>
+
+            <p class="text-gray-600 reveal delay-400 dark:text-gray-400 text-center max-w-lg mb-10 leading-relaxed">
+                {{ localized(modules.contact.description, locale) | safe }}
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mt-10 reveal delay-300">
+{% for link in modules.contact.links %}{% if link.kind == "email" %}                <a href="{{ link.url }}" class="btn-glow-primary group relative px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg border-2 border-blue-400 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto overflow-hidden">
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>                    
+                    <svg class="w-6 h-6 mr-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ link.iconPath }}"></path></svg>
+                    <span class="relative z-10">{{ localized(link.label, locale) | safe }}</span>
+                </a>{% else %}                <a href="{{ link.url }}" target="_blank" class="btn-glow-secondary group px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white rounded-xl font-semibold text-lg border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto">
+                    <svg class="w-6 h-6 mr-3 {{ link.iconClasses }} group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="{{ link.iconPath }}"/></svg>
+                    {{ localized(link.label, locale) | safe }}
+                </a>{% endif %}{% if not loop.last %}
+
+{% endif %}{% endfor %}
+
+            </div>
+        </section>

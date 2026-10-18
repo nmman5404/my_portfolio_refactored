@@ -1,0 +1,16 @@
+<div class="project-card w-[320px] md:w-[400px] flex-shrink-0 bg-slate-50/90 backdrop-blur-md dark:bg-gray-800/50 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-3 hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] flex flex-col cursor-pointer">
+                            <div class="relative z-20 h-48 w-full bg-gray-100 dark:bg-gray-800 shrink-0 overflow-hidden border-b border-gray-200 dark:border-gray-700">
+                                <img src="{{ project.thumbnail }}" alt="{{ localProject.alt }}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{{ localProject.title }}</h3>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
+                                    {{ localProject.summary }}
+                                </p>{{ project.legacy.beforeTags[locale] | default(projects.legacy.beforeTags) }}<div class="flex flex-wrap gap-2 mb-6 mt-auto">{% for tag in project.tags %}
+                                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 rounded-full text-xs font-semibold">{{ tag }}</span>{% endfor %}
+                            </div>{{ project.legacy.beforeButtons | default(projects.legacy.beforeButtons) }}<div class="flex space-x-4">
+                                    <a href="{{ project.github }}" target="_blank" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">{{ projects.labels[locale].github }}</a>
+                                    <a href="{{ project.href }}" class="px-5 py-2 border border-gray-400 dark:border-gray-500 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">{{ projects.labels[locale].details }}</a>
+                                </div>
+                            </div>
+                        </div>
