@@ -7,6 +7,7 @@ export function initChat({ locale, text: messages, limits }) {
     const { maxMessages, cooldownMs, sessionTimeoutMs } = limits;
     const session = createChatSession({ sessionTimeoutMs });
     let countdownInterval;
+    let inFlight = false;
 
     function updateLimitCountdown() {
         const timeLeft = sessionTimeoutMs - (Date.now() - session.lastActivity);
@@ -51,48 +52,79 @@ export function initChat({ locale, text: messages, limits }) {
         session.appendMessage(text, sender);
     }
 
-    async function sendChatMessage() {
-        const text = view.getInputText();
-        if (!text) return;
+    function sendChatMessage() {
+        return submitQuestion(view.getInputText());
+    }
+
+    /** Both entry points share the same conversation, limits, and request. */
+    async function submitQuestion(rawText, { beforeSend } = {}) {
+        const text = typeof rawText === 'string' ? rawText.trim() : '';
+        if (!text) return false;
+
+        if (inFlight) {
+            view.open();
+            view.showCooldownNotice(messages.busyNotice);
+            return false;
+        }
 
         const currentTime = Date.now();
 
         if (session.messageCount >= maxMessages) {
+            view.open();
             startLimitCountdown();
-            return;
+            return false;
         }
 
         if (currentTime - session.lastMessageTime < cooldownMs) {
+            view.open();
             view.showCooldownNotice(messages.cooldownNotice);
-            return;
+            return false;
         }
 
-        view.hideWarning();
-        session.recordSentMessage(currentTime);
-        const previousHistory = session.history.slice(-6);
-
-        renderAndSaveMessage(text, 'user');
-        view.clearAndDisableInput();
-        view.showTypingIndicator();
-
+        // Reserve immediately, including while an external entry animates into chat.
+        inFlight = true;
         try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userMessage: text, lang: locale, history: previousHistory }),
-            });
+            if (typeof beforeSend === 'function') {
+                try {
+                    await beforeSend();
+                } catch (error) {
+                    // Motion is cosmetic: an interrupted animation must not lose a question.
+                    console.warn('Chat entry animation was interrupted.', error);
+                }
+            }
 
-            const data = await response.json();
-            view.removeTypingIndicator();
-            renderAndSaveMessage(response.ok ? data.reply : messages.serverError, 'bot');
-        } catch (error) {
-            console.error(error);
-            view.removeTypingIndicator();
-            renderAndSaveMessage(messages.connectionError, 'bot');
+            view.open();
+            view.hideWarning();
+            session.recordSentMessage(Date.now());
+            const previousHistory = session.history.slice(-6);
+
+            renderAndSaveMessage(text, 'user');
+            view.clearAndDisableInput();
+            view.showTypingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userMessage: text, lang: locale, history: previousHistory }),
+                });
+
+                const data = await response.json();
+                view.removeTypingIndicator();
+                renderAndSaveMessage(response.ok ? data.reply : messages.serverError, 'bot');
+            } catch (error) {
+                console.error(error);
+                view.removeTypingIndicator();
+                renderAndSaveMessage(messages.connectionError, 'bot');
+            }
+
+            return true;
         } finally {
             view.restoreInput();
+            inFlight = false;
         }
     }
 
     window.sendChatMessage = sendChatMessage;
+    return { open: view.open, submitQuestion };
 }

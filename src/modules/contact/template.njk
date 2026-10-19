@@ -1,11 +1,23 @@
 <section id="contact" class="min-h-screen flex flex-col justify-center items-center py-20 transition-colors duration-300">
-            <h2 class="text-blue-600 dark:text-blue-500 font-mono text-lg mb-4 reveal delay-100">{{ localized(modules.contact.heading, locale) | safe }}</h2>
-
-            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center reveal delay-150 flex items-center justify-center flex-wrap min-h-[80px] md:min-h-[60px]">
-                <span class="mr-3">{{ localized(modules.contact.invitation, locale) | safe }}</span>
-                <span id="contact-rotating-text" class="text-blue-600 dark:text-blue-500"></span>
-                <span id="contact-cursor" class="cursor-blink inline-block w-[3px] h-[1em] bg-blue-600 dark:bg-blue-500 ml-1"></span>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 flex items-center reveal delay-100">
+                <span class="text-blue-600 dark:text-blue-500 font-mono text-xl mr-2">{{ modules.contact.number }}</span> {{ localized(modules.contact.heading, locale) | safe }}
             </h2>
+
+            <form class="contact-search reveal delay-150" data-contact-search aria-label="{{ modules.contact.search.label | localized(locale) }}">
+                <span class="contact-search-aura" aria-hidden="true"><span class="contact-search-orb contact-search-orb--cyan"></span><span class="contact-search-orb contact-search-orb--violet"></span><span class="contact-search-orb contact-search-orb--pink"></span></span>
+                <span class="contact-search-rim" aria-hidden="true"></span>
+                <div class="contact-search-field glass-surface">
+                    <svg class="contact-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="10.5" cy="10.5" r="6.5"></circle><path stroke-linecap="round" d="m16 16 4.5 4.5"></path></svg>
+                    <label for="contact-question" class="sr-only">{{ modules.contact.search.label | localized(locale) }}</label>
+                    <input id="contact-question" name="question" type="text" placeholder="{{ modules.contact.search.placeholder | localized(locale) }}" aria-describedby="contact-suggestions-label" autocomplete="off" enterkeyhint="send" required>
+                    <button class="contact-search-submit" type="submit" aria-label="{{ modules.contact.search.submit | localized(locale) }}" title="{{ modules.contact.search.submit | localized(locale) }}">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-6 6 6-6 6 6"></path></svg>
+                    </button>
+                </div>
+            </form>
+            <span id="contact-suggestions-label" class="sr-only">{{ modules.contact.search.suggestionsLabel | localized(locale) }}</span>
+            <div id="contact-suggestions" class="contact-suggestions reveal delay-200" data-contact-suggestions role="group" aria-labelledby="contact-suggestions-label"></div>
+            <p id="contact-search-status" class="sr-only" role="status" aria-live="polite"></p>
 
             <p class="text-gray-600 reveal delay-400 dark:text-gray-400 text-center max-w-lg mb-10 leading-relaxed">
                 {{ localized(modules.contact.description, locale) | safe }}
@@ -16,7 +28,7 @@
                     <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>                    
                     <svg class="w-6 h-6 mr-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ link.iconPath }}"></path></svg>
                     <span class="relative z-10">{{ localized(link.label, locale) | safe }}</span>
-                </a>{% else %}                <a href="{{ link.url }}" target="_blank" class="btn-glow-secondary group px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white rounded-xl font-semibold text-lg border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto">
+                </a>{% else %}                <a href="{{ link.url }}" target="_blank" class="glass-surface btn-glow-secondary group px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white rounded-xl font-semibold text-lg border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto">
                     <svg class="w-6 h-6 mr-3 {{ link.iconClasses }} group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="{{ link.iconPath }}"/></svg>
                     {{ localized(link.label, locale) | safe }}
                 </a>{% endif %}{% if not loop.last %}

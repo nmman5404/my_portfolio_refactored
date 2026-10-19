@@ -8,8 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>{{ source("modules/article/scripts/article-tailwind-config.js") }}</script>
     <script>{{ source(article.themeInit) }}</script>
+    <script>{{ source("modules/interface/critical/glass-bootstrap.js") }}</script>
     <link rel="stylesheet" href="{{ article.style | articleStyleUrl }}">{% if article.contentStyle %}
     <link rel="stylesheet" href="{{ article.contentStyle }}">{% endif %}
+    <link rel="stylesheet" href="/assets/css/interface.css">
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 font-sans antialiased transition-colors duration-300">

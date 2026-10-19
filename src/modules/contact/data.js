@@ -2,34 +2,97 @@
 export default {
   "navigation": { "en": "Contact", "vi": "Liên Hệ" },
   "heading": {
-    "en": "05. Get in touch",
-    "vi": "05. Liên hệ"
+    "en": "Get in touch",
+    "vi": "Liên hệ"
   },
-  "invitation": {
-    "en": "Let's",
-    "vi": "Cùng nhau"
+  "number": "05.",
+  "search": {
+    "label": {
+      "en": "Ask Mẫn's AI assistant",
+      "vi": "Hỏi trợ lý AI của Mẫn"
+    },
+    "placeholder": {
+      "en": "Ask about my skills, projects, or experience...",
+      "vi": "Hỏi về kỹ năng, dự án, kinh nghiệm của Mẫn..."
+    },
+    "submit": {
+      "en": "Send to AI assistant",
+      "vi": "Gửi cho trợ lý AI"
+    },
+    "suggestionsLabel": {
+      "en": "Or choose a quick question",
+      "vi": "Hoặc chọn một câu hỏi nhanh"
+    },
+    "sending": {
+      "en": "Sending your question to the AI assistant...",
+      "vi": "Đang gửi câu hỏi đến trợ lý AI..."
+    }
   },
+  "suggestions": [
+    {
+      "id": "contact",
+      "label": { "en": "Contact", "vi": "Liên lạc" },
+      "question": { "en": "How can I get in touch with Mẫn?", "vi": "Tôi có thể liên hệ với Mẫn bằng cách nào?" }
+    },
+    {
+      "id": "career",
+      "label": { "en": "Career", "vi": "Nghề nghiệp" },
+      "question": { "en": "What is Mẫn's career direction?", "vi": "Định hướng nghề nghiệp của Mẫn là gì?" }
+    },
+    {
+      "id": "skills",
+      "label": { "en": "Skills", "vi": "Kỹ năng" },
+      "question": { "en": "What are Mẫn's main skills?", "vi": "Mẫn có những kỹ năng nổi bật nào?" }
+    },
+    {
+      "id": "experience",
+      "label": { "en": "Experience", "vi": "Kinh nghiệm" },
+      "question": { "en": "What does Mẫn do as a Data Annotator and Auditor at Scale AI?", "vi": "Công việc Data Annotator và Auditor của Mẫn tại Scale AI gồm những gì?" }
+    },
+    {
+      "id": "languages",
+      "label": { "en": "English", "vi": "Tiếng Anh" },
+      "question": { "en": "What is Mẫn's English proficiency and TOEIC score?", "vi": "Khả năng tiếng Anh và điểm TOEIC của Mẫn như thế nào?" }
+    },
+    {
+      "id": "work-arrangement",
+      "label": { "en": "Work setup", "vi": "Việc làm" },
+      "question": { "en": "Where can Mẫn work, and is he available for full-time, onsite or hybrid roles?", "vi": "Mẫn có thể làm việc ở đâu và có sẵn sàng làm full-time, onsite hoặc hybrid không?" }
+    },
+    {
+      "id": "rag-project",
+      "label": { "en": "Agentic RAG", "vi": "Agentic RAG" },
+      "question": { "en": "How does Mẫn's Agentic RAG system use LangGraph and LangChain?", "vi": "Hệ thống Agentic RAG của Mẫn sử dụng LangGraph và LangChain như thế nào?" }
+    },
+    {
+      "id": "mcp-inventory",
+      "label": { "en": "MCP", "vi": "Kho AI · MCP" },
+      "question": { "en": "How does Mẫn's AI-Driven Inventory Manager use MCP with a .NET backend?", "vi": "Dự án AI-Driven Inventory Manager của Mẫn tích hợp MCP với backend .NET như thế nào?" }
+    },
+    {
+      "id": "stock-forecasting",
+      "label": { "en": "Stock forecast", "vi": "Cổ phiếu" },
+      "question": { "en": "How does Mẫn's Agentic Stock Forecasting System combine AI agents and LightGBM?", "vi": "Hệ thống Agentic Stock Forecasting của Mẫn kết hợp AI Agent và LightGBM như thế nào?" }
+    },
+    {
+      "id": "computer-vision",
+      "label": { "en": "Vision AI", "vi": "Thị giác AI" },
+      "question": { "en": "What results did Mẫn achieve in skin cancer detection and segmentation?", "vi": "Dự án phát hiện và phân vùng vùng da ung thư của Mẫn đạt những kết quả gì?" }
+    },
+    {
+      "id": "fake-news",
+      "label": { "en": "Fake news", "vi": "Tin giả" },
+      "question": { "en": "How does Mẫn's BERT-XLNet fake news classifier work, and what results did it achieve?", "vi": "Mô hình phân loại tin giả BERT-XLNet của Mẫn hoạt động như thế nào và đạt kết quả gì?" }
+    },
+    {
+      "id": "analytics",
+      "label": { "en": "Data & BI", "vi": "Data & BI" },
+      "question": { "en": "What are Mẫn's skills in Power BI, SQL, dashboards and data analytics?", "vi": "Mẫn có những kỹ năng nào về Power BI, SQL, dashboard và phân tích dữ liệu?" }
+    }
+  ],
   "description": {
     "en": "\"The world opens itself before those with a noble heart and a curious mind\".\r\n                Let’s make something meaningful together — feel free to reach out anytime.",
     "vi": "\"Chỉ cần giữ một trái tim cao đẹp và một tâm trí không ngừng khám phá, thế giới sẽ tự mở lối\". \r\n                Hãy cùng nhau tạo nên những điều ý nghĩa — tôi luôn sẵn sàng kết nối bất cứ lúc nào."
-  },
-  "phrases": {
-    "en": [
-      "Build Intelligent Systems",
-      "Turn Data into Decisions",
-      "Optimize Through Data",
-      "Build AI That Solves Real Problems",
-      "Connect Data with Business",
-      "Transform Insights into Action"
-    ],
-    "vi": [
-      "Xây dựng những điều thông minh",
-      "Biến dữ liệu thành quyết định",
-      "Tối ưu vận hành bằng dữ liệu",
-      "Phát triển AI thực tiễn",
-      "Kết nối dữ liệu với business",
-      "Giải quyết bài toán thực tế"
-    ]
   },
   "links": [
     {

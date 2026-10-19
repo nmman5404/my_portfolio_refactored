@@ -18,11 +18,14 @@ export function createArticleClientEntries(articles) {
   for (const article of articles) {
     const output = articleClientEntry(article);
     if (entries.has(output)) continue;
-    const imports = [`import { initArticleTheme } from '../${path.posix.basename(article.themeToggle)}';`];
+    const imports = [
+      `import { initArticleInterface } from '../../article.js';`,
+      `import { initArticleTheme } from '../${path.posix.basename(article.themeToggle)}';`,
+    ];
     if (article.backScript) {
       imports.push(`import { initArticleBack } from '../${path.posix.basename(article.backScript)}';`);
     }
-    const calls = ['initArticleTheme();'];
+    const calls = ['initArticleTheme();', 'initArticleInterface();'];
     if (article.backScript) calls.push('initArticleBack();');
     entries.set(output, { output, source: `${imports.join('\n')}\n\n${calls.join('\n')}\n` });
   }

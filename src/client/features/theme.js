@@ -1,9 +1,12 @@
 export function initTheme({ viewTransition, onThemeChange }) {
     const darkThemeIcon = document.getElementById('theme-toggle-dark-icon');
     const lightThemeIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleButton = document.getElementById('theme-toggle');
 
     function updateIcon() {
-        if (document.documentElement.classList.contains('dark')) {
+        const isDark = document.documentElement.classList.contains('dark');
+        themeToggleButton.setAttribute('aria-checked', String(isDark));
+        if (isDark) {
             lightThemeIcon.classList.remove('hidden');
             darkThemeIcon.classList.add('hidden');
         } else {
@@ -12,8 +15,6 @@ export function initTheme({ viewTransition, onThemeChange }) {
         }
     }
     updateIcon();
-
-    const themeToggleButton = document.getElementById('theme-toggle');
 
     function applyTheme() {
         if (document.documentElement.classList.contains('dark')) {

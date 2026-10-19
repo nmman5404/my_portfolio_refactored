@@ -40,7 +40,46 @@ Sửa một file là cập nhật cả EN/VN. Giá trị dùng chung viết mộ
 
 Skills: thêm nhóm vào `groups`, kỹ năng vào `groups[n].skills`, tag vào `groups[n].tags` dạng `{ title: 'Cloud', skills: ['AWS', 'Azure'] }`.
 
-Thêm section: tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký dữ liệu trong `src/_data/modules.js`, rồi thêm `{ id, template: 'modules/<id>/template.njk', enabled: true }` vào `src/_data/sections.js`. Template cần `id` trùng registry. Nhãn navbar lấy từ `navigation` trong `data.js`.
+Projects: trang tự chia tối đa **4 dự án mỗi trang nhỏ**, lấy từ `items` trong `src/modules/projects/data.js`. Hiện có 6 dự án: trang 1 hiển thị 4, trang 2 hiển thị 2. Desktop hiển thị 2 cột, điện thoại 1 cột. Nút trái/phải chuyển trang, dừng ở hai đầu; trang đang xem được giữ khi đổi EN/VN hoặc quay lại từ chi tiết. `pageSize: 4` là cấu hình duy nhất cho số dự án mỗi trang.
+
+### Thêm dự án và đưa dự án mới lên đầu
+
+Mở `src/modules/projects/data.js`, thêm object mới vào **đầu mảng `items`**, ngay sau `"items": [` và trước dự án `Agentic_RAG_System` hiện tại. Ví dụ phần đầu của mảng sẽ là:
+
+```javascript
+"items": [
+  {
+    "id": "Du_An_Moi",
+    "thumbnail": "thumbnail_png/du-an-moi.png",
+    "github": "https://github.com/your-name/du-an-moi",
+    "href": "projects/Du_An_Moi/Du_An_Moi.html",
+    "tags": ["Python", "LangGraph"],
+    "locales": {
+      "en": {
+        "title": "New Project",
+        "summary": "A short description of the project.",
+        "alt": "New project thumbnail"
+      },
+      "vi": {
+        "title": "Dự án mới",
+        "summary": "Mô tả ngắn về dự án.",
+        "alt": "Ảnh minh họa dự án mới"
+      }
+    }
+  },
+  // Giữ toàn bộ các object dự án hiện có ở bên dưới.
+]
+```
+
+- Mảng `items` chính là thứ tự hiển thị từ trái sang phải, từ trên xuống dưới và lần lượt sang các trang tiếp theo. Thêm ở đầu để dự án mới nằm ở ô đầu trang 1; thêm ở cuối sẽ nằm ở trang cuối. Không có bước tự sắp xếp theo ngày.
+- Muốn thay đổi thứ tự, di chuyển **toàn bộ object dự án** tới vị trí mong muốn; không cần đổi `id` hay thêm số thứ tự. Mỗi `id` phải duy nhất.
+- Đặt ảnh của ví dụ tại `public/thumbnail_png/du-an-moi.png`. `thumbnail` dùng đường dẫn trên website, bỏ phần `public/`. Thay GitHub, tag và hai bản dịch bằng nội dung thực tế.
+- Không cần tạo HTML riêng hoặc sửa JavaScript để thêm card vào cả EN/VN. Nếu cần trang chi tiết mới, tạo Markdown theo hướng dẫn bài dự án bên dưới, đặt `permalink: /projects/Du_An_Moi/Du_An_Moi.html` để khớp với `href` trong ví dụ.
+- Khi xem sau khi thêm, dùng URL không có `?projectPage=...` hoặc bấm về trang 1: trang web vẫn nhớ trang đang xem khi bạn đổi ngôn ngữ hay quay lại từ chi tiết.
+
+### Thêm section
+
+Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký dữ liệu trong `src/_data/modules.js`, rồi thêm `{ id, template: 'modules/<id>/template.njk', enabled: true }` vào `src/_data/sections.js`. Template cần `id` trùng registry. Nhãn navbar lấy từ `navigation` trong `data.js`.
 
 ## Sửa chức năng
 
@@ -48,7 +87,14 @@ Thêm section: tạo folder `src/modules/<id>/` có `data.js` và `template.njk`
 
 | Chức năng | Nơi sửa |
 | --- | --- |
-| Theme, nhạc, slider, gõ chữ, spotlight, scroll reveal, đổi ngôn ngữ | File tương ứng trong `src/client/features/` |
+| Theme, nhạc, gõ chữ, spotlight, scroll reveal, đổi ngôn ngữ | File tương ứng trong `src/client/features/` |
+| Lưới và phân trang dự án | `src/client/features/projects.js`, `src/styles/projects.css` |
+| Ô hỏi AI trong Contact | `src/modules/contact/`, `src/client/features/contact.js`, `src/styles/contact.css` |
+| Hiệu ứng câu hỏi bay vào chatbot | `src/client/features/contact/flight.js` |
+| Chọn, hiển thị và tự đổi các câu hỏi nhanh | `src/client/features/contact/suggestions.js` |
+| Bảng cài đặt dưới icon bánh răng | `src/_includes/components/settings.njk`, `src/client/features/settings.js`, `src/styles/settings.css` |
+| Liquid Glass và độ trong suốt | `src/client/features/glass.js`, `src/styles/glass.css` |
+| Chọn màu chữ Settings theo nền phía sau | `src/client/features/glass-contrast.js` |
 | Gửi chat, cooldown và countdown | `src/client/features/chat.js` |
 | Lịch sử chat, thời hạn phiên, localStorage | `src/client/features/chat/session.js` |
 | Hiển thị chat, nút và nhập tin nhắn | `src/client/features/chat/view.js` |
@@ -58,6 +104,14 @@ Thêm section: tạo folder `src/modules/<id>/` có `data.js` và `template.njk`
 | HTTP API, gọi model, prompt và kiến thức chatbot | `server/chat/` (route: `api/chat.js`) |
 
 Sự kiện chat được gắn trong module JavaScript, dùng chung cho cả EN/VN. Các preset bài viết dùng chung logic theme/quay lại; khác biệt bố cục nằm trong template và CSS.
+
+Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Quầng sáng AI Aurora chuyển động bằng CSS trong `src/styles/contact.css`. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
+
+Ba từ khóa bên dưới ô nhập được chọn ngẫu nhiên từ mảng `suggestions` trong `src/modules/contact/data.js`. Hiện có **12 câu hỏi** dựa trên thông tin trong `api/knowledge.md`. Khi Contact xuất hiện trên màn hình, cứ **7 giây** ba từ khóa mờ đi rồi hiện ba mục mới, không trùng với lượt trước. Việc đổi tạm dừng khi di chuột hoặc đặt focus vào ô nhập/các từ khóa, đang nhập nội dung, gõ tiếng Việt bằng IME, gửi câu hỏi, Contact ra ngoài màn hình hoặc tab bị ẩn. Bật chế độ giảm chuyển động của thiết bị sẽ chỉ chọn ngẫu nhiên lúc tải trang, không tự đổi tiếp. Bấm một từ khóa gửi câu hỏi đầy đủ qua cùng chatbot; các nút dùng chung cài đặt Liquid Glass.
+
+Muốn thêm, sửa hoặc xóa câu hỏi, chỉ chỉnh mảng `suggestions` trong file dữ liệu Contact; cả EN/VN cùng cập nhật, không cần sửa HTML hay hàm xử lý. Mỗi mục có `id` duy nhất, `label` là nhãn ngắn và `question` là câu hỏi gửi đi; cả hai đặt bản dịch `{ en: '...', vi: '...' }` cạnh nhau. Giữ ít nhất ba mục để hiển thị đủ ba từ khóa. Với danh sách bốn hoặc năm mục, mỗi lượt ưu tiên các mục mới rồi giữ lại đủ số mục cũ cần thiết; danh sách chỉ có ba mục sẽ đứng yên. Khi thêm chủ đề mới, cập nhật `api/knowledge.md` nếu chatbot chưa có thông tin để trả lời. Cách chọn, hiển thị và tự đổi nằm riêng trong `src/client/features/contact/suggestions.js`; `contact.js` chỉ điều phối nhập/gửi và kết nối chatbot. Chu kỳ đổi và thời gian mờ được đặt ở đầu module gợi ý.
+
+Icon bánh răng bên phải navbar mở các nút ngôn ngữ, sáng/tối, nhạc và Liquid Glass. Mức kính mặc định là 60%; tăng phần trăm để thấy nền rõ hơn. Công tắc Liquid Glass tắt toàn bộ blur và lớp phản chiếu của kính, dùng bề mặt đặc; bật lại giữ mức phần trăm đã chọn. Lựa chọn kính được lưu trong trình duyệt, dùng chung khi tải lại, đổi ngôn ngữ hoặc mở bài viết. Trang bài viết có cài đặt theme/kính; vùng đọc và ảnh vẫn giữ độ rõ. Nhãn EN/VN của bảng nằm trong `src/modules/interface/data.js`.
 
 ## Viết blog
 

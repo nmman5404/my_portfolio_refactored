@@ -1,11 +1,13 @@
 import { initTheme } from './features/theme.js';
 import { initLanguage } from './features/language.js';
 import { initChat } from './features/chat.js';
-import { initProjectSlider } from './features/slider.js';
+import { initProjects } from './features/projects.js';
+import { initSettings } from './features/settings.js';
+import { initGlass } from './features/glass.js';
 import { initSpotlight } from './features/spotlight.js';
 import { initProfileTypewriter } from './features/profile.js';
 import { initReveal } from './features/reveal.js';
-import { initContactTypewriter } from './features/contact.js';
+import { initContactSearch } from './features/contact.js';
 import { initAudio } from './features/audio.js';
 
 /** The entry coordinates features; each feature owns its DOM and private state. */
@@ -23,11 +25,13 @@ export function initHome(config) {
     onThemeChange: handleThemeChange,
   });
   initLanguage();
-  initChat(config.chat);
-  if (enabledSections.has('projects')) initProjectSlider();
+  initSettings();
+  initGlass();
+  const chatController = initChat(config.chat);
+  if (enabledSections.has('projects')) initProjects();
   initSpotlight();
   const startNameTypewriter = enabledSections.has('profile') ? initProfileTypewriter(config.profile) : undefined;
   initReveal(startNameTypewriter);
-  if (enabledSections.has('contact')) initContactTypewriter(config.contact);
+  if (enabledSections.has('contact')) initContactSearch(config.contact, chatController);
   audioController = initAudio(config.audio);
 }

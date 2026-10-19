@@ -15,12 +15,10 @@ export const articlePresets = {
   'project-mcp': { ...project },
   'project-stock': {
     ...project,
-    navigation: 'modules/article/components/article-navigation-stock.njk',
   },
   'project-formatted': {
     ...project,
     layout: 'modules/article/layouts/article-formatted.njk',
-    navigation: 'modules/article/components/article-navigation-formatted.njk',
     footer: 'modules/article/components/article-footer-formatted.njk',
     style: 'modules/article/styles/article-formatted.css',
   },

@@ -1,7 +1,12 @@
-// Shared project metadata. Both slider groups are generated from these records.
-// The legacy fields preserve invisible whitespace from the original HTML.
+// Add a project once here; both languages and pages are generated automatically.
+// Display order follows items: insert new projects at the START to show them first.
+// Move an entire item to change its position; no date-based sorting is applied.
 export default {
-  navigation: { en: 'Projects', vi: 'Dự Án' },
+  "pageSize": 4,
+  "navigation": {
+    "en": "Projects",
+    "vi": "Dự Án"
+  },
   "items": [
     {
       "id": "Agentic_RAG_System",
@@ -25,9 +30,6 @@ export default {
           "summary": "Xây dựng luồng xử lý RAG với LangGraph/LangChain, hỗ trợ truy xuất theo ngữ cảnh, ghi nhớ trạng thái đa lượt và cải thiện độ tin cậy thông qua guardrails.",
           "alt": "Agentic RAG System Thumbnail"
         }
-      },
-      "legacy": {
-        "beforeButtons": "\r\n\r\n                                "
       }
     },
     {
@@ -75,11 +77,6 @@ export default {
           "summary": "Đánh giá 13 mô hình nhận diện trên 16.9K hình ảnh, cải thiện chỉ số mAP@50 lên 76.2% và recall lên 84.3% qua các kỹ thuật tối ưu hóa.",
           "alt": "Skin Cancer Detection Thumbnail"
         }
-      },
-      "legacy": {
-        "beforeTags": {
-          "en": "\r\n\r\n                            "
-        }
       }
     },
     {
@@ -103,9 +100,6 @@ export default {
           "summary": "Xây dựng mô hình phân loại NLP lai (BERT + XLNet) kết hợp cơ chế Dynamic Gating, xử lý hơn 78K đoạn văn bản và đạt độ chính xác 90.42%, độ nhạy 91.63%.",
           "alt": "Fake News Detection Thumbnail"
         }
-      },
-      "legacy": {
-        "beforeButtons": "                                \r\n                                "
       }
     },
     {
@@ -154,13 +148,6 @@ export default {
           "summary": "Hệ thống MLOps thông minh được xây dựng để dự báo xu hướng lợi nhuận cổ phiếu và tự động phát hiện, xử lý sự suy giảm hiệu năng mô hình mà không cần can thiệp thủ công.",
           "alt": "description"
         }
-      },
-      "legacy": {
-        "commentGap": {
-          "en": {
-            "primary": "\r\n                        \r\n                         "
-          }
-        }
       }
     }
   ],
@@ -169,18 +156,21 @@ export default {
       "heading": "Featured Projects",
       "github": "View GitHub Repo",
       "details": "Read More",
-      "duplicateComment": "GROUP 2: Bản sao"
+      "pagination": "Project pages",
+      "previous": "Previous project page",
+      "next": "Next project page",
+      "page": "Page",
+      "of": "of"
     },
     "vi": {
       "heading": "Dự án Nổi bật",
       "github": "Xem GitHub",
       "details": "Chi Tiết",
-      "duplicateComment": "GROUP 2: Bản sao để Loop"
+      "pagination": "Phân trang dự án",
+      "previous": "Trang dự án trước",
+      "next": "Trang dự án sau",
+      "page": "Trang",
+      "of": "/"
     }
-  },
-  "legacy": {
-    "beforeTags": "\r\n                            ",
-    "beforeButtons": "\r\n                                ",
-    "cardGap": "\r\n\r\n                        "
   }
 };

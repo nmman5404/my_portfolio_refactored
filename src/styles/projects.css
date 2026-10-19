@@ -1,0 +1,81 @@
+#projects {
+    scroll-margin-top: 6rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+}
+
+.projects-grid[hidden] {
+    display: none !important;
+}
+
+.project-item,
+.projects-grid .project-card {
+    min-width: 0;
+}
+
+.projects-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.projects-page-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(156 163 175 / 0.7);
+    border-radius: 0.75rem;
+    color: #374151;
+    background: rgb(248 250 252 / 0.9);
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.dark .projects-page-button {
+    color: #d1d5db;
+    border-color: rgb(107 114 128 / 0.8);
+    background: rgb(31 41 55 / 0.8);
+}
+
+.projects-page-button:hover:enabled {
+    color: #2563eb;
+    border-color: #3b82f6;
+    background: rgb(219 234 254 / 0.9);
+}
+
+.dark .projects-page-button:hover:enabled {
+    color: #93c5fd;
+    background: rgb(30 58 138 / 0.4);
+}
+
+.projects-page-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.projects-page-button:focus-visible,
+.projects-page-status:focus-visible,
+#project-pages:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 4px;
+}
+
+.projects-page-status {
+    min-width: 7rem;
+    text-align: center;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

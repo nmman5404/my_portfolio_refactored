@@ -14,8 +14,10 @@ export function initAudio({ tracks, credits, volume, loop }) {
     let isMusicPlaying = false;
     let currentMusicTheme = '';
     let hasUserInteracted = false;
+    let playbackRequestId = 0;
 
     function updateMusicIcon() {
+        musicToggleButton.setAttribute('aria-checked', String(isMusicPlaying));
         if (isMusicPlaying) {
             musicIconOn.classList.remove('hidden');
             musicIconOff.classList.add('hidden');
@@ -27,6 +29,17 @@ export function initAudio({ tracks, credits, volume, loop }) {
 
     const musicCredit = document.getElementById('music-credit');
 
+    function playMusic(errorMessage) {
+        const requestId = ++playbackRequestId;
+        backgroundMusic.play().catch(error => {
+            // Pausing or replacing the track can reject an older play request.
+            if (requestId !== playbackRequestId) return;
+            isMusicPlaying = false;
+            updateMusicIcon();
+            console.warn(errorMessage, error);
+        });
+    }
+
     function loadThemeMusic() {
         const isDark = document.documentElement.classList.contains('dark');
         const targetTheme = isDark ? 'dark' : 'light';
@@ -34,38 +47,32 @@ export function initAudio({ tracks, credits, volume, loop }) {
 
         if (currentMusicTheme === targetTheme) return;
 
+        playbackRequestId++;
         backgroundMusic.src = musicUrl;
         currentMusicTheme = targetTheme;
         musicCredit.innerHTML = isDark ? credits.dark : credits.light;
         if (isMusicPlaying) {
-            backgroundMusic.play().catch(error => console.warn('Lỗi chuyển nhạc:', error));
+            playMusic('Lỗi chuyển nhạc:');
         }
-    }
-
-    function clearMusicHighlight() {
-        musicToggleButton.classList.remove('animate-gentle-shake', 'text-blue-500');
     }
 
     function handleMusicToggle() {
         hasUserInteracted = true;
         if (isMusicPlaying) {
+            playbackRequestId++;
             backgroundMusic.pause();
             isMusicPlaying = false;
         } else {
-            backgroundMusic.play().catch(error => console.warn('Lỗi phát nhạc:', error));
+            playMusic('Lỗi phát nhạc:');
             isMusicPlaying = true;
         }
         updateMusicIcon();
-        clearMusicHighlight();
     }
 
     function handleAudioUnlocked() {
         hasUserInteracted = true;
         isMusicPlaying = true;
         updateMusicIcon();
-
-        musicToggleButton.classList.add('animate-gentle-shake', 'text-blue-500');
-        setTimeout(clearMusicHighlight, 1000);
 
         interactionEvents.forEach(event => {
             window.removeEventListener(event, unlockAudio);
@@ -75,7 +82,11 @@ export function initAudio({ tracks, credits, volume, loop }) {
     function unlockAudio() {
         if (hasUserInteracted) return;
 
-        backgroundMusic.play().then(handleAudioUnlocked).catch(error => {
+        const requestId = ++playbackRequestId;
+        backgroundMusic.play().then(() => {
+            if (requestId === playbackRequestId) handleAudioUnlocked();
+        }).catch(error => {
+            if (requestId !== playbackRequestId) return;
             console.log('Trình duyệt vẫn đang chặn nhạc, chờ tương tác rõ ràng hơn...', error);
         });
     }
@@ -91,9 +102,10 @@ export function initAudio({ tracks, credits, volume, loop }) {
     function handleVisibilityChange() {
         if (!isMusicPlaying) return;
         if (document.hidden) {
+            playbackRequestId++;
             backgroundMusic.pause();
         } else {
-            backgroundMusic.play().catch(error => console.warn('Lỗi phát lại nhạc khi quay về tab:', error));
+            playMusic('Lỗi phát lại nhạc khi quay về tab:');
         }
     }
 

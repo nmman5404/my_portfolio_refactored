@@ -18,20 +18,23 @@ export function buildClientConfig(modules, locale, sections) {
   const sectionIds = sections.map((section) => section.id);
   const enabled = new Set(sectionIds);
   const roles = localized(profile.roles, locale);
-  const contactPhrases = localized(contact.phrases, locale);
 
   if (enabled.has('profile')) {
     validateTypewriterPhrases('profile', 'roles', roles, locale);
-  }
-  if (enabled.has('contact')) {
-    validateTypewriterPhrases('contact', 'phrases', contactPhrases, locale);
   }
 
   return {
     sections: sectionIds,
     viewTransition: localized(modules.interface.viewTransition, locale),
     profile: { nameText: localized(profile.name, locale), roles },
-    contact: { contactPhrases },
+    contact: {
+      sending: localized(contact.search.sending, locale),
+      suggestions: contact.suggestions.map(({ id, label, question }) => ({
+        id,
+        label: localized(label, locale),
+        question: localized(question, locale),
+      })),
+    },
     chat: {
       locale,
       limits: chat.limits,

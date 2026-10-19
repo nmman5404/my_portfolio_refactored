@@ -9,7 +9,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>{{ source("modules/article/scripts/article-tailwind-config.js") }}</script>
     <script>{{ source(article.themeInit) }}</script>
+    <script>{{ source("modules/interface/critical/glass-bootstrap.js") }}</script>
     <link rel="stylesheet" href="{{ article.style | articleStyleUrl }}">
+    <link rel="stylesheet" href="/assets/css/interface.css">
 </head>
 
 <body

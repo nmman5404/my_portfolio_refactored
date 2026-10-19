@@ -1,32 +1,69 @@
-export function initContactTypewriter({ contactPhrases }) {
-    const contactElement = document.getElementById('contact-rotating-text');
-    let phraseIndex = 0;
-    let characterIndex = 0;
-    let isDeleting = false;
+import { animateQuestionToChat } from './contact/flight.js';
+import { createContactSuggestions } from './contact/suggestions.js';
 
-    function rotateContact() {
-        const currentPhrase = contactPhrases[phraseIndex];
+/** Contact is another entry to the same conversation, not a second chat client. */
+export function initContactSearch({ sending, suggestions }, chat) {
+    const form = document.querySelector('[data-contact-search]');
+    if (!form || !chat || form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
 
-        if (isDeleting) {
-            contactElement.textContent = currentPhrase.substring(0, characterIndex - 1);
-            characterIndex--;
-        } else {
-            contactElement.textContent = currentPhrase.substring(0, characterIndex + 1);
-            characterIndex++;
-        }
+    const input = form.querySelector('input');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const suggestionsGroup = document.querySelector('[data-contact-suggestions]');
+    const status = document.getElementById('contact-search-status');
+    let isSubmitting = false;
+    let isComposing = false;
+    const quickQuestions = createContactSuggestions({
+        group: suggestionsGroup,
+        form,
+        suggestions,
+        canShuffle: () => !isSubmitting && !isComposing && !input.value.trim(),
+        onSelect: (question, source) => { void submitQuestion(question, source); },
+    });
 
-        let delay = isDeleting ? 40 : 80;
-        if (!isDeleting && characterIndex === currentPhrase.length) {
-            delay = 1000;
-            isDeleting = true;
-        } else if (isDeleting && characterIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % contactPhrases.length;
-            delay = 300;
-        }
-
-        setTimeout(rotateContact, delay);
+    function setSubmitting(value) {
+        isSubmitting = value;
+        form.setAttribute('aria-busy', String(value));
+        input.disabled = value;
+        submitButton.disabled = value;
+        quickQuestions.setDisabled(value);
+        status.textContent = value ? sending : '';
     }
 
-    window.addEventListener('load', rotateContact);
+    async function submitQuestion(question, source) {
+        if (!question || isSubmitting || isComposing) return;
+
+        const isSuggestion = source !== input;
+        const previousDraft = input.value;
+        if (isSuggestion) input.value = question;
+        setSubmitting(true);
+
+        try {
+            const accepted = await chat.submitQuestion(question, {
+                beforeSend: () => animateQuestionToChat(question, source),
+            });
+            if (accepted && input.value.trim() === question) {
+                // A quick question must not consume an unrelated draft in the search field.
+                input.value = isSuggestion && previousDraft.trim() !== question ? previousDraft : '';
+            }
+        } catch (error) {
+            // Keep the question available to retry, even if the chat bridge is interrupted.
+            console.error('The contact question could not be submitted.', error);
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
+    input.addEventListener('compositionstart', () => { isComposing = true; });
+    input.addEventListener('compositionend', () => { isComposing = false; });
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && (isComposing || event.isComposing || event.keyCode === 229)) {
+            event.preventDefault();
+        }
+    });
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void submitQuestion(input.value.trim(), input);
+    });
 }

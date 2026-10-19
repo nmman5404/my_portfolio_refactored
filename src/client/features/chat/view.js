@@ -11,8 +11,11 @@ export function createChatView() {
     const chatSendBtn = document.getElementById('chat-send-btn');
     let isChatOpen = false;
 
-    function toggleChat() {
-        isChatOpen = !isChatOpen;
+    function setChatOpen(open) {
+        isChatOpen = open;
+        chatToggleBtn.setAttribute('aria-expanded', String(open));
+        chatWindow.setAttribute('aria-hidden', String(!open));
+        chatWindow.inert = !open;
         if (isChatOpen) {
             chatWindow.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
             chatIconOpen.classList.add('scale-0', 'opacity-0');
@@ -23,19 +26,26 @@ export function createChatView() {
             chatWindow.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
             chatIconOpen.classList.remove('scale-0', 'opacity-0');
             chatIconClose.classList.add('scale-0', 'opacity-0');
+            if (chatWindow.contains(document.activeElement)) chatToggleBtn.focus();
         }
     }
 
-    function bindControls(sendMessage) {
-        chatToggleBtn.addEventListener('click', toggleChat);
-        chatCloseBtn.addEventListener('click', toggleChat);
+    function open() {
+        setChatOpen(true);
+    }
 
-        function handleInputKeypress(event) {
-            if (event.key === 'Enter') sendMessage();
+    function bindControls(sendMessage) {
+        chatToggleBtn.addEventListener('click', () => setChatOpen(!isChatOpen));
+        chatCloseBtn.addEventListener('click', () => setChatOpen(false));
+
+        function handleInputKeydown(event) {
+            if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) return;
+            event.preventDefault();
+            sendMessage();
         }
 
-        chatInput.addEventListener('keypress', handleInputKeypress);
-        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', handleInputKeydown);
+        chatSendBtn.addEventListener('click', () => sendMessage());
     }
 
     function clearMessages() {
@@ -49,12 +59,13 @@ export function createChatView() {
         const bubble = document.createElement('div');
         if (sender === 'user') {
             bubble.className = 'bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
+            bubble.textContent = text;
         } else {
             bubble.className = 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
             text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            bubble.innerHTML = text;
         }
 
-        bubble.innerHTML = text;
         message.appendChild(bubble);
         chatMessages.appendChild(message);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -103,6 +114,8 @@ export function createChatView() {
 
     function showCooldownNotice(text) {
         chatWarning.innerText = text;
+        chatWarning.classList.remove('text-green-500');
+        chatWarning.classList.add('text-red-500');
         chatWarning.classList.remove('hidden');
     }
 
@@ -117,14 +130,19 @@ export function createChatView() {
     function clearAndDisableInput() {
         chatInput.value = '';
         chatInput.disabled = true;
+        chatSendBtn.disabled = true;
+        chatWindow.setAttribute('aria-busy', 'true');
     }
 
     function restoreInput() {
         chatInput.disabled = false;
-        chatInput.focus();
+        chatSendBtn.disabled = false;
+        chatWindow.setAttribute('aria-busy', 'false');
+        if (isChatOpen) chatInput.focus();
     }
 
     return {
+        open,
         bindControls,
         clearMessages,
         renderMessage,
