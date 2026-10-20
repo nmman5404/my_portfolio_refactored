@@ -1,7 +1,23 @@
+function safeMailto(url) {
+    // Validate the address separately: encoded spaces/newlines are valid in a body.
+    const recipients = decodeURIComponent(url.pathname).split(',');
+    // URLSearchParams tolerates malformed escapes; reject them before reading fields.
+    decodeURIComponent(url.search);
+    const controls = /[\u0000-\u001f\u007f]/u;
+    const validRecipients = recipients.every(address =>
+        /^[^\s@<>"`/:?&#]+@[^\s@<>"`/:?&#]+$/u.test(address) && !controls.test(address));
+    const validHeaders = [...url.searchParams].every(([name, value]) =>
+        ['subject', 'body'].includes(name.toLowerCase()) && (name.toLowerCase() === 'body'
+            ? !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(value)
+            : !controls.test(value)));
+    return validRecipients && validHeaders && !url.hash ? url.href : null;
+}
+
 function safeHref(value) {
-    if (!/^https?:\/\//i.test(value) || /[\s<>"`]/u.test(value)) return null;
+    if (!/^(?:https?:\/\/|mailto:)/i.test(value) || /[\s<>"`]/u.test(value)) return null;
     try {
         const url = new URL(value);
+        if (url.protocol === 'mailto:') return safeMailto(url);
         return ['http:', 'https:'].includes(url.protocol) && url.hostname ? url.href : null;
     } catch {
         return null;
@@ -52,13 +68,15 @@ function createLink(href) {
     const link = document.createElement('a');
     link.className = 'chat-link';
     link.href = href;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
+    if (/^https?:/i.test(href)) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+    }
     return link;
 }
 
 function appendInline(parent, text, { links = true, bold = true } = {}) {
-    const markers = links ? /\*\*|\[|https?:\/\/|\n/gi : /\*\*|\n/g;
+    const markers = links ? /\*\*|\[|https?:\/\/|mailto:|\n/gi : /\*\*|\n/g;
     let cursor = 0;
     let match;
     while ((match = markers.exec(text))) {
@@ -90,7 +108,7 @@ function appendInline(parent, text, { links = true, bold = true } = {}) {
             } else {
                 parent.append(document.createTextNode(match[0]));
             }
-        } else if (/^https?:\/\//i.test(match[0])) {
+        } else if (/^(?:https?:\/\/|mailto:)/i.test(match[0])) {
             const candidate = /^[^\s<>"`]+/u.exec(text.slice(match.index))[0];
             const label = trimUrlPunctuation(candidate);
             const href = safeHref(label);

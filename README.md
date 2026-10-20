@@ -138,7 +138,7 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 
 Sự kiện chat được gắn trong module JavaScript, dùng chung cho cả EN/VN. Các bài dự án dùng chung khung trang, logic theme/quay lại và CSS. Storage là tùy chọn: dữ liệu lưu bị lỗi hoặc trình duyệt chặn lưu không làm dừng các tính năng khác.
 
-Phản hồi chatbot tự biến URL HTTP/HTTPS và Markdown `[nhãn](https://...)` thành link mở tab mới (`noopener noreferrer`), áp dụng cả tin nhắn mới lẫn lịch sử đã lưu. Tin nhắn người dùng vẫn là văn bản. Bộ định dạng dùng DOM để giữ chữ đậm/xuống dòng mà không chạy HTML từ phản hồi; màu và cách xuống dòng của link nằm trong `src/styles/chat.css`.
+Phản hồi chatbot tự biến URL HTTP/HTTPS và Markdown `[nhãn](https://...)` thành link mở tab mới (`noopener noreferrer`), áp dụng cả tin nhắn mới lẫn lịch sử đã lưu. Link email `[email](mailto:email)` hoặc URI `mailto:email` mở ứng dụng soạn mail mặc định, không tạo tab trống; có thể kèm subject/body được mã hóa URL. Tin nhắn người dùng vẫn là văn bản. Bộ định dạng dùng DOM để giữ chữ đậm/xuống dòng mà không chạy HTML từ phản hồi; màu và cách xuống dòng của link nằm trong `src/styles/chat.css`.
 
 Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Năm nguồn sáng AI Aurora nằm trong `src/modules/contact/glow.njk`, chuyển động bằng CSS trong `src/styles/ai-glow.css`; kiểu bong bóng bay nằm trong `src/styles/chat-entry.css`. Hai hiệu ứng được dùng chung với nút Tóm tắt bài viết. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
 
