@@ -3,6 +3,18 @@
 // Move an entire item to change its position; no date-based sorting is applied.
 export default {
   "pageSize": 4,
+  // Each action uses the matching published Markdown article as its AI context.
+  // Keep these prompts in one place; {title} is filled from the selected card.
+  "summary": {
+    "accessibleLabel": {
+      "en": "Summarize {title} with the AI assistant",
+      "vi": "Tóm tắt dự án {title} với trợ lý AI"
+    },
+    "prompt": {
+      "en": "Summarize the project “{title}”.",
+      "vi": "Tóm tắt dự án “{title}”."
+    }
+  },
   "navigation": {
     "en": "Projects",
     "vi": "Dự Án"
@@ -10,6 +22,7 @@ export default {
   "items": [
     {
       "id": "Agentic_RAG_System",
+      "articleId": "agentic-rag-system",
       "thumbnail": "thumbnail_png/proj1_thumb.png",
       "github": "https://github.com/nmman5404/MiniChatBot",
       "href": "projects/Agentic_RAG_System/Agentic_RAG_System.html",
@@ -34,6 +47,7 @@ export default {
     },
     {
       "id": "Agentic_MCP",
+      "articleId": "agentic-mcp",
       "thumbnail": "thumbnail_png/proj2_thumb.png",
       "github": "https://github.com/nmman5404/MCP_Agent",
       "href": "projects/Agentic_MCP/Agentic_MCP.html",
@@ -58,6 +72,7 @@ export default {
     },
     {
       "id": "Skin_Cancer_Detection",
+      "articleId": "skin-cancer-detection",
       "thumbnail": "thumbnail_png/proj3_thumb.png",
       "github": "https://github.com/nmman5404/Deep-Learning-Approaches-for-Skin-Cancer-Detection-and-Segmentation",
       "href": "projects/Skin_Cancer_Detection/Skin_Cancer_Detection.html",
@@ -81,6 +96,7 @@ export default {
     },
     {
       "id": "Fake_News_Detection",
+      "articleId": "fake-news-detection",
       "thumbnail": "thumbnail_png/proj4_thumb.png",
       "github": "https://github.com/nmman5404/Fake-News-Detection-with-a-BERT-XLNet-Hybrid-Model",
       "href": "projects/Fake_News_Detection/Fake_News_Detection.html",
@@ -104,6 +120,7 @@ export default {
     },
     {
       "id": "Diabetes_Health_Indicator_Analysis",
+      "articleId": "diabetes-health-indicator-analysis",
       "thumbnail": "thumbnail_png/proj5_thumb.png",
       "github": "https://github.com/nmman5404/Diabetes-Health-Indicator-Analysis",
       "href": "projects/Diabetes_Health_Indicator_Analysis/Diabetes_Health_Indicator_Analysis.html",
@@ -128,6 +145,7 @@ export default {
     },
     {
       "id": "Agentic_Stock_Forecasting_System",
+      "articleId": "agentic-stock-forecasting-system",
       "thumbnail": "thumbnail_png/proj6_thumb.png",
       "github": "https://github.com/nmman5404/agentic_stock_forecasting_system",
       "href": "projects/Agentic_Stock_Forecasting_System/Agentic_Stock_Forecasting_System.html",

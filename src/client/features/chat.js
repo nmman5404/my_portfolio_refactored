@@ -56,8 +56,12 @@ export function initChat({ locale, text: messages, limits, articleId }) {
         return submitQuestion(view.getInputText());
     }
 
-    /** Both entry points share the same conversation, limits, and request. */
-    async function submitQuestion(rawText, { beforeSend } = {}) {
+    /** An optional article supplements this request only; the conversation stays shared. */
+    async function submitQuestion(rawText, {
+        beforeSend,
+        articleId: requestedArticleId,
+        action,
+    } = {}) {
         const text = typeof rawText === 'string' ? rawText.trim() : '';
         if (!text) return false;
 
@@ -106,6 +110,9 @@ export function initChat({ locale, text: messages, limits, articleId }) {
             view.showTypingIndicator();
 
             try {
+                // Article pages stay pinned. A homepage summary includes its Markdown
+                // once; later questions use the profile and the saved summary/history.
+                const requestArticleId = articleId || requestedArticleId;
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -113,7 +120,8 @@ export function initChat({ locale, text: messages, limits, articleId }) {
                         userMessage: text,
                         lang: locale,
                         history: previousHistory,
-                        ...(articleId ? { articleId } : {}),
+                        ...(requestArticleId ? { articleId: requestArticleId } : {}),
+                        ...(action === 'summarize' ? { action } : {}),
                     }),
                 });
 

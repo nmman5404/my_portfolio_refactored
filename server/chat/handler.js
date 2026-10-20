@@ -10,18 +10,19 @@ const MAX_HISTORY_MESSAGES = 6;
 function readChatRequest(body) {
     if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
 
-    const { userMessage, lang = 'en', history = [], articleId } = body;
+    const { userMessage, lang = 'en', history = [], articleId, action } = body;
     if (typeof userMessage !== 'string' || !userMessage.trim()
         || userMessage.length > MAX_MESSAGE_LENGTH
         || !['en', 'vi'].includes(lang)
         || !Array.isArray(history) || history.length > MAX_HISTORY_MESSAGES
-        || (articleId !== undefined && !isArticleId(articleId))) return null;
+        || (articleId !== undefined && !isArticleId(articleId))
+        || (action !== undefined && (action !== 'summarize' || !articleId))) return null;
 
     const validHistory = history.every(message => message
         && ['user', 'bot'].includes(message.sender)
         && typeof message.text === 'string'
         && message.text.length <= MAX_MESSAGE_LENGTH);
-    return validHistory ? { userMessage, lang, history, articleId } : null;
+    return validHistory ? { userMessage, lang, history, articleId, action } : null;
 }
 
 /**

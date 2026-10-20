@@ -2,6 +2,7 @@ import { initTheme } from './features/theme.js';
 import { initLanguage } from './features/language.js';
 import { initChat } from './features/chat.js';
 import { initProjects } from './features/projects.js';
+import { initProjectSummaries } from './features/project-summary.js';
 import { initSettings } from './features/settings.js';
 import { initGlass } from './features/glass.js';
 import { initSpotlight } from './features/spotlight.js';
@@ -28,7 +29,10 @@ export function initHome(config) {
   initSettings();
   initGlass();
   const chatController = initChat(config.chat);
-  if (enabledSections.has('projects')) initProjects();
+  if (enabledSections.has('projects')) {
+    initProjects();
+    initProjectSummaries(chatController);
+  }
   initSpotlight();
   const startNameTypewriter = enabledSections.has('profile') ? initProfileTypewriter(config.profile) : undefined;
   initReveal(startNameTypewriter);

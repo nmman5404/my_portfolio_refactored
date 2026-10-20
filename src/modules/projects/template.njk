@@ -1,4 +1,5 @@
 {% set projects = modules.projects %}
+{% from "components/summary-button.njk" import summaryButton %}
 {% set projectLabels = projects.labels[locale] %}
 {% set projectPages = projects.items | batch(projects.pageSize) %}
 <section id="projects" class="min-h-screen flex flex-col justify-center py-20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 overflow-visible" data-projects data-project-page-size="{{ projects.pageSize }}">
@@ -20,6 +21,8 @@
         </div>
         {% endfor %}
     </div>
+
+    <p data-project-summary-status class="sr-only" role="status" aria-live="polite"></p>
 
     <nav class="projects-pagination" aria-label="{{ projectLabels.pagination }}">
         <button type="button" class="projects-page-button glass-surface glass-control" data-project-previous aria-label="{{ projectLabels.previous }}" title="{{ projectLabels.previous }}" aria-controls="project-pages" disabled>

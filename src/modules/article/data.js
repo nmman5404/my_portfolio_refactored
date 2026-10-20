@@ -15,8 +15,8 @@ export default {
       en: 'Sending the summary request to the AI assistant…',
     },
     prompt: {
-      vi: 'Hãy tóm tắt ngắn gọn bài viết tôi đang đọc: nội dung chính, mục tiêu, phương pháp và kết quả đáng chú ý nếu bài có đề cập. Chỉ dựa vào bài viết, không bổ sung thông tin bên ngoài. Cuối cùng, gợi ý 2 câu hỏi liên quan để tôi tìm hiểu tiếp.',
-      en: 'Please briefly summarize the article I am reading: its main ideas, goals, methods, and notable results where mentioned. Use only the article without adding outside facts. Finish with 2 relevant questions I could ask next.',
+      vi: 'Tóm tắt bài viết này.',
+      en: 'Summarize this article.',
     },
   },
 };

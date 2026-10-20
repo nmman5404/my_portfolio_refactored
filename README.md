@@ -53,6 +53,7 @@ Mở `src/modules/projects/data.js`, thêm object mới vào **đầu mảng `it
 "items": [
   {
     "id": "Du_An_Moi",
+    "articleId": "du-an-moi",
     "thumbnail": "thumbnail_png/du-an-moi.png",
     "github": "https://github.com/your-name/du-an-moi",
     "href": "projects/Du_An_Moi/Du_An_Moi.html",
@@ -78,6 +79,7 @@ Mở `src/modules/projects/data.js`, thêm object mới vào **đầu mảng `it
 - Muốn thay đổi thứ tự, di chuyển **toàn bộ object dự án** tới vị trí mong muốn; không cần đổi `id` hay thêm số thứ tự. Mỗi `id` phải duy nhất.
 - Đặt ảnh của ví dụ tại `public/thumbnail_png/du-an-moi.png`. `thumbnail` dùng đường dẫn trên website, bỏ phần `public/`. Thay GitHub, tag và hai bản dịch bằng nội dung thực tế.
 - Không cần tạo HTML riêng hoặc sửa JavaScript để thêm card vào cả EN/VN. Nếu cần trang chi tiết mới, tạo Markdown theo hướng dẫn bài dự án bên dưới, đặt `permalink: /projects/Du_An_Moi/Du_An_Moi.html` để khớp với `href` trong ví dụ.
+- `articleId` phải khớp `slug` của bài Markdown đã xuất bản. Card có trường này sẽ hiện nút **Tóm tắt** cạnh Repo/Chi Tiết. Bỏ trường này nếu dự án chưa có bài để chatbot đọc. Prompt ngắn của nút sửa tại `summary.prompt` trong cùng file; `{title}` tự lấy tên dự án theo EN/VN.
 - Khi xem sau khi thêm, dùng URL không có `?projectPage=...` hoặc bấm về trang 1: trang web vẫn nhớ trang đang xem khi bạn đổi ngôn ngữ hay quay lại từ chi tiết.
 
 ### Sửa và mở rộng Work Experience
@@ -117,6 +119,8 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 | Ô hỏi AI trong Contact | `src/modules/contact/`, `src/client/features/contact.js`, `src/styles/contact.css` |
 | Hiệu ứng câu hỏi bay vào chatbot | `src/client/features/contact/flight.js` |
 | Nút Tóm tắt bài viết | `src/modules/article/data.js`, `src/modules/article/components/article-summary.njk`, `src/client/features/article-summary.js` |
+| Nút Tóm tắt Featured Projects | `src/modules/projects/data.js`, `card.njk`, `src/client/features/project-summary.js` |
+| Giao diện và luồng gửi Tóm tắt dùng chung | `src/_includes/components/summary-button.njk`, `src/styles/summary.css`, `src/client/features/summary.js` |
 | Glow dùng chung cho Contact và Tóm tắt | `src/modules/contact/glow.njk`, `src/styles/ai-glow.css` |
 | Chọn, hiển thị và tự đổi các câu hỏi nhanh | `src/client/features/contact/suggestions.js` |
 | Bảng cài đặt dưới icon bánh răng | `src/_includes/components/settings.njk`, `src/client/features/settings.js`, `src/styles/settings.css` |
@@ -151,7 +155,7 @@ Nền sáng/tối của tất cả trang bài viết (blog và chi tiết dự �
 
 Nút GitHub trong bài viết dùng `glass-optional glass-control glass-pill glass-accent` cùng các class nút gốc, giống nút Repo trên trang chủ. Khi Off, nút trở về kiểu xanh và bo góc cũ.
 
-Mỗi bài có chatbot và nút **Tóm tắt**. Với bài có repo, thêm `data-article-repo` vào thẻ `<a>` của nút GitHub để Tóm tắt đứng cạnh nó (sáu bài cũ đã có). Bài Markdown thông thường không có repo sẽ tự hiện Tóm tắt dưới nội dung. Không cần viết JavaScript cho bài mới. Nhãn và câu hỏi tóm tắt sửa tại `src/modules/article/data.js`; lời chào chatbot bài viết sửa tại `src/modules/chat/data.js`, trường `articleWelcome`. Cả nút và chatbot dùng chung cài đặt Liquid Glass với trang chủ.
+Mỗi bài có chatbot và nút **Tóm tắt**. Với bài có repo, thêm `data-article-repo` vào thẻ `<a>` của nút GitHub để Tóm tắt đứng cạnh nó (sáu bài cũ đã có). Bài Markdown thông thường không có repo sẽ tự hiện Tóm tắt dưới nội dung. Không cần viết JavaScript cho bài mới. Nhãn và câu hỏi ngắn hiện trong chat sửa tại `src/modules/article/data.js`; hướng dẫn tóm tắt đầy đủ nằm phía server trong `server/chat/prompt.js`, không đưa vào bong bóng tin nhắn. Tóm tắt chỉ trả nội dung, không gợi ý thêm câu hỏi. Lời chào chatbot bài viết sửa tại `src/modules/chat/data.js`, trường `articleWelcome`. Cả nút và chatbot dùng chung cài đặt Liquid Glass với trang chủ.
 
 Tạo `src/content/blog/bai-viet-dau-tien.md`:
 
@@ -231,10 +235,10 @@ Chat dùng Vercel Function `/api/chat`, gọi Gemini REST bằng native `fetch` 
 
 Ngữ cảnh theo trang:
 
-- **Trang chủ:** chỉ `api/knowledge.md`, không nạp nội dung bài viết.
+- **Trang chủ:** mặc định chỉ `api/knowledge.md` và các tin nhắn gần nhất. Khi bấm **Tóm tắt** trên một card dự án, chỉ request đó bổ sung Markdown của dự án được chọn. Những câu hỏi tiếp theo không gửi lại Markdown, chỉ dùng knowledge cùng lịch sử chứa bản tóm tắt để tiết kiệm token. Nếu hỏi chi tiết ngoài phần tóm tắt, trợ lý phải nói rõ là thiếu thông tin; bấm Tóm tắt lần nữa sẽ nạp lại bài cho request mới. Mỗi lần gửi tối đa 6 tin nhắn lịch sử nên các ý cũ có thể ra khỏi ngữ cảnh sau nhiều lượt.
 - **Trang bài viết:** knowledge cá nhân và Markdown đầy đủ của đúng bài đang mở. Trình duyệt chỉ gửi `articleId` từ `slug`; server tự tra bài trong `src/content/blog/`, không nhận đường dẫn hoặc nội dung Markdown từ người dùng. Bài nháp, slug sai hoặc không tồn tại bị từ chối trước khi gọi Gemini.
 - Mỗi bài có lịch sử riêng, tách khỏi trang chủ. Cooldown và giới hạn số tin nhắn vẫn dùng chung giữa các trang; đổi bài không đặt lại hạn mức. Lịch sử hết hạn sau 5 phút không hoạt động. Đây là giới hạn phía trình duyệt, không phải quota hay rate limit bảo mật phía server.
 
-Instruction nằm tại `server/chat/prompt.js`, được gửi bằng trường `systemInstruction` riêng với dữ liệu. Trợ lý trả lời tự nhiên, dựa trên nguồn đã cung cấp; có thể giải thích khái niệm/code/toán liên quan bài, nhưng phải phân biệt giải thích chung với chi tiết tác giả thực sự viết. Khi thiếu thông tin hoặc câu hỏi ngoài phạm vi, trợ lý nói rõ và hướng về nội dung phù hợp. Nút Tóm tắt gửi prompt có sẵn qua cùng luồng chat và hiệu ứng bay, không gọi một API riêng; đầu ra model giới hạn 2.048 token. Bộ đọc YAML và cache bài viết nằm tại `server/chat/articles.js`. Sau khi thêm/sửa Markdown, push để Vercel deploy lại cả trang và ngữ cảnh chatbot.
+Instruction nằm tại `server/chat/prompt.js`, được gửi bằng trường `systemInstruction` riêng với dữ liệu. Trợ lý trả lời tự nhiên, dựa trên nguồn đã cung cấp; có thể giải thích khái niệm/code/toán liên quan bài, nhưng phải phân biệt giải thích chung với chi tiết tác giả thực sự viết. Khi thiếu thông tin hoặc câu hỏi ngoài phạm vi, trợ lý nói rõ và hướng về nội dung phù hợp. Nút Tóm tắt gửi câu hỏi ngắn và `action: 'summarize'` qua cùng luồng chat và hiệu ứng bay, không gọi một API riêng. Server chỉ chấp nhận action này khi có `articleId` hợp lệ, rồi thêm hướng dẫn tóm tắt đầy đủ vào `systemInstruction`; không yêu cầu thêm câu hỏi gợi ý. Đầu ra model giới hạn 2.048 token. Bộ đọc YAML và cache bài viết nằm tại `server/chat/articles.js`. Sau khi thêm/sửa Markdown, push để Vercel deploy lại cả trang và ngữ cảnh chatbot.
 
 Preview tĩnh chỉ kiểm tra giao diện, không chạy `/api/chat`. Để thử chatbot thật trên máy, khai báo biến theo `.env.example` trong `.env.local` rồi dùng Vercel development runtime. Khi thiếu khóa, API trả thông báo tạm không khả dụng; phần giao diện vẫn hoạt động.
