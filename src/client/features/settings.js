@@ -33,8 +33,10 @@ export function initSettings() {
         close({ restoreFocus: true });
     });
 
-    control.addEventListener('focusout', event => {
-        if (!control.contains(event.relatedTarget)) close();
+    // Safari can blur the active control without focusing the tapped button.
+    // Close only when focus actually moves to something outside the settings.
+    document.addEventListener('focusin', event => {
+        if (!panel.hidden && !control.contains(event.target)) close();
     });
 
     document.getElementById('lang-switch')?.addEventListener('click', () => close());
