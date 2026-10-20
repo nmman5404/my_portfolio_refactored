@@ -8,6 +8,7 @@ export function initAudio({ tracks, credits, volume, loop }) {
     const interactionEvents = ['scroll', 'click', 'touchstart', 'keydown'];
 
     const backgroundMusic = new Audio();
+    backgroundMusic.preload = 'none';
     backgroundMusic.loop = loop;
     backgroundMusic.volume = volume;
 
@@ -88,9 +89,8 @@ export function initAudio({ tracks, credits, volume, loop }) {
         const requestId = ++playbackRequestId;
         backgroundMusic.play().then(() => {
             if (requestId === playbackRequestId) handleAudioUnlocked();
-        }).catch(error => {
-            if (requestId !== playbackRequestId) return;
-            console.log('Trình duyệt vẫn đang chặn nhạc, chờ tương tác rõ ràng hơn...', error);
+        }).catch(() => {
+            // Autoplay can stay blocked until a later user gesture; keep listening.
         });
     }
 

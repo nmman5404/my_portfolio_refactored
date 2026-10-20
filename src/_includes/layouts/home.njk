@@ -20,11 +20,14 @@
 
     {% include "components/header.njk" %}
 
-    <main class="max-w-5xl mx-auto px-6 pt-20">{% for section in visibleSections %}{{ section | sectionLeading(locale) | safe }}{% include section.template %}{% endfor %}
-
+    <main class="max-w-5xl mx-auto px-6 pt-20">
+        {% for section in visibleSections %}
+        {% include section.template %}
+        {% endfor %}
     </main>
 
-{% include "modules/chat/template.njk" %}    {% include "components/footer.njk" %}
+    {% include "modules/chat/template.njk" %}
+    {% include "components/footer.njk" %}
 
 </body>
 

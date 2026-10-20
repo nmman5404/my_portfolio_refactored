@@ -41,8 +41,8 @@ export default {
       "vi": "Hệ thống đã làm mới. Bạn có thể tiếp tục trò chuyện!"
     },
     "cooldownNotice": {
-      "en": "Please wait 3 seconds before sending another message.",
-      "vi": "Vui lòng đợi 3 giây trước khi gửi tin nhắn tiếp theo."
+      "en": "Please wait {seconds} seconds before sending another message.",
+      "vi": "Vui lòng đợi {seconds} giây trước khi gửi tin nhắn tiếp theo."
     },
     "busyNotice": {
       "en": "Please wait for the current reply before sending another message.",

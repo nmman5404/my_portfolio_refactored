@@ -79,9 +79,12 @@ export function initChat({ locale, text: messages, limits, articleId }) {
             return false;
         }
 
-        if (currentTime - session.lastMessageTime < cooldownMs) {
+        const timeSinceLastMessage = currentTime - session.lastMessageTime;
+        if (timeSinceLastMessage < cooldownMs) {
             view.open();
-            view.showCooldownNotice(messages.cooldownNotice);
+            view.showCooldownNotice(formatMessage(messages.cooldownNotice, {
+                seconds: Math.ceil((cooldownMs - timeSinceLastMessage) / 1000),
+            }));
             return false;
         }
 

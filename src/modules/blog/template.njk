@@ -3,7 +3,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 {% for post in collections.publishedBlog %}                <article class="glass-surface project-card reveal delay-200 bg-slate-50/90 backdrop-blur-md dark:bg-gray-800/50 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-3 hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] flex flex-col cursor-pointer">
                     <div class="relative z-20 h-48 w-full bg-gray-100 dark:bg-gray-800 shrink-0 overflow-hidden border-b border-gray-200 dark:border-gray-700">
-                        <img src="{{ post.data.thumbnail | escape }}" alt="{{ post.data.title | escape }}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                        <img src="{{ post.data.thumbnail | escape }}" alt="{{ post.data.title | escape }}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                     </div>
                     <div class="relative z-20 p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{{ post.data.title | escape }}</h3>

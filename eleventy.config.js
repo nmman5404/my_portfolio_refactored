@@ -34,7 +34,6 @@ export default function configure(eleventyConfig) {
   environment.addGlobal('articlePage', articlePage);
   environment.addFilter('articleStyleUrl', (value) => `/assets/css/articles/${path.basename(value)}`);
   environment.addFilter('activeSections', activeSections);
-  environment.addFilter('sectionLeading', (section, locale) => section.leading?.[locale] ?? '\r\n\r\n        ');
   environment.addFilter('displayDate', (date) => new Date(date).toISOString().slice(0, 10));
   eleventyConfig.setLibrary('njk', environment);
   eleventyConfig.amendLibrary('md', configureMarkdown);
@@ -67,13 +66,6 @@ export default function configure(eleventyConfig) {
   // Render module data and Markdown first, then compile every used utility.
   eleventyConfig.on('eleventy.after', ({ outputMode }) => {
     if (outputMode === 'fs') return buildStyles();
-  });
-
-  // Keep the retained content's original line endings.
-  eleventyConfig.addTransform('preserve-line-endings', function (content) {
-    return typeof this.page.outputPath === 'string' && this.page.outputPath.endsWith('.html')
-      ? content.replace(/\r?\n/g, '\r\n')
-      : content;
   });
 
   return {
