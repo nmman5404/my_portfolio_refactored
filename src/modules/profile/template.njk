@@ -17,7 +17,7 @@
             </p>
 
             <div class="flex space-x-4">
-{% for action in modules.profile.actions %}                <a href="{{ action.href }}" class="{% if action.variant == 'primary' or (not action.variant and loop.first) %}px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40{% else %}px-6 py-3 border border-gray-400 dark:border-gray-500 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg{% endif %}">
+{% for action in modules.profile.actions %}                <a href="{{ action.href }}" class="glass-optional glass-control glass-pill {% if action.variant == 'primary' or (not action.variant and loop.first) %}glass-accent px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40{% else %}px-6 py-3 border border-gray-400 dark:border-gray-500 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg{% endif %}">
                     {{ localized(action.label, locale) | safe }}
                 </a>
 {% endfor %}            </div>

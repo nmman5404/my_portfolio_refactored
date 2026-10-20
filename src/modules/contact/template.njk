@@ -4,9 +4,8 @@
             </h2>
 
             <form class="contact-search reveal delay-150" data-contact-search aria-label="{{ modules.contact.search.label | localized(locale) }}">
-                <span class="contact-search-aura" aria-hidden="true"><span class="contact-search-orb contact-search-orb--cyan"></span><span class="contact-search-orb contact-search-orb--violet"></span><span class="contact-search-orb contact-search-orb--pink"></span></span>
-                <span class="contact-search-rim" aria-hidden="true"></span>
-                <div class="contact-search-field glass-surface">
+{% include "modules/contact/glow.njk" %}
+                <div class="contact-search-field glass-surface glass-control">
                     <svg class="contact-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="10.5" cy="10.5" r="6.5"></circle><path stroke-linecap="round" d="m16 16 4.5 4.5"></path></svg>
                     <label for="contact-question" class="sr-only">{{ modules.contact.search.label | localized(locale) }}</label>
                     <input id="contact-question" name="question" type="text" placeholder="{{ modules.contact.search.placeholder | localized(locale) }}" aria-describedby="contact-suggestions-label" autocomplete="off" enterkeyhint="send" required>
@@ -24,11 +23,11 @@
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mt-10 reveal delay-300">
-{% for link in modules.contact.links %}{% if link.kind == "email" %}                <a href="{{ link.url }}" class="btn-glow-primary group relative px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg border-2 border-blue-400 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto overflow-hidden">
+{% for link in modules.contact.links %}{% if link.kind == "email" %}                <a href="{{ link.url }}" class="glass-optional glass-control glass-pill glass-accent btn-glow-primary group relative px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg border-2 border-blue-400 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto overflow-hidden">
                     <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>                    
                     <svg class="w-6 h-6 mr-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ link.iconPath }}"></path></svg>
                     <span class="relative z-10">{{ localized(link.label, locale) | safe }}</span>
-                </a>{% else %}                <a href="{{ link.url }}" target="_blank" class="glass-surface btn-glow-secondary group px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white rounded-xl font-semibold text-lg border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto">
+                </a>{% else %}                <a href="{{ link.url }}" target="_blank" class="glass-surface glass-control glass-pill btn-glow-secondary group px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white rounded-xl font-semibold text-lg border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 hover:-translate-y-2 flex items-center justify-center w-full sm:w-auto">
                     <svg class="w-6 h-6 mr-3 {{ link.iconClasses }} group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="{{ link.iconPath }}"/></svg>
                     {{ localized(link.label, locale) | safe }}
                 </a>{% endif %}{% if not loop.last %}

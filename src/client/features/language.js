@@ -1,9 +1,11 @@
+import { sessionStore } from '../shared/storage.js';
+
 export function initLanguage() {
     const languageSwitchButton = document.getElementById('lang-switch');
 
     function saveScrollPosition() {
         updateLanguageDestination();
-        sessionStorage.setItem('scrollPosition', window.scrollY);
+        sessionStore.setItem('scrollPosition', window.scrollY);
     }
 
     function handleSwitchKeydown(event) {
@@ -27,11 +29,17 @@ export function initLanguage() {
     }
 
     function restoreScrollPosition() {
-        const savedPosition = sessionStorage.getItem('scrollPosition');
-        if (savedPosition === null) return;
+        const savedPosition = sessionStore.getItem('scrollPosition');
+        if (savedPosition === null) {
+            document.documentElement.classList.remove('is-switching');
+            return;
+        }
 
-        window.scrollTo({ top: parseInt(savedPosition), behavior: 'instant' });
-        sessionStorage.removeItem('scrollPosition');
+        const position = Number(savedPosition);
+        if (Number.isFinite(position) && position >= 0) {
+            window.scrollTo({ top: position, behavior: 'instant' });
+        }
+        sessionStore.removeItem('scrollPosition');
         setTimeout(revealPageAfterSwitch, 10);
     }
 

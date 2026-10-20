@@ -1,0 +1,64 @@
+/* Work entries share one node template. Each row holds at most five entries so
+   additional jobs retain useful touch targets without squeezing the years. */
+.experience-timeline-row:not(:last-child) {
+  padding-bottom: 14rem;
+}
+
+.experience-node {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.experience-node:is(:hover, :focus-within) {
+  z-index: 30;
+}
+
+.experience-details {
+  --experience-details-width: min(15rem, calc(100vw - 3rem));
+  width: var(--experience-details-width);
+  /* Clamp every popup to its own row, including inner nodes on narrow screens. */
+  left: clamp(
+    calc(-100% * var(--experience-node-index)),
+    calc(50% - var(--experience-details-width) / 2),
+    calc((var(--experience-node-count) - var(--experience-node-index)) * 100% - var(--experience-details-width))
+  );
+  overflow-wrap: anywhere;
+}
+
+.experience-details--wide {
+  --experience-details-width: min(16rem, calc(100vw - 3rem));
+}
+
+/* Keyboard focus and tapping a non-linked node reveal the same details as hover.
+   A linked node remains a native anchor: activating it opens its authored URL. */
+.experience-node:focus-within .experience-details {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.experience-node:focus-within .experience-dot {
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+  transform: scale(1.25);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+}
+
+.dark .experience-node:focus-within .experience-dot {
+  background-color: #1e3a8a;
+}
+
+.experience-node:focus-visible .experience-dot {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+}
+
+.experience-node:focus-within .experience-year {
+  color: #2563eb;
+}
+
+.dark .experience-node:focus-within .experience-year {
+  color: #60a5fa;
+}

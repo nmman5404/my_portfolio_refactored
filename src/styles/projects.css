@@ -32,10 +32,10 @@
     width: 2.75rem;
     height: 2.75rem;
     border: 1px solid rgb(156 163 175 / 0.7);
-    border-radius: 0.75rem;
+    border-radius: 999px;
     color: #374151;
     background: rgb(248 250 252 / 0.9);
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s, box-shadow 0.22s, -webkit-backdrop-filter 0.22s, backdrop-filter 0.22s;
 }
 
 .dark .projects-page-button {

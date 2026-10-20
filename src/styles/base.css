@@ -7,6 +7,3 @@
         html { background-color: #f9fafb; }
         html.dark { background-color: #111827; } 
         html.is-switching body { opacity: 0; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .cursor-grabbing { cursor: grabbing !important; }

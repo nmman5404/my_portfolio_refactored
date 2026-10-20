@@ -15,16 +15,22 @@ function sampleSuggestions(suggestions, count = VISIBLE_COUNT) {
 
 /** Own the suggestion UI and its rotation; sending stays with the Contact controller. */
 export function createContactSuggestions({ group, form, suggestions, canShuffle, onSelect }) {
+    const availableSuggestions = Array.isArray(suggestions) ? suggestions.filter(item => item
+        && typeof item.id === 'string' && item.id.trim()
+        && typeof item.label === 'string' && item.label.trim()
+        && typeof item.question === 'string' && item.question.trim()) : [];
+    if (!group || !availableSuggestions.length) return { setDisabled() {} };
+
     const contact = form.closest('section') || form;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let current = sampleSuggestions(suggestions);
+    let current = sampleSuggestions(availableSuggestions);
     let fadeTimer;
     let rotationTimer;
 
     const buttons = current.map((_, index) => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'contact-suggestion glass-surface';
+        button.className = 'contact-suggestion glass-surface glass-control';
         button.addEventListener('click', () => onSelect(current[index].question, button));
         group.appendChild(button);
         return button;
@@ -64,7 +70,7 @@ export function createContactSuggestions({ group, form, suggestions, canShuffle,
     function rotate() {
         if (fadeTimer !== undefined || !canRotate()) return;
         const previousIds = new Set(current.map(({ id }) => id));
-        const fresh = sampleSuggestions(suggestions.filter(({ id }) => !previousIds.has(id)));
+        const fresh = sampleSuggestions(availableSuggestions.filter(({ id }) => !previousIds.has(id)));
         if (!fresh.length) return;
         // Smaller authored lists can still rotate: introduce all new items, then fill the gaps.
         const next = [...fresh, ...sampleSuggestions(current, buttons.length - fresh.length)];
@@ -81,7 +87,7 @@ export function createContactSuggestions({ group, form, suggestions, canShuffle,
     function configureRotation() {
         clearInterval(rotationTimer);
         cancelShuffle();
-        if (!reducedMotion.matches) {
+        if (!reducedMotion.matches && availableSuggestions.length > VISIBLE_COUNT) {
             rotationTimer = setInterval(rotate, ROTATION_INTERVAL_MS);
         }
     }

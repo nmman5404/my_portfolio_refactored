@@ -9,7 +9,7 @@ export function initProfileTypewriter({ nameText, roles }) {
 
     function typeWriterName() {
         if (nameIndex < nameText.length) {
-            nameElement.innerHTML += nameText.charAt(nameIndex);
+            nameElement.textContent += nameText.charAt(nameIndex);
             nameIndex++;
             setTimeout(typeWriterName, 70);
         } else {

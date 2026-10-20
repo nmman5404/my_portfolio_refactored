@@ -2,13 +2,21 @@ export function initSpotlight() {
     const spotlightCards = document.querySelectorAll('.skill-card, .project-card, .edu-card');
 
     spotlightCards.forEach(card => {
-        function updatePointerPosition(event) {
-            const bounds = card.getBoundingClientRect();
-            const pointerX = event.clientX - bounds.left;
-            const pointerY = event.clientY - bounds.top;
+        let frame;
+        let clientX;
+        let clientY;
 
-            card.style.setProperty('--mouse-x', `${pointerX}px`);
-            card.style.setProperty('--mouse-y', `${pointerY}px`);
+        function updatePointerPosition(event) {
+            clientX = event.clientX;
+            clientY = event.clientY;
+            if (frame !== undefined) return;
+
+            frame = requestAnimationFrame(() => {
+                frame = undefined;
+                const bounds = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${clientX - bounds.left}px`);
+                card.style.setProperty('--mouse-y', `${clientY - bounds.top}px`);
+            });
         }
 
         card.addEventListener('mousemove', updatePointerPosition);

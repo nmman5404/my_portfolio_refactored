@@ -1,4 +1,5 @@
 import { initGlassContrast } from './glass-contrast.js';
+import { localStore } from '../shared/storage.js';
 
 const preferenceKey = 'portfolio-glass';
 const defaultPreferences = { enabled: true, transparency: 60 };
@@ -30,6 +31,7 @@ export function initGlass() {
     root.style.setProperty('--glass-transparency', transparency / 100);
     toggle.setAttribute('aria-checked', String(enabled));
     range.value = String(transparency);
+    range.style.setProperty('--glass-range-progress', `${transparency}%`);
     range.disabled = !enabled;
     range.setAttribute('aria-valuetext', `${transparency}%`);
     output.value = `${transparency}%`;
@@ -37,11 +39,7 @@ export function initGlass() {
 
   function savePreferences() {
     applyPreferences();
-    try {
-      localStorage.setItem(preferenceKey, JSON.stringify(preferences));
-    } catch (_) {
-      // The controls still work when the browser disallows persistence.
-    }
+    localStore.setItem(preferenceKey, JSON.stringify(preferences));
   }
 
   function toggleGlass() {
@@ -71,4 +69,3 @@ export function initGlass() {
   const panel = document.getElementById('settings-panel');
   if (panel) initGlassContrast(panel);
 }
-

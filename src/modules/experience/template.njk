@@ -25,26 +25,5 @@
 {% endif %}{% endfor %}
             </div>
 
-{% if locale == "en" %}            <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-12 font-mono border-l-4 border-blue-500 pl-3" reveal delay-100>{{ localized(modules.experience.workHeading, locale) | safe }}</h3>
-{% else %}            <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-12 font-mono border-l-4 border-blue-500 pl-3 reveal delay-100">{{ localized(modules.experience.workHeading, locale) | safe }}</h3>
-{% endif %}            <div class="relative w-full pb-32 pt-10 reveal delay-150">
-                <div class="absolute top-[52px] left-0 w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full z-0"></div>
-                <div class="relative flex justify-between w-full z-10">
-                    
-{% for item in modules.experience.timeline %}                    <div class="relative group cursor-pointer flex flex-col items-center flex-1">
-                        <div class="w-6 h-6 bg-white dark:bg-gray-900 border-4 border-gray-300 dark:border-gray-600 rounded-full group-hover:border-blue-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-900 group-hover:scale-125 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-all duration-300"></div>
-                        <div class="mt-4 font-bold text-gray-500 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ item.year }}</div>{% if item.id == "annotation" and locale == "en" %}                       {% elif item.id != "masters" %}                        {% endif %}
-                        <div class="glass-surface glass-reading absolute top-16 left-1/2 -translate-x-1/2 {{ localized(item.tooltipWidth, locale) }} bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20 text-center transform translate-y-2 group-hover:translate-y-0">
-                            <h4 class="font-bold text-blue-600 dark:text-blue-400">{{ localized(item.title, locale) | safe }}</h4>
-                            <p class="text-xs text-gray-500 mb-2">{{ localized(item.dates, locale) }}</p>
-                            <p class="text-sm text-gray-800 dark:text-gray-200 font-semibold">{{ localized(item.organization, locale) | safe }}</p>{% if item.description %}
-                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">{{ localized(item.description, locale) | safe }}</p>{% elif locale == "vi" %}           {% endif %}
-                        </div>
-                    </div>{% if not loop.last %}
-
-
-{% endif %}{% endfor %}
-
-                </div>
-            </div>
+{% include "modules/experience/timeline.njk" %}
         </section>

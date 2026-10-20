@@ -7,6 +7,7 @@ import { localized } from './src/lib/localized.js';
 import { buildClientConfig } from './src/lib/client-config.js';
 import { configureMarkdown } from './src/lib/markdown.js';
 import { articlePage } from './src/modules/article/presets.js';
+import { buildStyles } from './scripts/styles.mjs';
 
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 const sourceRoot = path.join(projectRoot, 'src');
@@ -17,7 +18,7 @@ export default function configure(eleventyConfig) {
     { autoescape: false, trimBlocks: false, lstripBlocks: false },
   );
 
-  // Only the critical theme/CDN bootstrap stays inline before first paint.
+  // Only the critical theme bootstrap stays inline before first paint.
   // Large application scripts are external ES modules; CSS is external too.
   environment.addGlobal('source', (relativePath) => {
     const target = path.resolve(sourceRoot, relativePath);
@@ -31,11 +32,9 @@ export default function configure(eleventyConfig) {
   environment.addGlobal('localized', localized);
   environment.addGlobal('clientConfig', buildClientConfig);
   environment.addGlobal('articlePage', articlePage);
-  environment.addFilter('articleScriptUrl', (value) => `/assets/js/articles/${path.basename(value)}`);
   environment.addFilter('articleStyleUrl', (value) => `/assets/css/articles/${path.basename(value)}`);
   environment.addFilter('activeSections', activeSections);
   environment.addFilter('sectionLeading', (section, locale) => section.leading?.[locale] ?? '\r\n\r\n        ');
-  environment.addFilter('postsForLocale', (posts = [], locale) => publishedPosts(posts, locale));
   environment.addFilter('displayDate', (date) => new Date(date).toISOString().slice(0, 10));
   eleventyConfig.setLibrary('njk', environment);
   eleventyConfig.amendLibrary('md', configureMarkdown);
@@ -59,8 +58,16 @@ export default function configure(eleventyConfig) {
   }
   for (const directory of ['src/styles', 'src/lib', 'src/modules', 'src/client']) {
     eleventyConfig.ignores.add(`${directory}/**`);
-    eleventyConfig.addWatchTarget(directory);
+    eleventyConfig.addWatchTarget(directory, {
+      resetConfig: directory === 'src/lib' || directory === 'src/modules',
+    });
   }
+  eleventyConfig.addWatchTarget('tailwind.config.js', { resetConfig: true });
+
+  // Render module data and Markdown first, then compile every used utility.
+  eleventyConfig.on('eleventy.after', ({ outputMode }) => {
+    if (outputMode === 'fs') return buildStyles();
+  });
 
   // Keep the retained content's original line endings.
   eleventyConfig.addTransform('preserve-line-endings', function (content) {

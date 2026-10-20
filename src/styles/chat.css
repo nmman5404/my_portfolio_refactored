@@ -1,0 +1,79 @@
+/* The outer chat window owns the backdrop filter. Inner layers stay translucent
+   without creating extra blur roots; every override is opt-in so Off uses the
+   original utility colors, spacing, corners and shadows. */
+html[data-glass-enabled="true"] #chat-window {
+  /* Open the surrounding chrome towards clear glass. Bot bubbles keep a reading
+     tint so page text behind the window cannot compete with the actual message. */
+  --chat-clarity-curve: calc(var(--glass-transparency) * var(--glass-transparency) * var(--glass-transparency));
+  --chat-chrome-color: 255, 255, 255;
+  --chat-chrome-alpha: calc(0.9 - 0.7 * var(--chat-clarity-curve));
+  --chat-bubble-color: 255, 255, 255;
+  --chat-bubble-alpha: calc(0.9 - 0.04 * var(--chat-clarity-curve));
+  --chat-input-color: 255, 255, 255;
+  --chat-input-alpha: calc(0.94 - 0.69 * var(--chat-clarity-curve));
+  --chat-text-color: #111827;
+  --chat-detail-color: #1f2937;
+  --chat-label-shadow: 0 1px 1px rgb(255 255 255 / 90%), 0 0 3px rgb(255 255 255 / 65%);
+  --chat-edge-color: 255, 255, 255;
+  --chat-edge-alpha: calc(0.35 + 0.29 * var(--glass-edge-strength));
+  --chat-user-color: 24, 61, 158;
+  --chat-user-alpha: calc(0.92 - 0.12 * var(--glass-transparency));
+  text-shadow: none;
+}
+
+html.dark[data-glass-enabled="true"] #chat-window {
+  --chat-chrome-color: 17, 24, 39;
+  --chat-bubble-color: 22, 28, 40;
+  --chat-input-color: 17, 24, 39;
+  --chat-text-color: #f8fafc;
+  --chat-detail-color: #e2e8f0;
+  --chat-label-shadow: 0 1px 2px rgb(0 0 0 / 90%), 0 0 3px rgb(0 0 0 / 65%);
+  --chat-edge-color: 219, 234, 254;
+  --chat-edge-alpha: calc(0.12 + 0.1 * var(--glass-edge-strength));
+}
+
+html[data-glass-enabled="true"] .chat-messages {
+  background-color: transparent;
+}
+
+html[data-glass-enabled="true"] :is(.chat-header, .chat-composer) {
+  background-color: rgba(var(--chat-chrome-color), var(--chat-chrome-alpha));
+  border-color: rgba(var(--chat-edge-color), var(--chat-edge-alpha));
+  box-shadow: inset 0 1px 0 rgba(var(--chat-edge-color), 0.12);
+}
+
+html[data-glass-enabled="true"] .chat-header p {
+  color: var(--chat-detail-color);
+}
+
+html[data-glass-enabled="true"] .chat-header :is(h3, p, button) {
+  text-shadow: var(--chat-label-shadow);
+}
+
+html[data-glass-enabled="true"] .chat-bubble {
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, calc(0.12 * var(--glass-reflection-strength))), transparent 65%);
+  box-shadow: inset 0 1px 1px rgba(var(--chat-edge-color), var(--chat-edge-alpha)), inset 0 -1px 1px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(15, 23, 42, 0.06);
+  text-shadow: none;
+}
+
+html[data-glass-enabled="true"] .chat-bubble-bot {
+  background-color: rgba(var(--chat-bubble-color), var(--chat-bubble-alpha));
+  color: var(--chat-text-color);
+}
+
+html[data-glass-enabled="true"] .chat-bubble-user {
+  background-color: rgba(var(--chat-user-color), var(--chat-user-alpha));
+  color: #fff;
+}
+
+html[data-glass-enabled="true"] #chat-input {
+  background-color: rgba(var(--chat-input-color), var(--chat-input-alpha));
+  border-color: rgba(var(--chat-edge-color), var(--chat-edge-alpha));
+  color: var(--chat-text-color);
+  text-shadow: var(--chat-label-shadow);
+}
+
+html[data-glass-enabled="true"] #chat-input::placeholder {
+  color: var(--chat-detail-color);
+  opacity: 1;
+}

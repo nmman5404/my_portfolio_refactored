@@ -7,4 +7,4 @@ permalink: "assets/js/home-{{ locale }}.js"
 eleventyExcludeFromCollections: true
 ---
 import { initHome } from './home.js';
-initHome({{ clientConfig(modules, locale, sections | activeSections(collections.publishedBlog, locale)) | jsonLiteral | safe }});
+initHome({{ clientConfig(modules, locale, sections | activeSections(collections.publishedBlog)) | jsonLiteral | safe }});

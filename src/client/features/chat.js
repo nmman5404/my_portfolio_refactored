@@ -125,6 +125,5 @@ export function initChat({ locale, text: messages, limits }) {
         }
     }
 
-    window.sendChatMessage = sendChatMessage;
     return { open: view.open, submitQuestion };
 }

@@ -12,16 +12,6 @@ const project = {
 // Presentation stays in templates; each Markdown file only selects a preset.
 export const articlePresets = {
   project,
-  'project-mcp': { ...project },
-  'project-stock': {
-    ...project,
-  },
-  'project-formatted': {
-    ...project,
-    layout: 'modules/article/layouts/article-formatted.njk',
-    footer: 'modules/article/components/article-footer-formatted.njk',
-    style: 'modules/article/styles/article-formatted.css',
-  },
 };
 
 export function articlePage(title, preset, bodyContent) {

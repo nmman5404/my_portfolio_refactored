@@ -1,7 +1,7 @@
 {% set settingsLocale = locale or "vi" %}
 {% set settingsLabels = modules.interface.settings %}
 <div id="settings-control" class="settings-control">
-    <button id="settings-toggle" type="button" class="settings-toggle" aria-label="{{ settingsLabels.title | localized(settingsLocale) }}" title="{{ settingsLabels.title | localized(settingsLocale) }}" aria-expanded="false" aria-controls="settings-panel">
+    <button id="settings-toggle" type="button" class="settings-toggle glass-surface glass-control" aria-label="{{ settingsLabels.title | localized(settingsLocale) }}" title="{{ settingsLabels.title | localized(settingsLocale) }}" aria-expanded="false" aria-controls="settings-panel">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.8 3-.5 2a7 7 0 0 0-1.7 1l-2-.6-2.2 3.8 1.5 1.4a8 8 0 0 0 0 2l-1.5 1.4 2.2 3.8 2-.6a7 7 0 0 0 1.7 1l.5 2h4.4l.5-2a7 7 0 0 0 1.7-1l2 .6 2.2-3.8-1.5-1.4a8 8 0 0 0 0-2l1.5-1.4-2.2-3.8-2 .6a7 7 0 0 0-1.7-1l-.5-2Z"/><circle cx="12" cy="12" r="3"/></svg>
     </button>
     <div id="settings-panel" class="settings-panel glass-surface glass-control" role="region" aria-labelledby="settings-panel-title" hidden>

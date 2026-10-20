@@ -12,11 +12,11 @@
                         {{ localized(group.title, locale) | safe }}
                     </h3>
                     <div class="flex flex-wrap gap-2 reveal delay-{{ group.revealDelay or 200 }}">
-{% for skill in group.skills %}                        <span class="px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
+{% for skill in group.skills %}                        <span class="glass-optional glass-control glass-pill px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
 {% endfor %}                    </div>{% for tag in group.tags %}
                     <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mt-4 mb-2">{{ localized(tag.title, locale) | safe }}</h4>
                     <div class="flex flex-wrap gap-2">
-{% for skill in tag.skills %}                        <span class="px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
+{% for skill in tag.skills %}                        <span class="glass-optional glass-control glass-pill px-3 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] cursor-default">{{ localized(skill.label or skill, locale) | safe }}</span>
 {% endfor %}                    </div>{% endfor %}
                 </div>{% if not loop.last %}
 

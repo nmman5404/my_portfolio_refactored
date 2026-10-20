@@ -74,7 +74,7 @@ export async function startPreview({ directory = path.join(root, 'dist'), port =
     }
     headers['Content-Length'] = end - start + 1;
     response.writeHead(range ? 206 : 200, headers);
-    if (request.method === 'HEAD') response.end();
+    if (request.method === 'HEAD' || fileStat.size === 0) response.end();
     else createReadStream(filename, { start, end }).on('error', () => response.destroy()).pipe(response);
   });
   await new Promise((resolve, reject) => {

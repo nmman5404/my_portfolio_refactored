@@ -58,11 +58,14 @@ export function createChatView() {
 
         const bubble = document.createElement('div');
         if (sender === 'user') {
-            bubble.className = 'bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
+            bubble.className = 'chat-bubble chat-bubble-user bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
             bubble.textContent = text;
         } else {
-            bubble.className = 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
-            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            bubble.className = 'chat-bubble chat-bubble-bot bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
+            // Replies and restored history are text; only authored bold/newlines become markup.
+            const entities = { '&': '&amp;', '<': '&lt;', '>': '&gt;' };
+            text = text.replace(/[&<>]/g, character => entities[character])
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
             bubble.innerHTML = text;
         }
 
@@ -76,7 +79,7 @@ export function createChatView() {
         indicator.id = 'typing-indicator';
         indicator.className = 'flex justify-start';
         indicator.innerHTML = `
-            <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-sm px-4 py-3 flex space-x-1 shadow-sm">
+            <div class="chat-bubble chat-bubble-bot bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-sm px-4 py-3 flex space-x-1 shadow-sm">
                 <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                 <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
                 <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>

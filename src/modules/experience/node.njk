@@ -1,0 +1,27 @@
+{% set nodeHref = localized(item.href, locale) %}
+{% set detailsId = "experience-details-" + item.id %}
+{% if nodeHref %}
+<a href="{{ nodeHref | escape }}" target="_blank" rel="noopener noreferrer"
+{% else %}
+<div tabindex="0" role="group"
+{% endif %}
+    class="experience-node relative group cursor-pointer flex flex-col items-center flex-1"
+    data-experience-node="{{ item.id | escape }}"
+    style="--experience-node-index: {{ loop.index0 }};"
+    aria-label="{{ item.year | escape }}: {{ localized(item.title, locale) | striptags | escape }}"
+    aria-describedby="{{ detailsId | escape }}">
+    <span class="experience-dot w-6 h-6 bg-white dark:bg-gray-900 border-4 border-gray-300 dark:border-gray-600 rounded-full group-hover:border-blue-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-900 group-hover:scale-125 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-all duration-300" aria-hidden="true"></span>
+    <span class="experience-year mt-4 font-bold text-gray-500 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ item.year }}</span>
+    <div id="{{ detailsId | escape }}" role="tooltip" class="experience-details{% if localized(item.detailsSize, locale) == 'wide' %} experience-details--wide{% endif %} glass-surface glass-reading absolute top-16 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20 text-center transform translate-y-2 group-hover:translate-y-0">
+        <h4 class="font-bold text-blue-600 dark:text-blue-400">{{ localized(item.title, locale) | safe }}</h4>
+        <p class="text-xs text-gray-500 mb-2">{{ localized(item.dates, locale) }}</p>
+        <p class="text-sm text-gray-800 dark:text-gray-200 font-semibold">{{ localized(item.organization, locale) | safe }}</p>
+{% if item.description %}
+        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">{{ localized(item.description, locale) | safe }}</p>
+{% endif %}
+    </div>
+{% if nodeHref %}
+</a>
+{% else %}
+</div>
+{% endif %}

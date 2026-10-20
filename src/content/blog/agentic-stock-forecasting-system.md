@@ -2,7 +2,7 @@
 title: "Project Agentic Stock Forecasting System"
 slug: "agentic-stock-forecasting-system"
 kind: "project"
-preset: "project-stock"
+preset: "project"
 permalink: "/projects/Agentic_Stock_Forecasting_System/Agentic_Stock_Forecasting_System.html"
 ---
 
@@ -100,7 +100,7 @@ Trong đó, `q_0.5` đóng vai trò là dự báo trung vị, còn các phân v�
 <div class="flex justify-center my-8">
 <div class="w-full max-w-2xl">
 <img 
-src="proj6_agentic_forecast.png"
+src="/thumbnail_png/proj6_thumb.png"
 alt="Forecast Quantiles"
 class="w-full rounded-xl shadow-md border border-gray-200 dark:border-gray-700"
 >

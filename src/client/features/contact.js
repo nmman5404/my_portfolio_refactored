@@ -2,15 +2,15 @@ import { animateQuestionToChat } from './contact/flight.js';
 import { createContactSuggestions } from './contact/suggestions.js';
 
 /** Contact is another entry to the same conversation, not a second chat client. */
-export function initContactSearch({ sending, suggestions }, chat) {
+export function initContactSearch({ sending, suggestions } = {}, chat) {
     const form = document.querySelector('[data-contact-search]');
     if (!form || !chat || form.dataset.initialized) return;
-    form.dataset.initialized = 'true';
-
     const input = form.querySelector('input');
     const submitButton = form.querySelector('button[type="submit"]');
     const suggestionsGroup = document.querySelector('[data-contact-suggestions]');
     const status = document.getElementById('contact-search-status');
+    if (!input || !submitButton || !status) return;
+    form.dataset.initialized = 'true';
     let isSubmitting = false;
     let isComposing = false;
     const quickQuestions = createContactSuggestions({

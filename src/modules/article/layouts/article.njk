@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ article.title | safe }}</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>{{ source("modules/article/scripts/article-tailwind-config.js") }}</script>
     <script>{{ source(article.themeInit) }}</script>
     <script>{{ source("modules/interface/critical/glass-bootstrap.js") }}</script>
     <link rel="stylesheet" href="{{ article.style | articleStyleUrl }}">{% if article.contentStyle %}
     <link rel="stylesheet" href="{{ article.contentStyle }}">{% endif %}
     <link rel="stylesheet" href="/assets/css/interface.css">
+    <link rel="stylesheet" href="/assets/css/tailwind.css">
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 font-sans antialiased transition-colors duration-300">

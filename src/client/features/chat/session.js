@@ -1,3 +1,5 @@
+import { localStore } from '../../shared/storage.js';
+
 const storageKeys = {
     count: 'aiMessageCount',
     history: 'aiChatHistory',
@@ -5,25 +7,39 @@ const storageKeys = {
     lastMessage: 'aiLastMessageTime',
 };
 
+function readNumber(key) {
+    const value = Number(localStore.getItem(key));
+    return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+}
+
+function readHistory() {
+    try {
+        const history = JSON.parse(localStore.getItem(storageKeys.history) || '[]');
+        return Array.isArray(history) ? history.filter(message => message
+            && typeof message.text === 'string'
+            && (message.sender === 'user' || message.sender === 'bot')) : [];
+    } catch (_) {
+        return [];
+    }
+}
+
 /** Own the persisted conversation and limits without touching the interface. */
 export function createChatSession({ sessionTimeoutMs }) {
     const now = Date.now();
-    let lastActivity = parseInt(localStorage.getItem(storageKeys.activity) || '0');
+    let lastActivity = readNumber(storageKeys.activity);
 
     if (lastActivity !== 0 && now - lastActivity > sessionTimeoutMs) {
-        localStorage.removeItem(storageKeys.count);
-        localStorage.removeItem(storageKeys.history);
-        localStorage.removeItem(storageKeys.activity);
-        localStorage.removeItem(storageKeys.lastMessage);
+        Object.values(storageKeys).forEach(key => localStore.removeItem(key));
+        lastActivity = 0;
     }
 
-    let messageCount = parseInt(localStorage.getItem(storageKeys.count) || '0');
-    let lastMessageTime = parseInt(localStorage.getItem(storageKeys.lastMessage) || '0');
-    const history = JSON.parse(localStorage.getItem(storageKeys.history) || '[]');
+    let messageCount = readNumber(storageKeys.count);
+    let lastMessageTime = readNumber(storageKeys.lastMessage);
+    const history = readHistory();
 
     function saveHistory() {
-        localStorage.setItem(storageKeys.history, JSON.stringify(history));
-        localStorage.setItem(storageKeys.activity, Date.now());
+        localStore.setItem(storageKeys.history, JSON.stringify(history));
+        localStore.setItem(storageKeys.activity, Date.now());
     }
 
     function ensureWelcomeMessage(text) {
@@ -43,16 +59,16 @@ export function createChatSession({ sessionTimeoutMs }) {
     function recordSentMessage(currentTime) {
         messageCount++;
         lastMessageTime = currentTime;
-        localStorage.setItem(storageKeys.count, messageCount);
-        localStorage.setItem(storageKeys.lastMessage, lastMessageTime);
-        localStorage.setItem(storageKeys.activity, currentTime);
+        localStore.setItem(storageKeys.count, messageCount);
+        localStore.setItem(storageKeys.lastMessage, lastMessageTime);
+        localStore.setItem(storageKeys.activity, currentTime);
     }
 
     function resetMessageLimit() {
         messageCount = 0;
-        localStorage.removeItem(storageKeys.count);
-        localStorage.removeItem(storageKeys.activity);
-        localStorage.removeItem(storageKeys.lastMessage);
+        localStore.removeItem(storageKeys.count);
+        localStore.removeItem(storageKeys.activity);
+        localStore.removeItem(storageKeys.lastMessage);
         // The conversation and live timestamps survive a countdown reset.
     }
 

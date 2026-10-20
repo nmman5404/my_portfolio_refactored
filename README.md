@@ -4,7 +4,7 @@ Website EN/VN dùng chung dữ liệu và template. JavaScript chia thành ES mo
 
 ## Chạy trên máy
 
-Cần Node.js 20 trở lên. Lần đầu chạy:
+Cần Node.js 24.x (cùng phiên bản major với cấu hình Vercel). Lần đầu chạy:
 
 ```powershell
 npm.cmd ci
@@ -12,6 +12,8 @@ npm.cmd run dev
 ```
 
 Mở địa chỉ terminal hiển thị. Lưu file sẽ tự cập nhật. Trên macOS/Linux dùng `npm` thay `npm.cmd`.
+
+Tailwind được compile/minify thành CSS local sau khi render HTML, không tải compiler từ CDN trong trình duyệt. Cả dev và production dùng cùng pipeline; class trong dữ liệu module, Markdown và client JavaScript đều được quét khi build. Cấu hình nằm ở `tailwind.config.js`, bước compile ở `scripts/styles.mjs`.
 
 Xem bản production:
 
@@ -29,7 +31,8 @@ Mở `http://127.0.0.1:4173`. `dist/` được sinh tự động, không sửa t
 | Tên, chức danh, giới thiệu đầu trang | `src/modules/profile/data.js` |
 | About Me | `src/modules/about/data.js` |
 | Nhóm, tag và kỹ năng | `src/modules/skills/data.js` |
-| Học vấn, chứng chỉ, kinh nghiệm | `src/modules/experience/data.js` |
+| Học vấn, chứng chỉ | `src/modules/experience/data.js` |
+| Các node Work Experience | `src/modules/experience/work.js` |
 | Dự án | `src/modules/projects/data.js` |
 | Contact | `src/modules/contact/data.js` |
 | Tiêu đề trang, footer, nhãn nút | `src/modules/interface/data.js` |
@@ -77,6 +80,27 @@ Mở `src/modules/projects/data.js`, thêm object mới vào **đầu mảng `it
 - Không cần tạo HTML riêng hoặc sửa JavaScript để thêm card vào cả EN/VN. Nếu cần trang chi tiết mới, tạo Markdown theo hướng dẫn bài dự án bên dưới, đặt `permalink: /projects/Du_An_Moi/Du_An_Moi.html` để khớp với `href` trong ví dụ.
 - Khi xem sau khi thêm, dùng URL không có `?projectPage=...` hoặc bấm về trang 1: trang web vẫn nhớ trang đang xem khi bạn đổi ngôn ngữ hay quay lại từ chi tiết.
 
+### Sửa và mở rộng Work Experience
+
+Mỗi object trong `src/modules/experience/work.js` là một node. Thứ tự mảng là thứ tự hiển thị, dùng chung cho EN/VN. Thêm, xóa hoặc di chuyển nguyên object tại đây; không cần sửa HTML. Ví dụ một mục mới:
+
+```javascript
+{
+  id: 'new-role',
+  year: '2027',
+  title: { en: 'Role title', vi: 'Tên vị trí' },
+  dates: 'MM/YYYY - MM/YYYY',
+  organization: 'Tên tổ chức',
+  description: { en: 'A short description.', vi: 'Mô tả công việc.' },
+  href: 'https://example.com/role',
+  detailsSize: 'wide'
+}
+```
+
+`id` phải duy nhất. `href` không bắt buộc: có link thì bấm node sẽ mở tab mới; bỏ trường này để node chỉ hiện chi tiết khi hover, focus bằng bàn phím hoặc chạm. Có thể dùng `{ en: '...', vi: '...' }` cho link và nội dung cần dịch. Năm mục hiện tại giữ nguyên nội dung và chưa thêm link thay bạn. `detailsSize` nhận `compact` (mặc định) hoặc `wide`. Timeline tự chia tối đa 5 node/hàng khi thêm nhiều mục; popup được giới hạn trong chiều rộng hàng để xem được trên điện thoại.
+
+Giao diện toàn timeline nằm tại `src/modules/experience/timeline.njk`, giao diện một node tại `node.njk`, CSS tại `src/styles/experience.css`. Phần học vấn vẫn sửa riêng trong `data.js`.
+
 ### Thêm section
 
 Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký dữ liệu trong `src/_data/modules.js`, rồi thêm `{ id, template: 'modules/<id>/template.njk', enabled: true }` vào `src/_data/sections.js`. Template cần `id` trùng registry. Nhãn navbar lấy từ `navigation` trong `data.js`.
@@ -89,6 +113,7 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 | --- | --- |
 | Theme, nhạc, gõ chữ, spotlight, scroll reveal, đổi ngôn ngữ | File tương ứng trong `src/client/features/` |
 | Lưới và phân trang dự án | `src/client/features/projects.js`, `src/styles/projects.css` |
+| Node và popup Work Experience | `src/modules/experience/work.js`, `timeline.njk`, `node.njk`, `src/styles/experience.css` |
 | Ô hỏi AI trong Contact | `src/modules/contact/`, `src/client/features/contact.js`, `src/styles/contact.css` |
 | Hiệu ứng câu hỏi bay vào chatbot | `src/client/features/contact/flight.js` |
 | Chọn, hiển thị và tự đổi các câu hỏi nhanh | `src/client/features/contact/suggestions.js` |
@@ -98,20 +123,25 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 | Gửi chat, cooldown và countdown | `src/client/features/chat.js` |
 | Lịch sử chat, thời hạn phiên, localStorage | `src/client/features/chat/session.js` |
 | Hiển thị chat, nút và nhập tin nhắn | `src/client/features/chat/view.js` |
+| Nền kính của khung chat, ô nhập và bong bóng tin nhắn | `src/styles/chat.css` |
 | Theme và quay lại trong các bài viết | `src/modules/article/scripts/article-theme-toggle.js`, `article-back.js` |
 | Kiểm tra nội dung, lọc bài và section khi build | `src/lib/content.js` |
 | Chuyển dữ liệu nội dung thành cấu hình trình duyệt | `src/lib/client-config.js` |
 | HTTP API, gọi model, prompt và kiến thức chatbot | `server/chat/` (route: `api/chat.js`) |
 
-Sự kiện chat được gắn trong module JavaScript, dùng chung cho cả EN/VN. Các preset bài viết dùng chung logic theme/quay lại; khác biệt bố cục nằm trong template và CSS.
+Sự kiện chat được gắn trong module JavaScript, dùng chung cho cả EN/VN. Các bài dự án dùng chung khung trang, logic theme/quay lại và CSS. Storage là tùy chọn: dữ liệu lưu bị lỗi hoặc trình duyệt chặn lưu không làm dừng các tính năng khác.
 
-Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Quầng sáng AI Aurora chuyển động bằng CSS trong `src/styles/contact.css`. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
+Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Năm nguồn sáng AI Aurora nằm trong `src/modules/contact/glow.njk`, chuyển động bằng CSS trong `src/styles/contact.css`. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
 
 Ba từ khóa bên dưới ô nhập được chọn ngẫu nhiên từ mảng `suggestions` trong `src/modules/contact/data.js`. Hiện có **12 câu hỏi** dựa trên thông tin trong `api/knowledge.md`. Khi Contact xuất hiện trên màn hình, cứ **7 giây** ba từ khóa mờ đi rồi hiện ba mục mới, không trùng với lượt trước. Việc đổi tạm dừng khi di chuột hoặc đặt focus vào ô nhập/các từ khóa, đang nhập nội dung, gõ tiếng Việt bằng IME, gửi câu hỏi, Contact ra ngoài màn hình hoặc tab bị ẩn. Bật chế độ giảm chuyển động của thiết bị sẽ chỉ chọn ngẫu nhiên lúc tải trang, không tự đổi tiếp. Bấm một từ khóa gửi câu hỏi đầy đủ qua cùng chatbot; các nút dùng chung cài đặt Liquid Glass.
 
 Muốn thêm, sửa hoặc xóa câu hỏi, chỉ chỉnh mảng `suggestions` trong file dữ liệu Contact; cả EN/VN cùng cập nhật, không cần sửa HTML hay hàm xử lý. Mỗi mục có `id` duy nhất, `label` là nhãn ngắn và `question` là câu hỏi gửi đi; cả hai đặt bản dịch `{ en: '...', vi: '...' }` cạnh nhau. Giữ ít nhất ba mục để hiển thị đủ ba từ khóa. Với danh sách bốn hoặc năm mục, mỗi lượt ưu tiên các mục mới rồi giữ lại đủ số mục cũ cần thiết; danh sách chỉ có ba mục sẽ đứng yên. Khi thêm chủ đề mới, cập nhật `api/knowledge.md` nếu chatbot chưa có thông tin để trả lời. Cách chọn, hiển thị và tự đổi nằm riêng trong `src/client/features/contact/suggestions.js`; `contact.js` chỉ điều phối nhập/gửi và kết nối chatbot. Chu kỳ đổi và thời gian mờ được đặt ở đầu module gợi ý.
 
 Icon bánh răng bên phải navbar mở các nút ngôn ngữ, sáng/tối, nhạc và Liquid Glass. Mức kính mặc định là 60%; tăng phần trăm để thấy nền rõ hơn. Công tắc Liquid Glass tắt toàn bộ blur và lớp phản chiếu của kính, dùng bề mặt đặc; bật lại giữ mức phần trăm đã chọn. Lựa chọn kính được lưu trong trình duyệt, dùng chung khi tải lại, đổi ngôn ngữ hoặc mở bài viết. Trang bài viết có cài đặt theme/kính; vùng đọc và ảnh vẫn giữ độ rõ. Nhãn EN/VN của bảng nằm trong `src/modules/interface/data.js`.
+
+Vật liệu kính dùng chung nằm trong `src/styles/glass.css`: `.glass-surface` tạo nền xuyên, viền phản sáng và mép tối; `.glass-control` dùng cho nút/thanh điều khiển, `.glass-reading` dành cho khung nhiều nội dung. Hover trên thiết bị có chuột hoặc focus bằng bàn phím làm nhòe nền ngay bên dưới từng bề mặt kính; chữ, ảnh và các khu vực khác vẫn rõ. Các switch và thanh phần trăm được tạo hình riêng trong `src/styles/settings.css`. Mức 0% là nền đặc; 100% bỏ lớp màu phủ và lớp màu che hình nền, giảm blur khi đứng yên xuống 0.25–0.75px tùy bề mặt. Phản chiếu và bóng cũng giảm dần gần 100%, còn viền kính mảnh; hover ở mức này chỉ tăng thêm 2px blur cục bộ. Khung chat cũng giảm độ phủ khi tăng phần trăm, nhưng bong bóng giữ một lớp màu để đọc tin nhắn. Off tắt cả vật liệu kính lẫn hiệu ứng blur khi hover.
+
+Các nút About Me/View Projects, Repo/Read More, tag kỹ năng và nút mở chatbot dùng `.glass-optional`: vật liệu chỉ áp dụng khi bật Liquid Glass. `.glass-pill` bo tròn kiểu capsule khi bật, `.glass-accent` thêm màu xanh nhẹ cho nút chính. Ba nút Email, LinkedIn, GitHub ở Contact cũng dùng các profile này và giữ nguyên đích liên kết. Khi Off, các class giao diện gốc tự hoạt động trở lại, giữ màu, bo góc và kích thước cũ. Nền vùng tin nhắn chatbot để trong suốt khi bật kính; header, ô nhập và bong bóng dùng lớp màu nhẹ để dễ đọc, được chỉnh riêng trong `src/styles/chat.css`.
 
 ## Viết blog
 
@@ -160,7 +190,7 @@ preset: project
 permalink: /projects/Agentic_RAG_System/Agentic_RAG_System.html
 ```
 
-`kind: project` giữ bài ở phần dự án, `permalink` giữ URL và đường dẫn ảnh cũ. `preset` chọn khung hiển thị có sẵn (`project`, `project-mcp`, `project-stock`, `project-formatted`). Bài blog mới dùng mẫu phía trên; không cần ba trường này. Chỉ các bài blog thông thường xuất hiện trong danh sách Blog trên cả EN/VN. Các bài cũ chỉ có năm 2026 nên không thêm ngày đăng giả.
+`kind: project` giữ bài ở phần dự án, `permalink` giữ URL và đường dẫn ảnh cũ. `preset: project` chọn khung dùng chung cho sáu bài dự án. Bài blog mới dùng mẫu phía trên; không cần ba trường này. Chỉ các bài blog thông thường xuất hiện trong danh sách Blog trên cả EN/VN. Các bài cũ chỉ có năm 2026 nên không thêm ngày đăng giả.
 
 Ảnh tương đối như `proj1_banner.png` trong bài cũ tiếp tục hoạt động nhờ URL được giữ nguyên. Khi tạo bài hoặc đổi URL, dùng đường dẫn bắt đầu bằng `/`, ví dụ `/projects/Agentic_RAG_System/proj1_banner.png`.
 
@@ -180,6 +210,15 @@ Bài blog mới dùng Markdown thuần như mẫu đầu mục; layout tự tạ
 
 ## Deploy và chat
 
-Đưa source vào gốc repo. Với Vercel, dùng repository root, Build Command `npm run build`, Output Directory `dist`. `.gitignore` đã bỏ dependencies, output, cache và `.env`.
+1. Push nội dung folder `portfolio-refactored` thành một GitHub repo độc lập. Ở gốc repo cần có `package.json`, `vercel.json`, `src/`, `public/`, `api/` và `server/`.
+2. Trong Vercel chọn **Add New → Project**, import GitHub repo. Giữ **Root Directory** là gốc repo (không chọn `src` hoặc `dist`). `vercel.json` đã khai báo **Build Command** `npm run build` và **Output Directory** `dist`; `package.json` cố định Node.js `24.x`.
+3. Trong **Environment Variables**, thêm **`GEMINI_API_KEY`** với khóa Gemini hợp lệ cho Production và Preview nếu dùng. `GEMINI_MODEL_NAME` không bắt buộc; mặc định là `gemini-3.1-flash-lite`. Không tạo biến có tiền tố public và không commit khóa.
+4. Chọn **Deploy**. Những lần push tiếp theo tự build lại trang và các bài Markdown. Nếu thêm hoặc đổi biến môi trường sau khi deploy, thực hiện **Redeploy**.
 
-Chat dùng `/api/chat`; khai báo biến môi trường theo `.env.example`. Kiến thức chatbot nằm trong `api/knowledge.md`. Preview tĩnh không chạy API; dùng Vercel development runtime khi cần thử chat thật. Giữ khóa API ngoài Git.
+`.gitignore` loại dependencies, output, cache và `.env`; chỉ push source cùng `package-lock.json`. Vercel cài dependencies và tạo `dist/` khi build, không cần upload thư mục này. [Cấu hình Node.js trên Vercel](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
+
+Tailwind được giữ ở major 3 để bảo toàn giao diện hiện tại. `npm audit --omit=dev` không có cảnh báo cho dependencies production; audit đầy đủ hiện còn 8 cảnh báo ở chuỗi công cụ build (6 high, 2 moderate). `braces` chưa có bản vá; không ép nâng major hoặc dùng `audit fix --force` vì có thể đổi CSS và hành vi build. Các công cụ này chỉ xử lý source của repo khi build, không nằm trong API hay chạy trong trình duyệt. [Advisory braces](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [advisory PostCSS](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
+
+Chat dùng Vercel Function `/api/chat`, gọi Gemini REST bằng native `fetch` của Node.js; không có SDK provider trong bundle. `vercel.json` đóng gói `api/knowledge.md` cùng function và cho phép chạy tối đa 60 giây; request tới model dừng sau 45 giây. API kiểm tra dữ liệu trước khi gửi, giới hạn độ dài câu hỏi/lịch sử và không trả chi tiết lỗi provider ra trình duyệt. Nội dung prompt và kiến thức vẫn nằm tại `server/chat/prompt.js` và `api/knowledge.md`.
+
+Preview tĩnh chỉ kiểm tra giao diện, không chạy `/api/chat`. Để thử chatbot thật trên máy, khai báo biến theo `.env.example` trong `.env.local` rồi dùng Vercel development runtime. Khi thiếu khóa, API trả thông báo tạm không khả dụng; phần giao diện vẫn hoạt động.

@@ -1,3 +1,5 @@
+import { localStore } from '../shared/storage.js';
+
 export function initTheme({ viewTransition, onThemeChange }) {
     const darkThemeIcon = document.getElementById('theme-toggle-dark-icon');
     const lightThemeIcon = document.getElementById('theme-toggle-light-icon');
@@ -19,10 +21,10 @@ export function initTheme({ viewTransition, onThemeChange }) {
     function applyTheme() {
         if (document.documentElement.classList.contains('dark')) {
             document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
+            localStore.setItem('color-theme', 'light');
         } else {
             document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
+            localStore.setItem('color-theme', 'dark');
         }
         updateIcon();
         onThemeChange();

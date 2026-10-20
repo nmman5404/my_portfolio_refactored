@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-/** Read on every request, preserving the original route's fallback behavior. */
+/** The handler caches this deployment's knowledge after the first read. */
 export function readKnowledge({
     cwd = process.cwd,
     readFile = fs.readFileSync,

@@ -1,10 +1,13 @@
 
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        if (sessionStorage.getItem('scrollPosition') !== null) {
-            document.documentElement.classList.add('is-switching');
-        }
-    
+        (function () {
+            var savedTheme = null;
+            try { savedTheme = localStorage.getItem('color-theme'); } catch (_) {}
+            document.documentElement.classList.toggle('dark', savedTheme === 'dark' ||
+                (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches));
+            try {
+                if (sessionStorage.getItem('scrollPosition') !== null) {
+                    document.documentElement.classList.add('is-switching');
+                }
+            } catch (_) {}
+        }());
+

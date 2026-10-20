@@ -2,7 +2,7 @@
 title: "Project Deep Learning Approaches for Skin Cancer Detection and Segmentation\r\n    "
 slug: "skin-cancer-detection"
 kind: "project"
-preset: "project-formatted"
+preset: "project"
 permalink: "/projects/Skin_Cancer_Detection/Skin_Cancer_Detection.html"
 ---
 

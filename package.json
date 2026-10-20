@@ -4,18 +4,16 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "eleventy --serve",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/preview.mjs"
   },
-  "dependencies": {
-    "@google/generative-ai": "0.24.1"
-  },
   "devDependencies": {
     "@11ty/eleventy": "3.1.7",
-    "nunjucks": "3.2.4"
+    "nunjucks": "3.2.4",
+    "tailwindcss": "3.4.17"
   }
 }

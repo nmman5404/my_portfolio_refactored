@@ -2,7 +2,7 @@
 title: "Project AI-Driven Inventory Manager with MCP"
 slug: "agentic-mcp"
 kind: "project"
-preset: "project-mcp"
+preset: "project"
 permalink: "/projects/Agentic_MCP/Agentic_MCP.html"
 ---
 

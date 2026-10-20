@@ -2,7 +2,7 @@
 title: "Project Diabetes Health Indicator Analysis\r\n    "
 slug: "diabetes-health-indicator-analysis"
 kind: "project"
-preset: "project-formatted"
+preset: "project"
 permalink: "/projects/Diabetes_Health_Indicator_Analysis/Diabetes_Health_Indicator_Analysis.html"
 ---
 

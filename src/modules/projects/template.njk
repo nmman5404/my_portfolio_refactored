@@ -22,13 +22,13 @@
     </div>
 
     <nav class="projects-pagination" aria-label="{{ projectLabels.pagination }}">
-        <button type="button" class="projects-page-button" data-project-previous aria-label="{{ projectLabels.previous }}" title="{{ projectLabels.previous }}" aria-controls="project-pages" disabled>
+        <button type="button" class="projects-page-button glass-surface glass-control" data-project-previous aria-label="{{ projectLabels.previous }}" title="{{ projectLabels.previous }}" aria-controls="project-pages" disabled>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6" /></svg>
         </button>
         <p class="projects-page-status text-gray-600 dark:text-gray-300" data-project-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
             {{ projectLabels.page }} <span data-project-current-page>1</span> {{ projectLabels.of }} {{ projectPages | length }}
         </p>
-        <button type="button" class="projects-page-button" data-project-next aria-label="{{ projectLabels.next }}" title="{{ projectLabels.next }}" aria-controls="project-pages"{% if projectPages | length <= 1 %} disabled{% endif %}>
+        <button type="button" class="projects-page-button glass-surface glass-control" data-project-next aria-label="{{ projectLabels.next }}" title="{{ projectLabels.next }}" aria-controls="project-pages"{% if projectPages | length <= 1 %} disabled{% endif %}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" /></svg>
         </button>
     </nav>

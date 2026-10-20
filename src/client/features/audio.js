@@ -56,8 +56,15 @@ export function initAudio({ tracks, credits, volume, loop }) {
         }
     }
 
-    function handleMusicToggle() {
+    function releaseAudioUnlock() {
         hasUserInteracted = true;
+        interactionEvents.forEach(event => {
+            window.removeEventListener(event, unlockAudio);
+        });
+    }
+
+    function handleMusicToggle() {
+        releaseAudioUnlock();
         if (isMusicPlaying) {
             playbackRequestId++;
             backgroundMusic.pause();
@@ -70,13 +77,9 @@ export function initAudio({ tracks, credits, volume, loop }) {
     }
 
     function handleAudioUnlocked() {
-        hasUserInteracted = true;
+        releaseAudioUnlock();
         isMusicPlaying = true;
         updateMusicIcon();
-
-        interactionEvents.forEach(event => {
-            window.removeEventListener(event, unlockAudio);
-        });
     }
 
     function unlockAudio() {
@@ -94,9 +97,11 @@ export function initAudio({ tracks, credits, volume, loop }) {
     function initializeThemeMusic() {
         loadThemeMusic();
 
-        interactionEvents.forEach(event => {
-            window.addEventListener(event, unlockAudio, { passive: true });
-        });
+        if (!hasUserInteracted) {
+            interactionEvents.forEach(event => {
+                window.addEventListener(event, unlockAudio, { passive: true });
+            });
+        }
     }
 
     function handleVisibilityChange() {

@@ -1,19 +1,16 @@
-{% set visibleSections = sections | activeSections(collections.publishedBlog, locale) %}{% set navigationClass = "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors" %}<!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+{% set visibleSections = sections | activeSections(collections.publishedBlog) %}{% set navigationClass = "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors" %}<!DOCTYPE html>
+<html lang="{{ locale }}" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ modules.interface.pageTitle | localized(locale) }}</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>{{ source("modules/interface/critical/tailwind-config.js") }}</script>
 
     <script>{{ source("modules/interface/critical/theme-bootstrap.js") }}</script>
     <script>{{ source("modules/interface/critical/glass-bootstrap.js") }}</script>
 
     <link rel="stylesheet" href="/assets/css/home.css">
     <link rel="stylesheet" href="/assets/css/interface.css">
+    <link rel="stylesheet" href="/assets/css/tailwind.css">
 </head>
 
 <body class="text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
