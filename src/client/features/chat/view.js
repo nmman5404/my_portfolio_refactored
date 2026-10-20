@@ -1,3 +1,5 @@
+import { renderMessageContent } from './message-content.js';
+
 /** Render the existing widget and keep its DOM details out of chat orchestration. */
 export function createChatView() {
     const chatToggleBtn = document.getElementById('chat-toggle-btn');
@@ -62,11 +64,7 @@ export function createChatView() {
             bubble.textContent = text;
         } else {
             bubble.className = 'chat-bubble chat-bubble-bot bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-[85%] text-sm shadow-sm break-words';
-            // Replies and restored history are text; only authored bold/newlines become markup.
-            const entities = { '&': '&amp;', '<': '&lt;', '>': '&gt;' };
-            text = text.replace(/[&<>]/g, character => entities[character])
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-            bubble.innerHTML = text;
+            bubble.append(renderMessageContent(text));
         }
 
         message.appendChild(bubble);

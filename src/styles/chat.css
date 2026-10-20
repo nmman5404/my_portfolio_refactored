@@ -1,3 +1,14 @@
+.chat-link {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+html.dark .chat-link { color: #93c5fd; }
+.chat-link:hover { text-decoration-thickness: 2px; }
+.chat-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 2px; }
+
 /* The outer chat window owns the backdrop filter. Inner layers stay translucent
    without creating extra blur roots; every override is opt-in so Off uses the
    original utility colors, spacing, corners and shadows. */
