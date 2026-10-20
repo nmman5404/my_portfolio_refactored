@@ -5,4 +5,104 @@
         ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
         html { background-color: #f9fafb; }
         html.dark { background-color: #111827; } 
-    
+
+/* Keep wallpaper behind the article while its controls can sample the same scene. */
+.article-page {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+}
+
+.article-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--article-background-light);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    transition: background-image 1s;
+}
+
+html.dark .article-background {
+    background-image: var(--article-background-dark);
+}
+
+.article-background > div {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(255 255 255 / 60%);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    transition: background-color 1s;
+}
+
+html.dark .article-background > div {
+    background-color: rgb(17 24 39 / 90%);
+}
+
+/* The repository link keeps its authored appearance; this row only adds room
+   for the shared AI action and wraps both controls on smaller screens. */
+.article-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.article-summary-fallback:not([hidden]) {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+}
+
+.article-summary {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    min-height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: #3730a3;
+    font: inherit;
+    font-weight: 500;
+    line-height: 1.5rem;
+    cursor: pointer;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.article-summary-surface {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+    padding: 0.6875rem 1.5rem;
+    border: 1px solid #c7d2fe;
+    border-radius: inherit;
+    background-color: #eef2ff;
+    color: inherit;
+    transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+.article-summary-surface svg { flex: 0 0 auto; }
+html.dark .article-summary { color: #e0e7ff; }
+html.dark .article-summary-surface { border-color: #6366f1; background-color: #1e1b4b; }
+html[data-glass-enabled="true"] .article-summary { border-radius: 999px; }
+.article-summary .contact-search-aura { inset: -14px -4px; filter: blur(14px); opacity: 0.55; }
+.article-summary:hover:not(:disabled), .article-summary:focus-visible { transform: translateY(-2px); }
+.article-summary:hover .contact-search-aura, .article-summary:focus-visible .contact-search-aura { opacity: 0.8; }
+.article-summary:focus-visible { outline: 2px solid #6366f1; outline-offset: 4px; }
+.article-summary:disabled { cursor: wait; opacity: 0.65; }
+
+@media (prefers-reduced-motion: reduce) {
+    .article-summary, .article-summary-surface { transition: none; }
+    .article-summary:hover:not(:disabled), .article-summary:focus-visible { transform: none; }
+}
+

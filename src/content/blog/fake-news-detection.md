@@ -158,7 +158,7 @@ Trong tương lai, dự án có thể được mở rộng theo nhiều hướng
 - Kết hợp metadata như nguồn tin, tác giả hoặc thời gian đăng bài để cải thiện độ chính xác
 
 <div class="mt-12 flex justify-center">
-<a href="https://github.com/nmman5404/Fake-News-Detection-with-a-BERT-XLNet-Hybrid-Model" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
+<a data-article-repo href="https://github.com/nmman5404/Fake-News-Detection-with-a-BERT-XLNet-Hybrid-Model" target="_blank" class="glass-optional glass-control glass-pill glass-accent px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
 Xem mã nguồn trên GitHub
 </a>
 </div>

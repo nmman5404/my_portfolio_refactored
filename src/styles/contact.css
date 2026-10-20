@@ -8,90 +8,6 @@
   border-radius: 999px;
 }
 
-/* Cut the gradient out of the center so the input keeps a readable glass fill. */
-.contact-search-rim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  /* Bound the rotating square without cutting the masked edge's antialiasing. */
-  overflow: clip;
-  overflow-clip-margin: 2px;
-  padding: 1.5px;
-  border-radius: inherit;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.contact-search-rim::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  aspect-ratio: 1;
-  background: conic-gradient(#38bdf8, #818cf8 22%, #f472b6 42%, #c084fc 58%, #67e8f9 78%, #38bdf8);
-  animation: contact-ai-ring 6s linear infinite;
-}
-
-/* Separate light sources travel across the bar, swell and fade independently. */
-.contact-search-aura {
-  position: absolute;
-  inset: -22px -6px;
-  z-index: -1;
-  overflow: hidden;
-  border-radius: inherit;
-  filter: blur(18px);
-  opacity: 0.68;
-  pointer-events: none;
-  transition: opacity 250ms ease;
-}
-
-.contact-search-orb {
-  position: absolute;
-  top: -20%;
-  left: 0;
-  width: 44%;
-  height: 140%;
-  border-radius: 50%;
-}
-
-.contact-search-orb--cyan {
-  background: radial-gradient(ellipse, #22d3ee 8%, rgba(56, 189, 248, 0.65) 40%, transparent 72%);
-  animation: contact-ai-cyan 5.5s ease-in-out -1s infinite alternate;
-}
-
-.contact-search-orb--violet {
-  background: radial-gradient(ellipse, #8b5cf6 10%, rgba(129, 140, 248, 0.7) 42%, transparent 72%);
-  animation: contact-ai-violet 6.5s ease-in-out -3s infinite alternate;
-}
-
-.contact-search-orb--pink {
-  background: radial-gradient(ellipse, #f472b6 8%, rgba(192, 132, 252, 0.65) 42%, transparent 72%);
-  animation: contact-ai-pink 4.5s ease-in-out -2s infinite alternate;
-}
-
-/* Smaller, softer highlights weave between the three main light sources. */
-.contact-search-orb--blue {
-  top: -5%;
-  left: 8%;
-  width: 30%;
-  height: 110%;
-  background: radial-gradient(ellipse, rgba(96, 165, 250, 0.75) 8%, rgba(129, 140, 248, 0.45) 42%, transparent 72%);
-  animation: contact-ai-blue 7.4s ease-in-out -4.6s infinite alternate;
-}
-
-.contact-search-orb--teal {
-  top: -15%;
-  left: 30%;
-  width: 28%;
-  height: 130%;
-  background: radial-gradient(ellipse, rgba(94, 234, 212, 0.7) 8%, rgba(34, 211, 238, 0.4) 42%, transparent 72%);
-  animation: contact-ai-teal 6.1s ease-in-out -1.8s infinite alternate;
-}
-
 .contact-search:focus-within .contact-search-aura { opacity: 0.95; }
 
 .contact-search-field {
@@ -197,75 +113,12 @@ html.dark .contact-suggestion { background: #1f2937; border-color: #475569; colo
   .contact-suggestions { min-height: 6.125rem; align-content: center; }
 }
 
-.contact-message-flight {
-  position: fixed;
-  z-index: 80;
-  height: 44px;
-  padding: 11px 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 999px;
-  background: linear-gradient(110deg, #2563eb, #7c3aed 65%, #a855f7);
-  box-shadow: 0 6px 28px rgba(99, 102, 241, 0.35);
-  color: white;
-  font-size: 14px;
-  line-height: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  pointer-events: none;
-  transform-origin: center;
-}
-
-@keyframes contact-ai-ring {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes contact-ai-cyan {
-  0% { transform: translate(-12%, -8%) scale(0.85, 0.8); opacity: 0.7; }
-  50% { transform: translate(60%, 14%) scale(1.15, 1.2); opacity: 1; }
-  100% { transform: translate(135%, -12%) scale(0.95, 1.05); opacity: 0.8; }
-}
-
-@keyframes contact-ai-violet {
-  0% { transform: translate(70%, 12%) scale(1.1, 1.15); opacity: 0.85; }
-  50% { transform: translate(-5%, -18%) scale(0.9, 0.85); opacity: 0.65; }
-  100% { transform: translate(115%, 8%) scale(1.2, 1.25); opacity: 1; }
-}
-
-@keyframes contact-ai-pink {
-  0% { transform: translate(135%, -8%) scale(0.9, 1.1); opacity: 1; }
-  50% { transform: translate(70%, 18%) scale(1.2, 0.95); opacity: 0.7; }
-  100% { transform: translate(-12%, -14%) scale(1, 1.2); opacity: 0.9; }
-}
-
-@keyframes contact-ai-blue {
-  0% { transform: translate(140%, 25%) scale(0.7, 0.85); opacity: 0.4; }
-  30% { transform: translate(25%, -10%) scale(1.1, 0.9); opacity: 0.6; }
-  65% { transform: translate(170%, -18%) scale(0.85, 1.15); opacity: 0.5; }
-  100% { transform: translate(-20%, 12%) scale(0.9, 1.05); opacity: 0.65; }
-}
-
-@keyframes contact-ai-teal {
-  0% { transform: translate(90%, -15%) scale(0.85, 1.1); opacity: 0.55; }
-  40% { transform: translate(-110%, 20%) scale(1.1, 0.8); opacity: 0.4; }
-  75% { transform: translate(40%, 12%) scale(0.8, 1.15); opacity: 0.65; }
-  100% { transform: translate(155%, -5%) scale(1, 0.95); opacity: 0.45; }
-}
-
 @media (max-width: 480px) {
   .contact-search-field { gap: 0.625rem; min-height: 4rem; padding-left: 1rem; }
   .contact-search-icon { flex-basis: 1.125rem; width: 1.125rem; height: 1.125rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-search-rim::before, .contact-search-orb { animation: none; }
-  .contact-search-rim::before { transform: translate(-50%, -50%); }
-  .contact-search-orb--cyan { transform: translateX(-5%); }
-  .contact-search-orb--violet { transform: translateX(65%); }
-  .contact-search-orb--pink { transform: translateX(130%); }
-  .contact-search-orb--blue { transform: translateX(30%); opacity: 0.5; }
-  .contact-search-orb--teal { transform: translateX(145%); opacity: 0.5; }
-  .contact-search-aura, .contact-search-field, .contact-search-submit, .contact-suggestion { transition: none; }
+  .contact-search-field, .contact-search-submit, .contact-suggestion { transition: none; }
   .contact-search-submit:hover:not(:disabled), .contact-suggestion:hover:not(:disabled) { transform: none; }
 }

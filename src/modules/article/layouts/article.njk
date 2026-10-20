@@ -9,11 +9,16 @@
     <script>{{ source("modules/interface/critical/glass-bootstrap.js") }}</script>
     <link rel="stylesheet" href="{{ article.style | articleStyleUrl }}">{% if article.contentStyle %}
     <link rel="stylesheet" href="{{ article.contentStyle }}">{% endif %}
+    <link rel="stylesheet" href="/assets/css/chat.css">
     <link rel="stylesheet" href="/assets/css/interface.css">
     <link rel="stylesheet" href="/assets/css/tailwind.css">
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 font-sans antialiased transition-colors duration-300">
+<body data-chat-article="{{ slug | escape }}" class="article-page text-gray-800 dark:text-gray-300 font-sans antialiased transition-colors duration-300">
+
+    {% set locale = article.lang or 'vi' %}
+
+    {% include "modules/article/components/article-background.njk" %}
 
     <!-- Navbar tối giản cho trang Blog -->
     {% include article.navigation %}
@@ -21,7 +26,13 @@
     <!-- NỘI DUNG BÀI VIẾT -->
     {{ article.bodyContent | safe }}
 
+    <div class="article-summary-fallback" data-article-summary-fallback hidden></div>
+    {% include "modules/article/components/article-summary.njk" %}
+    <p data-article-summary-status class="sr-only" role="status" aria-live="polite"></p>
+
     {% include article.footer %}
+
+    {% include "modules/chat/template.njk" %}
 
     <!-- SCRIPT DARK MODE -->
     <script type="module" src="{{ article.clientEntry }}"></script>

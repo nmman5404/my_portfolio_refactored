@@ -31,6 +31,10 @@ export default {
     "cooldownMs": 5000,
     "sessionTimeoutMs": 300000
   },
+  "articleWelcome": {
+    "en": "Ask about this article, or press Summarize to get started.",
+    "vi": "Bạn có thể hỏi về nội dung bài viết này hoặc nhấn Tóm tắt để bắt đầu."
+  },
   "messages": {
     "resetNotice": {
       "en": "System refreshed. You can chat again!",

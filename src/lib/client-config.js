@@ -12,6 +12,15 @@ function validateTypewriterPhrases(section, field, phrases, locale) {
   }
 }
 
+/** Shared widget settings for homepages and article entries. */
+export function buildChatConfig(chat, locale, { welcome } = {}) {
+  const text = Object.fromEntries(
+    Object.entries(chat.messages).map(([key, value]) => [key, localized(value, locale)]),
+  );
+  if (welcome) text.welcome = localized(welcome, locale);
+  return { locale, limits: chat.limits, text };
+}
+
 /** Generated entry files consume authored module data; HTML contains no app JS. */
 export function buildClientConfig(modules, locale, sections) {
   const { chat, audio, profile, contact } = modules;
@@ -35,11 +44,7 @@ export function buildClientConfig(modules, locale, sections) {
         question: localized(question, locale),
       })),
     },
-    chat: {
-      locale,
-      limits: chat.limits,
-      text: Object.fromEntries(Object.entries(chat.messages).map(([key, value]) => [key, localized(value, locale)])),
-    },
+    chat: buildChatConfig(chat, locale),
     audio: {
       tracks: audio.tracks,
       credits: {

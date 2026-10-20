@@ -1,0 +1,13 @@
+{# Shared by all articles; the client places this action beside an authored repo link. #}
+<template id="article-summary-template">
+    <button type="button" class="article-summary" data-article-summary
+            data-summary-prompt="{{ modules.article.summary.prompt | localized(locale) | escape }}"
+            data-summary-busy-label="{{ modules.article.summary.busyLabel | localized(locale) | escape }}"
+            aria-label="{{ modules.article.summary.accessibleLabel | localized(locale) | escape }}">
+        {% include "modules/contact/glow.njk" %}
+        <span class="article-summary-surface glass-optional glass-control glass-pill glass-accent">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"></path><path d="M20 3v4m-2-2h4"></path></svg>
+            <span data-article-summary-label>{{ modules.article.summary.label | localized(locale) }}</span>
+        </span>
+    </button>
+</template>

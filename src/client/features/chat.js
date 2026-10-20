@@ -2,10 +2,10 @@ import { formatMessage } from '../shared/text.js';
 import { createChatSession } from './chat/session.js';
 import { createChatView } from './chat/view.js';
 
-export function initChat({ locale, text: messages, limits }) {
+export function initChat({ locale, text: messages, limits, articleId }) {
     const view = createChatView();
     const { maxMessages, cooldownMs, sessionTimeoutMs } = limits;
-    const session = createChatSession({ sessionTimeoutMs });
+    const session = createChatSession({ sessionTimeoutMs, articleId });
     let countdownInterval;
     let inFlight = false;
 
@@ -32,8 +32,8 @@ export function initChat({ locale, text: messages, limits }) {
     function startLimitCountdown() {
         if (countdownInterval) clearInterval(countdownInterval);
         view.showLimitWarning();
-        updateLimitCountdown();
         countdownInterval = setInterval(updateLimitCountdown, 1000);
+        updateLimitCountdown();
     }
 
     if (session.messageCount >= maxMessages
@@ -96,7 +96,10 @@ export function initChat({ locale, text: messages, limits }) {
             view.open();
             view.hideWarning();
             session.recordSentMessage(Date.now());
-            const previousHistory = session.history.slice(-6);
+            const previousHistory = session.history
+                .filter(message => !message.welcome)
+                .slice(-6)
+                .map(({ text, sender }) => ({ text, sender }));
 
             renderAndSaveMessage(text, 'user');
             view.clearAndDisableInput();
@@ -106,7 +109,12 @@ export function initChat({ locale, text: messages, limits }) {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userMessage: text, lang: locale, history: previousHistory }),
+                    body: JSON.stringify({
+                        userMessage: text,
+                        lang: locale,
+                        history: previousHistory,
+                        ...(articleId ? { articleId } : {}),
+                    }),
                 });
 
                 const data = await response.json();

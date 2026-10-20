@@ -13,7 +13,7 @@ export function articleClientEntry(article) {
   return `/assets/js/articles/entries/${name}.js`;
 }
 
-export function createArticleClientEntries(articles) {
+export function createArticleClientEntries(articles, config) {
   const entries = new Map();
   for (const article of articles) {
     const output = articleClientEntry(article);
@@ -25,7 +25,7 @@ export function createArticleClientEntries(articles) {
     if (article.backScript) {
       imports.push(`import { initArticleBack } from '../${path.posix.basename(article.backScript)}';`);
     }
-    const calls = ['initArticleTheme();', 'initArticleInterface();'];
+    const calls = ['initArticleTheme();', `initArticleInterface(${JSON.stringify(config)});`];
     if (article.backScript) calls.push('initArticleBack();');
     entries.set(output, { output, source: `${imports.join('\n')}\n\n${calls.join('\n')}\n` });
   }

@@ -13,6 +13,7 @@ class ProviderError extends Error {
 /** Use Node's native fetch; credentials stay in a header, outside request URLs. */
 export async function generateReply({
     prompt,
+    systemInstruction,
     apiKey,
     modelName,
     fetchImpl = fetch,
@@ -26,7 +27,11 @@ export async function generateReply({
         const response = await fetchImpl(`${GENERATE_CONTENT_URL}/${model}:generateContent`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+            body: JSON.stringify({
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                generationConfig: { maxOutputTokens: 2048 },
+            }),
             signal: controller.signal,
         });
         if (!response.ok) throw new ProviderError();
@@ -37,7 +42,7 @@ export async function generateReply({
         if (!Array.isArray(parts) || BLOCKED_FINISH_REASONS.has(candidate.finishReason)) {
             throw new ProviderError();
         }
-        const reply = parts.filter(part => typeof part?.text === 'string')
+        const reply = parts.filter(part => typeof part?.text === 'string' && part.thought !== true)
             .map(part => part.text).join('');
         if (!reply.trim()) throw new ProviderError();
 

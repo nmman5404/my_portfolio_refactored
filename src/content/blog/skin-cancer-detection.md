@@ -362,9 +362,9 @@ Trong tương lai, nghiên cứu có thể được mở rộng theo nhiều hư
 - Xây dựng hệ thống CAD hỗ trợ sàng lọc ung thư da trong môi trường cộng đồng.
 
 <div class="mt-12 flex justify-center">
-<a href="https://github.com/nmman5404/Deep-Learning-Approaches-for-Skin-Cancer-Detection-and-Segmentation"
+<a data-article-repo href="https://github.com/nmman5404/Deep-Learning-Approaches-for-Skin-Cancer-Detection-and-Segmentation"
 target="_blank"
-class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
+class="glass-optional glass-control glass-pill glass-accent px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
 Xem mã nguồn trên GitHub
 </a>
 </div>

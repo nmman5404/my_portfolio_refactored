@@ -116,6 +116,8 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 | Node và popup Work Experience | `src/modules/experience/work.js`, `timeline.njk`, `node.njk`, `src/styles/experience.css` |
 | Ô hỏi AI trong Contact | `src/modules/contact/`, `src/client/features/contact.js`, `src/styles/contact.css` |
 | Hiệu ứng câu hỏi bay vào chatbot | `src/client/features/contact/flight.js` |
+| Nút Tóm tắt bài viết | `src/modules/article/data.js`, `src/modules/article/components/article-summary.njk`, `src/client/features/article-summary.js` |
+| Glow dùng chung cho Contact và Tóm tắt | `src/modules/contact/glow.njk`, `src/styles/ai-glow.css` |
 | Chọn, hiển thị và tự đổi các câu hỏi nhanh | `src/client/features/contact/suggestions.js` |
 | Bảng cài đặt dưới icon bánh răng | `src/_includes/components/settings.njk`, `src/client/features/settings.js`, `src/styles/settings.css` |
 | Liquid Glass và độ trong suốt | `src/client/features/glass.js`, `src/styles/glass.css` |
@@ -131,7 +133,7 @@ Tạo folder `src/modules/<id>/` có `data.js` và `template.njk`, đăng ký d�
 
 Sự kiện chat được gắn trong module JavaScript, dùng chung cho cả EN/VN. Các bài dự án dùng chung khung trang, logic theme/quay lại và CSS. Storage là tùy chọn: dữ liệu lưu bị lỗi hoặc trình duyệt chặn lưu không làm dừng các tính năng khác.
 
-Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Năm nguồn sáng AI Aurora nằm trong `src/modules/contact/glow.njk`, chuyển động bằng CSS trong `src/styles/contact.css`. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
+Ô hỏi AI ở Contact dùng chung chatbot, lịch sử và giới hạn gửi với nút chat góc dưới bên phải. Nhấn Enter hoặc nút mũi tên để gửi; câu hỏi bay về nút chat rồi mở cuộc trò chuyện. Năm nguồn sáng AI Aurora nằm trong `src/modules/contact/glow.njk`, chuyển động bằng CSS trong `src/styles/ai-glow.css`; kiểu bong bóng bay nằm trong `src/styles/chat-entry.css`. Hai hiệu ứng được dùng chung với nút Tóm tắt bài viết. Khi bật chế độ giảm chuyển động của thiết bị, quầng sáng đứng yên và câu hỏi được gửi trực tiếp. Các nhãn và placeholder sửa một lần trong `src/modules/contact/data.js`.
 
 Ba từ khóa bên dưới ô nhập được chọn ngẫu nhiên từ mảng `suggestions` trong `src/modules/contact/data.js`. Hiện có **12 câu hỏi** dựa trên thông tin trong `api/knowledge.md`. Khi Contact xuất hiện trên màn hình, cứ **7 giây** ba từ khóa mờ đi rồi hiện ba mục mới, không trùng với lượt trước. Việc đổi tạm dừng khi di chuột hoặc đặt focus vào ô nhập/các từ khóa, đang nhập nội dung, gõ tiếng Việt bằng IME, gửi câu hỏi, Contact ra ngoài màn hình hoặc tab bị ẩn. Bật chế độ giảm chuyển động của thiết bị sẽ chỉ chọn ngẫu nhiên lúc tải trang, không tự đổi tiếp. Bấm một từ khóa gửi câu hỏi đầy đủ qua cùng chatbot; các nút dùng chung cài đặt Liquid Glass.
 
@@ -144,6 +146,12 @@ Vật liệu kính dùng chung nằm trong `src/styles/glass.css`: `.glass-surfa
 Các nút About Me/View Projects, Repo/Read More, tag kỹ năng và nút mở chatbot dùng `.glass-optional`: vật liệu chỉ áp dụng khi bật Liquid Glass. `.glass-pill` bo tròn kiểu capsule khi bật, `.glass-accent` thêm màu xanh nhẹ cho nút chính. Ba nút Email, LinkedIn, GitHub ở Contact cũng dùng các profile này và giữ nguyên đích liên kết. Khi Off, các class giao diện gốc tự hoạt động trở lại, giữ màu, bo góc và kích thước cũ. Nền vùng tin nhắn chatbot để trong suốt khi bật kính; header, ô nhập và bong bóng dùng lớp màu nhẹ để dễ đọc, được chỉnh riêng trong `src/styles/chat.css`.
 
 ## Viết blog
+
+Nền sáng/tối của tất cả trang bài viết (blog và chi tiết dự án) sửa tại `src/modules/article/data.js`, trong `background.light` / `background.dark`. Hai ảnh ở `public/backgrounds/articles/light.jpg` và `dark.jpg` ban đầu là bản sao ảnh trang chủ; thay ảnh hoặc đường dẫn tại đây sẽ chỉ đổi nền bài viết. Layout/nền nằm trong `src/modules/article/components/article-background.njk` và `src/modules/article/styles/article.css`. Các trang dùng chung cài đặt theme và Liquid Glass với trang chủ.
+
+Nút GitHub trong bài viết dùng `glass-optional glass-control glass-pill glass-accent` cùng các class nút gốc, giống nút Repo trên trang chủ. Khi Off, nút trở về kiểu xanh và bo góc cũ.
+
+Mỗi bài có chatbot và nút **Tóm tắt**. Với bài có repo, thêm `data-article-repo` vào thẻ `<a>` của nút GitHub để Tóm tắt đứng cạnh nó (sáu bài cũ đã có). Bài Markdown thông thường không có repo sẽ tự hiện Tóm tắt dưới nội dung. Không cần viết JavaScript cho bài mới. Nhãn và câu hỏi tóm tắt sửa tại `src/modules/article/data.js`; lời chào chatbot bài viết sửa tại `src/modules/chat/data.js`, trường `articleWelcome`. Cả nút và chatbot dùng chung cài đặt Liquid Glass với trang chủ.
 
 Tạo `src/content/blog/bai-viet-dau-tien.md`:
 
@@ -219,6 +227,14 @@ Bài blog mới dùng Markdown thuần như mẫu đầu mục; layout tự tạ
 
 Tailwind được giữ ở major 3 để bảo toàn giao diện hiện tại. `npm audit --omit=dev` không có cảnh báo cho dependencies production; audit đầy đủ hiện còn 8 cảnh báo ở chuỗi công cụ build (6 high, 2 moderate). `braces` chưa có bản vá; không ép nâng major hoặc dùng `audit fix --force` vì có thể đổi CSS và hành vi build. Các công cụ này chỉ xử lý source của repo khi build, không nằm trong API hay chạy trong trình duyệt. [Advisory braces](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [advisory PostCSS](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
 
-Chat dùng Vercel Function `/api/chat`, gọi Gemini REST bằng native `fetch` của Node.js; không có SDK provider trong bundle. `vercel.json` đóng gói `api/knowledge.md` cùng function và cho phép chạy tối đa 60 giây; request tới model dừng sau 45 giây. API kiểm tra dữ liệu trước khi gửi, giới hạn độ dài câu hỏi/lịch sử và không trả chi tiết lỗi provider ra trình duyệt. Nội dung prompt và kiến thức vẫn nằm tại `server/chat/prompt.js` và `api/knowledge.md`.
+Chat dùng Vercel Function `/api/chat`, gọi Gemini REST bằng native `fetch` của Node.js; không có SDK provider trong bundle. `vercel.json` đóng gói `api/knowledge.md` và `src/content/blog/**/*.md` cùng function và cho phép chạy tối đa 60 giây; request tới model dừng sau 45 giây. Giữ nguyên đầu nhận `GEMINI_API_KEY` và model mặc định. API kiểm tra dữ liệu trước khi gửi, giới hạn độ dài câu hỏi/lịch sử và không trả chi tiết lỗi provider ra trình duyệt.
+
+Ngữ cảnh theo trang:
+
+- **Trang chủ:** chỉ `api/knowledge.md`, không nạp nội dung bài viết.
+- **Trang bài viết:** knowledge cá nhân và Markdown đầy đủ của đúng bài đang mở. Trình duyệt chỉ gửi `articleId` từ `slug`; server tự tra bài trong `src/content/blog/`, không nhận đường dẫn hoặc nội dung Markdown từ người dùng. Bài nháp, slug sai hoặc không tồn tại bị từ chối trước khi gọi Gemini.
+- Mỗi bài có lịch sử riêng, tách khỏi trang chủ. Cooldown và giới hạn số tin nhắn vẫn dùng chung giữa các trang; đổi bài không đặt lại hạn mức. Lịch sử hết hạn sau 5 phút không hoạt động. Đây là giới hạn phía trình duyệt, không phải quota hay rate limit bảo mật phía server.
+
+Instruction nằm tại `server/chat/prompt.js`, được gửi bằng trường `systemInstruction` riêng với dữ liệu. Trợ lý trả lời tự nhiên, dựa trên nguồn đã cung cấp; có thể giải thích khái niệm/code/toán liên quan bài, nhưng phải phân biệt giải thích chung với chi tiết tác giả thực sự viết. Khi thiếu thông tin hoặc câu hỏi ngoài phạm vi, trợ lý nói rõ và hướng về nội dung phù hợp. Nút Tóm tắt gửi prompt có sẵn qua cùng luồng chat và hiệu ứng bay, không gọi một API riêng; đầu ra model giới hạn 2.048 token. Bộ đọc YAML và cache bài viết nằm tại `server/chat/articles.js`. Sau khi thêm/sửa Markdown, push để Vercel deploy lại cả trang và ngữ cảnh chatbot.
 
 Preview tĩnh chỉ kiểm tra giao diện, không chạy `/api/chat`. Để thử chatbot thật trên máy, khai báo biến theo `.env.example` trong `.env.local` rồi dùng Vercel development runtime. Khi thiếu khóa, API trả thông báo tạm không khả dụng; phần giao diện vẫn hoạt động.

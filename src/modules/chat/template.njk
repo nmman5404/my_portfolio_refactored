@@ -29,7 +29,7 @@
             <!-- Tin nhắn chào mừng tự động từ Bot -->
 {% else %}{% endif %}            <div class="flex justify-start">
                 <div class="chat-bubble chat-bubble-bot bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-[85%] text-sm shadow-sm">
-                    {{ modules.chat.messages.welcome | localized(locale) | safe }}
+                    {{ (modules.chat.articleWelcome if article else modules.chat.messages.welcome) | localized(locale) | safe }}
                 </div>
             </div>
             

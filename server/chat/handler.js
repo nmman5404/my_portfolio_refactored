@@ -1,6 +1,7 @@
 import { readKnowledge } from './knowledge.js';
 import { buildPrompt } from './prompt.js';
 import { generateReply } from './gemini.js';
+import { isArticleId, readArticle } from './articles.js';
 
 const DEFAULT_MODEL_NAME = 'gemini-3.1-flash-lite';
 const MAX_MESSAGE_LENGTH = 8000;
@@ -9,17 +10,18 @@ const MAX_HISTORY_MESSAGES = 6;
 function readChatRequest(body) {
     if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
 
-    const { userMessage, lang = 'en', history = [] } = body;
+    const { userMessage, lang = 'en', history = [], articleId } = body;
     if (typeof userMessage !== 'string' || !userMessage.trim()
         || userMessage.length > MAX_MESSAGE_LENGTH
         || !['en', 'vi'].includes(lang)
-        || !Array.isArray(history) || history.length > MAX_HISTORY_MESSAGES) return null;
+        || !Array.isArray(history) || history.length > MAX_HISTORY_MESSAGES
+        || (articleId !== undefined && !isArticleId(articleId))) return null;
 
     const validHistory = history.every(message => message
         && ['user', 'bot'].includes(message.sender)
         && typeof message.text === 'string'
         && message.text.length <= MAX_MESSAGE_LENGTH);
-    return validHistory ? { userMessage, lang, history } : null;
+    return validHistory ? { userMessage, lang, history, articleId } : null;
 }
 
 /**
@@ -29,6 +31,7 @@ function readChatRequest(body) {
 export function createChatHandler({
     requestReply = generateReply,
     loadKnowledge = readKnowledge,
+    loadArticle = readArticle,
     environment = () => process.env,
     logger = console,
 } = {}) {
@@ -54,6 +57,11 @@ export function createChatHandler({
         }
 
         try {
+            const article = chatRequest.articleId ? loadArticle(chatRequest.articleId) : null;
+            if (chatRequest.articleId && !article) {
+                return res.status(400).json({ message: 'Invalid article context.' });
+            }
+
             const settings = environment();
             const apiKey = settings.GEMINI_API_KEY?.trim();
             if (!apiKey) {
@@ -62,7 +70,7 @@ export function createChatHandler({
 
             knowledgeContent ??= loadKnowledge({ logger });
             const reply = await requestReply({
-                prompt: buildPrompt({ ...chatRequest, knowledgeContent }),
+                ...buildPrompt({ ...chatRequest, knowledgeContent, article }),
                 apiKey,
                 modelName: settings.GEMINI_MODEL_NAME?.trim() || DEFAULT_MODEL_NAME,
             });

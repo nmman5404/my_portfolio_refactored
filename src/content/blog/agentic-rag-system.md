@@ -54,7 +54,7 @@ Mục tiêu của dự án là xây dựng một trợ lý AI sử dụng RAG k�
 - **Khắc phục chứng "Trôi dạt sự chú ý" (Attention Drift):** Việc sở hữu bộ nhớ dài lại sinh ra một "tác dụng phụ" nguy hiểm: LLM dễ bị "lú lẫn" với các đại từ (anh ấy, quốc gia này) và bị phân tâm bởi các chủ đề ở lượt chat quá cũ. Bài toán khó này được hóa giải bằng cách xây dựng một hàm Query Rewriting (Viết lại truy vấn) trực tiếp ngay bên trong node Retriever. Tại đây, kĩ thuật Few-Shot Prompting được áp dụng, toàn bộ lịch sử chat được đưa vào để yêu cầu Agent tổng hợp thông tin quá khứ cùng câu hỏi mập mờ thành một câu truy vấn độc lập. Nhờ đó, Vector DB luôn truy xuất tài liệu cần thiết chính xác hơn, loại bỏ hiện tượng mất dấu ngữ cảnh của hệ thống.
 
 <div class="mt-12 flex justify-center">
-<a href="https://github.com/nmman5404/MiniChatBot" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
+<a data-article-repo href="https://github.com/nmman5404/MiniChatBot" target="_blank" class="glass-optional glass-control glass-pill glass-accent px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
 Xem mã nguồn trên GitHub
 </a>
 </div>

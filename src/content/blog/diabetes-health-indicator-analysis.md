@@ -327,9 +327,9 @@ Dự án có thể được mở rộng theo nhiều hướng nhằm cải thi�
 - Mở rộng dữ liệu cho nhiều nhóm dân số và khu vực khác nhau.
 
 <div class="mt-12 flex justify-center">
-<a href="https://github.com/nmman5404/Diabetes-Health-Indicator-Analysis"
+<a data-article-repo href="https://github.com/nmman5404/Diabetes-Health-Indicator-Analysis"
 target="_blank"
-class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
+class="glass-optional glass-control glass-pill glass-accent px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
 Xem mã nguồn trên GitHub
 </a>
 </div>

@@ -7,7 +7,7 @@
   "functions": {
     "api/chat.js": {
       "maxDuration": 60,
-      "includeFiles": "api/knowledge.md"
+      "includeFiles": "{api/knowledge.md,src/content/blog/**/*.md}"
     }
   }
 }

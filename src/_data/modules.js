@@ -9,10 +9,12 @@ import blog from '../modules/blog/data.js';
 import chat from '../modules/chat/data.js';
 import audio from '../modules/audio/data.js';
 import interfaceData from '../modules/interface/data.js';
+import article from '../modules/article/data.js';
 
 export default {
   profile, about, skills,
   experience: { ...experience, timeline: work },
   projects, contact, blog, chat, audio,
   interface: interfaceData,
+  article,
 };
