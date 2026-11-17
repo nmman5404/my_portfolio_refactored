@@ -224,7 +224,7 @@
       "thankYou": {
         "eyebrow": "Cảm ơn",
         "title": "Ngân",
-        "body": "Đã là một người bạn tốt, đồng hành cùng Mẫn trong suốt thời gian qua."
+        "body": "Đã là một người bạn tốt, đồng hành cùng Mẫn trong suốt thời gian qua. Mong rằng chúng ta sẽ có nhiều kỉ niệm đẹp cùng nhau."
       },
       "personalMessage": {
         "eyebrow": "Chúc",
@@ -526,7 +526,7 @@
       "invitation": {
         "eyebrow": "Mời",
         "title": "Em Cao Minh",
-        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "body": "Đến dự lễ tốt nghiệp của anh.",
         "time": "10:45",
         "signature": ""
       },
@@ -549,7 +549,7 @@
       "invitation": {
         "eyebrow": "Mời",
         "title": "Em Bảo Định",
-        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "body": "Đến dự lễ tốt nghiệp của anh.",
         "time": "10:45",
         "signature": ""
       },
@@ -567,7 +567,7 @@
       "invitation": {
         "eyebrow": "Mời",
         "title": "Em Anh Khôi",
-        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "body": "Đến dự lễ tốt nghiệp của anh.",
         "time": "11:00",
         "signature": ""
       },
@@ -603,7 +603,7 @@
       "intro": {
         "eyebrow": "Chào",
         "title": "Anh Đức",
-        "body": "Đồng nghiệp dạy học tại trung tâm của Cô Nga"
+        "body": "Đồng nghiệp dạy học tại trung tâm của Cô Nga."
       },
       "invitation": {
         "eyebrow": "Mời",
@@ -632,6 +632,29 @@
         "eyebrow": "Mời",
         "title": "Quang",
         "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "nbt",
+      "profile": "friend",
+      "displayName": "Em Bảo Trọng",
+      "intro": {
+        "eyebrow": "Hello em",
+        "title": "Trọng",
+        "body": "'Hậu bối' thời đại học, gặp nhau hồi họp mặt BCS lớp."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Em",
+        "body": "Đã là một người bạn tốt thời Đại học của anh. Chúc em thật nhiều sức khoẻ và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Em",
+        "body": "Đến dự lễ tốt nghiệp của anh.",
         "time": "10:45",
         "signature": ""
       },
