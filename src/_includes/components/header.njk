@@ -3,6 +3,10 @@
     <div class="portfolio-nav-inner">
         <div class="portfolio-nav-links text-sm font-medium">
 {% for section in visibleSections %}{% if modules[section.id].navigation or section.nav %}{% include "components/nav-link.njk" %}{% endif %}{% endfor %}
+{% if modules.ceremony and modules.ceremony.showInNavigation %}
+            {% set section = { id: 'ceremony', href: modules.ceremony.href } %}
+            {% include "components/nav-link.njk" %}
+{% endif %}
         </div>
         {% include "components/settings.njk" %}
     </div>

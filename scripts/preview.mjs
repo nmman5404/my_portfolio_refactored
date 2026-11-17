@@ -3,6 +3,8 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createInvitationHandler } from '../server/ceremony/handler.js';
+import { readRecipients } from '../server/ceremony/recipients.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const mimeTypes = {
@@ -14,16 +16,18 @@ const mimeTypes = {
 
 export async function startPreview({ directory = path.join(root, 'dist'), port = 0 } = {}) {
   const baseDirectory = path.resolve(directory);
+  const invitation = createInvitationHandler({ loadRecipients: () => readRecipients({ cwd: () => root }) });
   const server = createServer(async (request, response) => {
-    if (!['GET', 'HEAD'].includes(request.method)) {
-      response.writeHead(405, { Allow: 'GET, HEAD' }).end('Static preview supports GET and HEAD only.');
-      return;
-    }
     let pathname;
     try {
       pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1').pathname);
     } catch {
       response.writeHead(400).end('Invalid URL');
+      return;
+    }
+    if (pathname === '/api/invitation') return invitation(request, response);
+    if (!['GET', 'HEAD'].includes(request.method)) {
+      response.writeHead(405, { Allow: 'GET, HEAD' }).end('Static preview supports GET and HEAD only.');
       return;
     }
     if (pathname.startsWith('/api/')) {
@@ -38,14 +42,13 @@ export async function startPreview({ directory = path.join(root, 'dist'), port =
       return;
     }
     if (pathname.endsWith('/')) filename = path.join(filename, 'index.html');
-    let fileStat;
-    try {
-      fileStat = await stat(filename);
-    } catch {
-      if (!path.extname(filename)) {
-        filename += '.html';
-        fileStat = await stat(filename).catch(() => null);
-      }
+    let fileStat = await stat(filename).catch(() => null);
+    if (fileStat?.isDirectory()) {
+      filename = path.join(filename, 'index.html');
+      fileStat = await stat(filename).catch(() => null);
+    } else if (!fileStat && !path.extname(filename)) {
+      filename += '.html';
+      fileStat = await stat(filename).catch(() => null);
     }
     if (!fileStat?.isFile()) {
       response.writeHead(404).end('Not found');
@@ -99,8 +102,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     directory: path.resolve(option('--dir', path.join(root, 'dist'))),
     port: Number(option('--port', process.env.PORT || 4173)),
   });
-  console.log(`Static portfolio preview: ${preview.url}`);
-  console.log('Live /api/chat requires Vercel dev; this server serves static files only.');
+  console.log(`Portfolio preview: ${preview.url}`);
+  console.log('Local /api/invitation is enabled. Live /api/chat still requires Vercel dev.');
   for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, async () => {
     await preview.close();
     process.exit(0);

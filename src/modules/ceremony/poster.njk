@@ -1,0 +1,50 @@
+{% set event = ceremony.event %}
+{% set arrivalTime = ceremony.invitation.invitation.time | trim %}
+{% set hasDate = event.date | trim %}
+{% set hasPlace = (event.venue | trim) or (event.address | trim) %}
+<section id="poster-scene" class="poster-scene" aria-label="{{ ceremony.poster.sceneLabel | escape }}" aria-hidden="true" inert>
+  <article class="graduation-poster">
+    <div class="poster-art" aria-hidden="true">
+      <span class="poster-stamp">✦</span>
+      <div class="poster-portrait">
+        <img class="poster-character" src="{{ ceremony.media.character.src | escape }}" width="{{ ceremony.media.character.width }}" height="{{ ceremony.media.character.height }}" alt="" draggable="false">
+        <img class="poster-cap" src="{{ ceremony.media.cap.src | escape }}" width="{{ ceremony.media.cap.width }}" height="{{ ceremony.media.cap.height }}" alt="" draggable="false">
+        <img class="poster-platform" src="{{ ceremony.media.podium.src | escape }}" width="{{ ceremony.media.podium.width }}" height="{{ ceremony.media.podium.height }}" alt="" draggable="false">
+      </div>
+      {% if ceremony.poster.artCaption | trim %}<p class="poster-art-caption">{{ ceremony.poster.artCaption | escape }}</p>{% endif %}
+    </div>
+    <div class="poster-copy">
+      <header class="poster-heading">
+        {% if ceremony.poster.eyebrow | trim %}<p class="poster-eyebrow">{{ ceremony.poster.eyebrow | escape }}</p>{% endif %}
+        <h2 id="poster-title" tabindex="-1"{% if not (ceremony.poster.title | trim) %} hidden{% endif %}>{{ ceremony.poster.title | escape }}</h2>
+        <p class="poster-host">{{ ceremony.poster.hostPrefix | escape }} <strong>{{ ceremony.identity.name | escape }}</strong></p>
+      </header>
+      <p class="poster-invite">{{ ceremony.poster.invitePrefix | escape }} <strong id="poster-recipient">{{ ceremony.invitation.displayName | escape }}</strong></p>
+      <p id="poster-message" class="poster-message">{{ ceremony.invitation.invitation.body | escape }}</p>
+      <dl id="poster-details" class="poster-details"{% if not hasDate and not arrivalTime and not hasPlace %} hidden{% endif %}>
+        <div id="poster-time"{% if not hasDate and not arrivalTime %} hidden{% endif %}>
+          {% if ceremony.poster.timeLabel | trim %}<dt>{{ ceremony.poster.timeLabel | escape }}</dt>{% endif %}
+          <dd><span id="poster-date"{% if not hasDate %} hidden{% endif %}>{{ event.date | trim | escape }}</span><span id="poster-time-separator" aria-hidden="true"{% if not hasDate or not arrivalTime %} hidden{% endif %}> · </span><span id="poster-arrival-time"{% if not arrivalTime %} hidden{% endif %}>{{ arrivalTime | escape }}</span></dd>
+        </div>
+        {% if hasPlace %}
+        <div id="poster-place">
+          {% if ceremony.poster.placeLabel | trim %}<dt>{{ ceremony.poster.placeLabel | escape }}</dt>{% endif %}
+          <dd>{{ event.venue | escape }}{% if event.address | trim %}<address>{{ event.address | escape }}</address>{% endif %}</dd>
+        </div>
+        {% endif %}
+      </dl>
+      {% if event.note | trim %}
+      <aside class="poster-parking">
+        <span class="poster-parking-icon" aria-hidden="true">P</span>
+        <div>{% if ceremony.poster.parkingLabel | trim %}<h3>{{ ceremony.poster.parkingLabel | escape }}</h3>{% endif %}<p>{{ event.note | escape }}</p></div>
+      </aside>
+      {% endif %}
+      {% if ((event.mapUrl | trim) and (event.mapLabel | trim)) or (ceremony.poster.footnote | trim) %}
+      <div class="poster-bottom">
+        {% if (event.mapUrl | trim) and (event.mapLabel | trim) %}<a class="poster-map" href="{{ event.mapUrl | trim | escape }}" target="_blank" rel="noopener noreferrer">{{ event.mapLabel | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+        {% if ceremony.poster.footnote | trim %}<p>{{ ceremony.poster.footnote | escape }}</p>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </article>
+</section>

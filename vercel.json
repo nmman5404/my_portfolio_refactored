@@ -8,6 +8,9 @@
     "api/chat.js": {
       "maxDuration": 60,
       "includeFiles": "{api/knowledge.md,src/content/blog/**/*.md}"
+    },
+    "api/invitation.js": {
+      "includeFiles": "src/modules/ceremony/recipients.json"
     }
   }
 }

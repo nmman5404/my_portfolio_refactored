@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="{{ modules.ceremony.locale | escape }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b2b">
+  <meta name="description" content="{{ modules.ceremony.page.description | escape }}">
+  <title>{{ modules.ceremony.page.title | escape }}</title>
+  <link rel="icon" href="{{ modules.ceremony.media.favicon | escape }}" type="image/svg+xml">
+  <link rel="preload" href="{{ modules.ceremony.media.character.src | escape }}" as="image">
+  <link rel="preload" href="{{ modules.ceremony.media.cap.src | escape }}" as="image">
+  <link rel="preload" href="/ceremony/fonts/be-vietnam-pro-normal-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/ceremony/fonts/lora-normal-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/ceremony.css">
+  <script type="module" src="/assets/js/ceremony-entry.js"></script>
+</head>
+{% set ceremony = modules.ceremony %}
+<body data-phase="idle" data-started="false">
+  <main id="experience" aria-label="{{ ceremony.ui.experienceLabel | escape }}">
+    {% if ceremony.music.src | trim %}<audio id="ceremony-music" src="{{ ceremony.music.src | escape }}" preload="none"{% if ceremony.music.loop %} loop{% endif %}></audio>{% endif %}
+    <canvas id="atmosphere" aria-hidden="true"></canvas>
+    <img id="confetti-sprites" src="{{ ceremony.media.confetti.src | escape }}" width="{{ ceremony.media.confetti.width }}" height="{{ ceremony.media.confetti.height }}" alt="" hidden>
+    <div class="glow-orb glow-orb-blue" aria-hidden="true"></div>
+    <div class="glow-orb glow-orb-gold" aria-hidden="true"></div>
+    <div class="spotlight spotlight-left" aria-hidden="true"></div>
+    <div class="spotlight spotlight-right" aria-hidden="true"></div>
+    <div class="stage-floor" aria-hidden="true"></div>
+    <div id="theater-frame" class="theater-frame" aria-hidden="true">
+      <div class="curtain curtain-left"><img id="curtain-image" class="curtain-art" src="{{ ceremony.media.curtain.src | escape }}" width="{{ ceremony.media.curtain.width }}" height="{{ ceremony.media.curtain.height }}" alt="" draggable="false"></div>
+      <div class="curtain curtain-right"><img class="curtain-art" src="{{ ceremony.media.curtain.src | escape }}" width="{{ ceremony.media.curtain.width }}" height="{{ ceremony.media.curtain.height }}" alt="" draggable="false"></div>
+      <div id="theater-stage" class="theater-stage">
+        <div class="platform-shadow"></div>
+        <img id="podium-image" class="podium-art" src="{{ ceremony.media.podium.src | escape }}" width="{{ ceremony.media.podium.width }}" height="{{ ceremony.media.podium.height }}" alt="" draggable="false">
+      </div>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="{{ ceremony.identity.homeHref | escape }}" aria-label="{{ ceremony.identity.homeLabel | escape }}">
+        <span class="monogram" aria-hidden="true">{{ ceremony.identity.initial | escape }}<span>✦</span></span>
+        <span class="brand-copy">{{ ceremony.identity.brand | escape }}<br><span>{{ ceremony.identity.byline | escape }}</span></span>
+      </a>
+      <div class="top-actions">
+        <span id="recipient-label" class="recipient-label">{{ ceremony.ui.recipientGeneral | escape }}</span>
+        <button id="sound-button" class="icon-button" type="button" aria-label="{{ ceremony.ui.soundOn | escape }}" aria-pressed="false" title="{{ ceremony.ui.soundOn | escape }}"{% if not (ceremony.music.src | trim) %} hidden{% endif %}>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4 6 8H3v8h3l5 4V4Z"/><path class="sound-on" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="sound-off" d="m16 9 5 6m0-6-5 6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section id="hero-scene" class="hero-scene" aria-label="{{ ceremony.hero.sceneLabel | escape }}">
+      <div class="hero-heading">
+        {% if ceremony.hero.eyebrow | trim %}<p class="eyebrow">{{ ceremony.hero.eyebrow | escape }}</p>{% endif %}
+        <h1 class="hero-title"{% if not (ceremony.hero.title | trim) and not (ceremony.hero.preface | trim) %} hidden{% endif %}>{% if ceremony.hero.preface | trim %}<span class="title-preface">{{ ceremony.hero.preface | escape }}</span>{% endif %}<span id="graduation-title" class="title-word"{% if not (ceremony.hero.title | trim) %} hidden{% endif %}>{{ ceremony.hero.title | escape }}</span>{% if ceremony.hero.title | trim %}<span class="title-star" aria-hidden="true">✦</span>{% endif %}</h1>
+        {% if ceremony.hero.subtitle | trim %}<p class="hero-subtitle">{{ ceremony.hero.subtitle | escape }}</p>{% endif %}
+      </div>
+      <div id="character-rig" class="character-rig">
+        <img id="character-image" class="character-image" src="{{ ceremony.media.character.src | escape }}" width="{{ ceremony.media.character.width }}" height="{{ ceremony.media.character.height }}" alt="{{ ceremony.hero.characterAlt | escape }}" draggable="false">
+      </div>
+      <div id="cap-rig" class="cap-rig" aria-hidden="true">
+        <div id="cap-glow" class="cap-glow"></div>
+        <img id="cap-image" src="{{ ceremony.media.cap.src | escape }}" width="{{ ceremony.media.cap.width }}" height="{{ ceremony.media.cap.height }}" alt="" draggable="false">
+      </div>
+      <p id="hero-caption" class="stage-caption" aria-live="off"></p>
+    </section>
+
+    <section id="letter-scene" class="letter-scene" data-kind="dear" aria-hidden="true" aria-label="{{ ceremony.ui.letterLabel | escape }}" inert>
+      <p id="letter-eyebrow" class="letter-eyebrow"></p>
+      <h2 id="letter-title" class="letter-title"></h2>
+      <div class="letter-rule" aria-hidden="true"><span>✦</span></div>
+      <p id="letter-body" class="letter-body"></p>
+      <p id="letter-signature" class="letter-signature"></p>
+    </section>
+
+    {% include "modules/ceremony/poster.njk" %}
+
+    <div id="light-wash" class="light-wash" aria-hidden="true"></div>
+    <div id="open-actions" class="welcome-actions">
+      <button id="open-button" class="primary-button" type="button" disabled><span id="open-label">{{ ceremony.ui.loading | escape }}</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+      <p id="load-error" class="load-error" role="alert" hidden>{{ ceremony.ui.error | escape }} <a href="{{ ceremony.href | escape }}">{{ ceremony.ui.generalLink | escape }}</a></p>
+    </div>
+
+    <footer class="footer-bar">
+      <span class="footer-note">{{ ceremony.identity.footer | escape }}</span>
+      <p id="download-feedback" class="download-feedback" role="status" aria-live="polite" hidden></p>
+      <div id="playback" class="playback" hidden>
+        <button id="next-button" class="playback-button" type="button" aria-label="{{ ceremony.ui.next | escape }}" title="{{ ceremony.ui.next | escape }}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+        <button id="download-button" class="playback-button" type="button" aria-label="{{ ceremony.ui.download | escape }}" title="{{ ceremony.ui.download | escape }}" hidden>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>
+        </button>
+        <button id="replay-button" class="playback-button" type="button" aria-label="{{ ceremony.ui.replay | escape }}" title="{{ ceremony.ui.replay | escape }}" hidden>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+      </div>
+    </footer>
+    <div class="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+    <noscript><div class="no-script">{{ ceremony.ui.noScript | escape }}</div></noscript>
+  </main>
+</body>
+</html>

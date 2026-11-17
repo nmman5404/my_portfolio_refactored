@@ -1,0 +1,124 @@
+// Public Ceremony content. Edit guests separately in recipients.json.
+// Empty event fields stay hidden until you have the real details.
+export default {
+  href: '/ceremony/',
+  showInNavigation: true,
+  navigation: { en: 'Graduation', vi: 'Graduation' },
+  locale: 'vi',
+  page: {
+    title: 'Một lời mời từ Mẫn',
+    description: 'Một cột mốc mới, và một lời cảm ơn dành riêng cho bạn. Thiệp tốt nghiệp của Mẫn.',
+  },
+  identity: {
+    initial: 'm',
+    name: 'Nguyễn Minh Mẫn',
+    brand: 'Một lời mời',
+    byline: 'từ Nguyễn Minh Mẫn · a.k.a Felix',
+    homeHref: '/',
+    homeLabel: 'Về portfolio của Nguyễn Minh Mẫn',
+    footer: 'Một cột mốc mới · Nguyễn Minh Mẫn',
+  },
+  hero: {
+    eyebrow: 'MỘT CỘT MỐC MỚI',
+    preface: 'Thế là,',
+    title: 'GRADUATION',
+    subtitle: 'Một chút vụng về. Thật nhiều biết ơn.',
+    characterAlt: 'Mẫn phiên bản hoạt hình, đeo kính đen và khoanh tay với một nụ cười',
+    sceneLabel: 'Mẫn và chiếc mũ tốt nghiệp',
+    fallingCaption: 'Chiếc mũ này… hình như là của mình.',
+    landedCaption: 'Tốt nghiệp thật rồi! ✦',
+  },
+  // This invitation is public and also powers the page without an id.
+  invitation: {
+    displayName: 'bạn',
+    intro: {
+      eyebrow: 'Dear',
+      title: '{name},',
+      body: 'Có một điều mình muốn gửi đến bạn.',
+    },
+    thankYou: {
+      eyebrow: 'CÓ NHỮNG ĐIỀU LUÔN Ở LẠI',
+      title: 'Một lời cảm ơn.',
+      body: 'Cảm ơn bạn đã dành thời gian mở tấm thiệp này và cùng chia sẻ niềm vui với mình. Sự hiện diện và những lời chúc của bạn làm cột mốc này trở nên đặc biệt hơn.',
+    },
+    personalMessage: {
+      eyebrow: 'MỘT CHÚT HỎI THĂM',
+      title: 'Dạo này…',
+      body: 'Dạo này bạn thế nào? Mong bạn vẫn giữ được niềm vui với những điều mình đang chọn, và luôn có những người thật tốt ở bên.',
+    },
+    invitation: {
+      eyebrow: 'VÀ MỘT LỜI HẸN',
+      title: 'Hẹn gặp trong\nngày đặc biệt.',
+      body: 'Mình rất mong được gặp bạn trong ngày tốt nghiệp, để cùng nhau lưu lại một kỷ niệm thật đẹp.',
+      signature: 'Thương mến, Mẫn',
+      time: '',             // Each recipient can set invitation.time, e.g. '09:00'.
+    },
+  },
+  event: {
+    title: 'Lễ tốt nghiệp',
+    date: '21/11/2026',
+    venue: 'Trường Đại học Khoa học tự nhiên, ĐHQG-HCM',
+    address: '227 Nguyễn Văn Cừ, phường Chợ Quán, TP. Hồ Chí Minh',
+    mapUrl: 'https://maps.app.goo.gl/khrG3UmHFhACgwrM6',
+    note: 'Có thể gửi xe tại NOWZONE (đối diện trường), ĐH Sư phạm (280 An Dương Vương), THPT chuyên Lê Hồng Phong (kế bên) hoặc ngay tại HCMUS.',
+    mapLabel: 'Xem đường đi',
+  },
+  poster: {
+    sceneLabel: 'Poster lời mời dự lễ tốt nghiệp',
+    eyebrow: "YOU’RE INVITED",
+    title: 'Lễ tốt nghiệp',
+    hostPrefix: 'của',
+    invitePrefix: 'Trân trọng mời',
+    timeLabel: 'Thời gian',
+    placeLabel: 'Địa điểm',
+    parkingLabel: 'Một chút lưu ý về gửi xe',
+    artCaption: 'Tốt nghiệp thật rồi! ✦',
+    footnote: 'Một tấm hình chung, một kỷ niệm thật đẹp.',
+  },
+  ui: {
+    experienceLabel: 'Thiệp tốt nghiệp của Mẫn',
+    letterLabel: 'Lời nhắn dành cho bạn',
+    recipientGeneral: 'Gửi bạn, một lời mời.',
+    recipientPersonal: 'Gửi riêng: {name}',
+    personalizedTitle: '{name}, một lời mời từ Mẫn',
+    open: 'Mở thiệp',
+    loading: 'Đang chuẩn bị thiệp…',
+    next: 'Cảnh tiếp',
+    replay: 'Xem lại',
+    download: 'Lưu thiệp thành ảnh',
+    downloadPreparing: 'Đang lưu thiệp…',
+    downloadSaved: 'Đã lưu ảnh thiệp.',
+    downloadError: 'Chưa lưu được ảnh. Bạn thử lại nhé.',
+    soundOn: 'Bật âm thanh',
+    soundOff: 'Tắt âm thanh',
+    soundEnded: 'Nhạc đã kết thúc. Chọn Xem lại để nghe lại.',
+    unavailable: 'Thiệp chưa mở được',
+    error: 'Thiệp chưa mở được. Bạn có thể thử lại hoặc mở thiệp chung.',
+    generalLink: 'Mở thiệp chung',
+    noScript: 'Bạn cần bật JavaScript để mở tấm thiệp có chuyển động này.',
+    readyStatus: 'Thiệp đã sẵn sàng. Chọn {open} để bắt đầu.',
+    openStatus: 'Thiệp đã mở. Chiếc mũ tốt nghiệp đang tìm đúng chủ nhân.',
+    endStatus: 'Poster lời mời đã hiện ra với thông tin buổi lễ, bản đồ và lưu ý gửi xe. Bạn có thể chọn Xem lại để mở lại thiệp.',
+  },
+  // Seconds from the start; keep the sequence in increasing order.
+  animation: {
+    land: 4.8, podium: 4.95, curtain: 6.15, dear: 9.6,
+    // Reading durations: greeting 2s, thanks 4.5s, check-in 4s, invitation 4s.
+    thanks: 11.6, personal: 16.1, invitation: 20.1, end: 24.1, finish: 25.5,
+  },
+  // Playback starts on Open, not on page load or unrelated interactions.
+  // Set src to '' to remove music and its toggle.
+  music: {
+    src: '/ceremony/audio/touch-the-sky.mp3',
+    volume: 0.32,
+    loop: false,
+  },
+  media: {
+    character: { src: '/ceremony/character.png', width: 1052, height: 1494 },
+    cap: { src: '/ceremony/graduation-cap.png', width: 1536, height: 1024 },
+    curtain: { src: '/ceremony/curtain-soft.png', width: 683, height: 2116 },
+    podium: { src: '/ceremony/podium-soft.png', width: 2072, height: 267 },
+    confetti: { src: '/ceremony/confetti-toys.png', width: 1254, height: 1254 },
+    favicon: '/ceremony/spark.svg',
+  },
+};

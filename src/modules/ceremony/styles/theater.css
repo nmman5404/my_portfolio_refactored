@@ -1,0 +1,102 @@
+/* Soft physical props; the application owns the podium-then-curtain clock. */
+.theater-frame {
+  --podium-reveal: clamp(0, var(--podium-progress, 0), 1);
+  --curtain-reveal: clamp(0, var(--curtain-progress, 0), 1);
+  --curtain-default-top: 11.4svh;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: var(--theater-opacity, 0);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The illustrated panels carry their own soft fabric edge and tieback. */
+.curtain {
+  position: absolute;
+  top: var(--curtain-top, var(--curtain-default-top));
+  width: min(14.5vw, 190px);
+  height: max(130px, calc(var(--stage-y, 75svh) - var(--curtain-top, var(--curtain-default-top)) + 14px));
+  opacity: var(--curtain-reveal);
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+}
+.curtain-left {
+  left: 1.8vw;
+  transform: translateX(calc((1 - var(--curtain-progress, 0)) * -145%)) rotate(var(--curtain-sway, 0deg));
+}
+.curtain-right {
+  right: 1.8vw;
+  transform: translateX(calc((1 - var(--curtain-progress, 0)) * 145%)) rotate(calc(var(--curtain-sway, 0deg) * -1));
+}
+.curtain-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: .94;
+  filter: brightness(.82) saturate(.78) contrast(.97) drop-shadow(6px 9px 10px #030b1638);
+  -webkit-user-drag: none;
+}
+.curtain-right .curtain-art {
+  transform: scaleX(-1);
+  filter: brightness(.82) saturate(.78) contrast(.97) drop-shadow(-6px 9px 10px #030b1638);
+}
+
+/* The entire 3D platform slides across as one rigid prop, without squeezing. */
+.theater-stage {
+  position: absolute;
+  top: var(--stage-y, 75svh);
+  left: var(--stage-x, 50%);
+  width: min(70vw, 820px);
+  aspect-ratio: var(--podium-aspect, 6);
+  height: auto;
+  line-height: 0;
+  opacity: var(--podium-reveal);
+  transform: translateX(-50%) translateX(calc((1 - var(--podium-progress, 0)) * -100vw));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+.podium-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(.86) saturate(.68) contrast(.97) drop-shadow(0 12px 12px #01091650);
+  -webkit-user-drag: none;
+}
+.platform-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 67%;
+  z-index: -1;
+  height: 24%;
+  border-radius: 50%;
+  background: #030b16;
+  filter: blur(13px);
+  opacity: calc(var(--podium-reveal) * .22);
+}
+
+@media (max-width: 640px) {
+  .theater-frame { --curtain-default-top: 13.2svh; }
+  .curtain {
+    width: clamp(39px, 13vw, 64px);
+    height: max(120px, calc(var(--stage-y, 75svh) - var(--curtain-top, var(--curtain-default-top)) + 9px));
+  }
+  .curtain-left { left: 1.1vw; }
+  .curtain-right { right: 1.1vw; }
+  .curtain-art { filter: brightness(.84) saturate(.76) contrast(.97) drop-shadow(3px 5px 7px #030b1635); }
+  .curtain-right .curtain-art { filter: brightness(.84) saturate(.76) contrast(.97) drop-shadow(-3px 5px 7px #030b1635); }
+  .theater-stage { width: 84vw; }
+  .podium-art { filter: brightness(.88) saturate(.68) contrast(.97) drop-shadow(0 8px 8px #01091648); }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .theater-frame { --curtain-default-top: 15.7svh; }
+  .curtain { width: min(12.5vw, 106px); height: max(100px, calc(var(--stage-y, 75svh) - var(--curtain-top, var(--curtain-default-top)) + 8px)); }
+  .theater-stage { width: min(52vw, 570px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain, .theater-stage { will-change: auto; }
+}

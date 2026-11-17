@@ -10,6 +10,7 @@ import chat from '../modules/chat/data.js';
 import audio from '../modules/audio/data.js';
 import interfaceData from '../modules/interface/data.js';
 import article from '../modules/article/data.js';
+import ceremony from '../modules/ceremony/data.js';
 
 export default {
   profile, about, skills,
@@ -17,4 +18,5 @@ export default {
   projects, contact, blog, chat, audio,
   interface: interfaceData,
   article,
+  ceremony,
 };

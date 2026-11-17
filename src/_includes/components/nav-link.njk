@@ -1,1 +1,1 @@
-                <a href="#{{ section.id }}" class="{{ section.navClass or navigationClass }}">{{ (modules[section.id].navigation or section.nav) | localized(locale) }}</a>
+                <a href="{{ (section.href or ('#' ~ section.id)) | escape }}" class="{{ (section.navClass or navigationClass) | escape }}">{{ (modules[section.id].navigation or section.nav) | localized(locale) | escape }}</a>

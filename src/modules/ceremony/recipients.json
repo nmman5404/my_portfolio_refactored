@@ -1,0 +1,641 @@
+{
+  "recipients": [
+    {
+      "id": "qtn",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Quách Thanh Như",
+      "intro": {
+        "eyebrow": "Hế lô bà",
+        "title": "Quách Tks Như",
+        "body": "Choy oi Tks Nhu chịu mở thịp roy hẻ. Kưng wá dọ."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Kảm ơn nhìu nèk",
+        "body": "Ckoy oy cảm mơn Tks Như nhiều nhe, choy oi. Chúc Tks Như luôn vui vẻ, hạnh phúc và thành công trong cuộc sống. Ckoy oy sẽ luôn ủng hộ Tks Như và mong rằng chúng ta sẽ có nhiều kỷ niệm đẹp bên nhau. Chúc Tks Như một ngày thật tuyệt vời và tràn đầy niềm vui!"
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Hỏi thăm sức phẻ",
+        "body": "Dạo này Tks Như khoẻ hok, chắc khoẻ dữ lắm he."
+      },
+      "invitation": {
+        "eyebrow": "Xink mời",
+        "title": "Bạn Tks Như",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "nntn",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Nguyễn Ngọc Tuyết Nhi",
+      "intro": {
+        "eyebrow": "Chào pạn",
+        "title": "Tuyết Nhi",
+        "body": "Lời đầu tiên mình xin chào pạn, mình dới bạn đi học gặp quài nên mình chào ít lại nha."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Cảm ơn bạn Nhi",
+        "body": "Đã đồng hành cùng mình trong 4 năm đại học, chúc bạn Nhi luôn vui vẻ, hạnh phúc và thành công trong cuộc sống. Mình sẽ luôn ủng hộ bạn Nhi và mong rằng chúng ta sẽ có nhiều kỷ niệm đẹp bên nhau. Chúc bạn Nhi một ngày thật tuyệt vời và tràn đầy niềm vui!"
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Hỏi thăm sức khỏe",
+        "body": "Dạo này bạn Nhi khoẻ hok, ngày nào cũng nhắn thui chắc mình k hỏi nhiều."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Bạn Tuyết Nhi thânk mếnkss",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "vhnp",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Vũ Hoàng Nam Phương",
+      "intro": {
+        "eyebrow": "Chào pạn",
+        "title": "Nam Phương",
+        "body": "Ni hạo ma, quô sư đã tốt nghiệp."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Nam Phương",
+        "body": "Xia xìa, ni hạo ma, pảrapẻn, thankiu so much Nam Phương <3. Thank you for being a best friend."
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Hỏi thăm sức khỏe",
+        "body": "Chúc Phương thật nhiều sức khoẻ, nhớ đi dự lễ tốt nghiệp của Mẫn để chụp hình chung nha bà."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Bạn Nam Phương thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ptq",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Phạm Thuý Quỳnh",
+      "intro": {
+        "eyebrow": "Chào em, cô gái xinh đẹp số 1 của ck",
+        "title": "Thuý Quỳnh",
+        "body": "Dạo này em thế nào, ck nhớ em lắm."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Zk iu",
+        "body": "Ck cảm ơn em nhiều nhe, ck iu em lắm. Chúc em luôn vui vẻ, hạnh phúc và thành công trong cuộc sống. Ck sẽ luôn ủng hộ em và mong rằng chúng ta sẽ có nhiều kỷ niệm đẹp bên nhau. Chúc em một ngày thật tuyệt vời và tràn đầy niềm vui!"
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Ck nhớ em!!",
+        "body": "Em nhớ đi dự lễ tốt nghiệp của ck nhé, để mình còn chụp hình chung."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Zk Thuý Quỳnh thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ptn",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Phan Thanh Ngân",
+      "intro": {
+        "eyebrow": "Chào em, cô gái xinh đẹp số 1 của ck",
+        "title": "Thanh Ngân",
+        "body": "Em có nhớ ck hok?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Em",
+        "body": "Đã đồng hành cùng ck lúc zui lúc buồn, chúc em luôn vui vẻ, hạnh phúc và thành công trong cuộc sống. Ck sẽ luôn ủng hộ em và mong rằng chúng ta sẽ có nhiều kỷ niệm đẹp bên nhau, thương zk."
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Em nèk",
+        "body": "Nhớ đi dự lễ tốt nghiệp của ck nha, ck đợi em đó."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Zk Ngân thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "kien",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Kien Minh Anh",
+      "intro": {
+        "eyebrow": "Chào em, cô gái xinh đẹp số 1 của ck",
+        "title": "Kien Minh Anh",
+        "body": "ck thương em nhìu hơn mấy zk kia đó."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Zk iu",
+        "body": "Đã là một người bạn thân thiết, người zk zui zẻ, đảm đang, dễ thương, lạc quan,........ thương zk nhìu."
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Zk ơi",
+        "body": "Nhớ đi dự lễ tốt nghiệp của ck nha, ck đợi zk để mình chụp hình chung đó."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Zk Kien Minh Anh thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "vnnp",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Võ Nguyễn Nhất Phương",
+      "intro": {
+        "eyebrow": "Chào em, cô gái xinh đẹp số 1 của ck",
+        "title": "Nhất Phương",
+        "body": "ck thương em nhìu hơn mấy zk mà ck thương nhìu nhất!!"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Em",
+        "body": "Đã là người zk đảm đang, chăm sóc và quan tâm đến ck."
+      },
+      "personalMessage": {
+        "eyebrow": "Hỏi thăm",
+        "title": "Zk iu à",
+        "body": "Nhớ đi dự lễ tốt nghiệp của ck nhé, ck nôn được gặp zk để mình chụp hình lắm."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Zk Võ Nguyễn Nhất Phương thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "dptn",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Đinh Phạm Thanh Ngân",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Ngân",
+        "body": "Thời gian trôi qua, ai cũng trưởng thành. Ngân vẫn khoẻ chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Ngân",
+        "body": "Đã là một người bạn tốt, đồng hành cùng Mẫn trong suốt thời gian qua."
+      },
+      "personalMessage": {
+        "eyebrow": "Chúc",
+        "title": "Ngân",
+        "body": "Thật nhiều niềm vui trong cuộc sống, luôn hạnh phúc và vui tươi. Mời Ngân đến dự lễ tốt nghiệp của Mẫn, cùng chia sẻ niềm vui và chụp vài tấm hình kỉ niệm."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Thanh Ngân thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "lthg",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Lê Thị Hoàng Giang",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Giang",
+        "body": "Lâu rồi hông gặp, Giang vẫn ổn chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Giang",
+        "body": "Đã là một người bạn tốt, đồng hành cùng Mẫn trong suốt thời gian qua."
+      },
+      "personalMessage": {
+        "eyebrow": "Chúc",
+        "title": "Giang",
+        "body": "Thật nhiều sức khoẻ và niềm vui trong cuộc sống. Mời Giang đến dự lễ tốt nghiệp của Mẫn, cùng chia sẻ niềm vui và chụp vài tấm hình kỉ niệm."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Hoàng Giang thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ntt",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Nguyễn Thu Thảo",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Thảo",
+        "body": "Lâu rồi hông gặp, Thảo vẫn ổn chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Thảo",
+        "body": "Đã là một người bạn tốt, đồng hành cùng Mẫn trong suốt thời gian qua."
+      },
+      "personalMessage": {
+        "eyebrow": "Chúc",
+        "title": "Thảo",
+        "body": "Thật nhiều sức khoẻ và niềm vui trong cuộc sống. Mời Thảo đến dự lễ tốt nghiệp của Mẫn, cùng chia sẻ niềm vui và chụp vài tấm hình kỉ niệm."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Thu Thảo thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "dntn",
+      "profile": "close",
+      "aliases": [],
+      "enabled": true,
+      "displayName": "Bạn Đống Ngọc Tuyết Nhung",
+      "intro": {
+        "eyebrow": "Chào bạn cùng bàn thân mến",
+        "title": "Tuyết Nhung",
+        "body": "Lâu rồi hông gặp, khoẻ hông bà?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Nhung",
+        "body": "Đã là một người bạn tốt, một deskmate tuyệt vời, đồng hành cùng Mẫn trong suốt thời gian qua."
+      },
+      "personalMessage": {
+        "eyebrow": "Chúc",
+        "title": "Nhung",
+        "body": "Thật nhiều sức khoẻ và niềm vui trong cuộc sống. Mời Nhung đến dự lễ tốt nghiệp của Mẫn, cùng chia sẻ niềm vui và chụp vài tấm hình kỉ niệm."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Tuyết Nhung thân mến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:30",
+        "signature": "Minh Mẫn"
+      },
+      "notes": ""
+    },
+    {
+      "id": "akhang",
+      "profile": "friend",
+      "displayName": "Anh Hoàng Khang",
+      "intro": {
+        "eyebrow": "Hello anh",
+        "title": "Khang",
+        "body": "Lâu lắm rùi em chưa gặp anh, anh còn nhớ em hok."
+      },
+      "thankYou": {
+        "eyebrow": "Em cảm ơn",
+        "title": "Anh",
+        "body": "Đã hỗ trợ và động viên em trong suốt thời gian qua. Chúc anh luôn vui vẻ và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Anh Hoàng Khang thân mến",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "aquang",
+      "profile": "friend",
+      "displayName": "Anh Minh Quang",
+      "intro": {
+        "eyebrow": "Hello anh",
+        "title": "Quang",
+        "body": "Lâu lắm rùi mình chưa gặp nhau, anh khoẻ hok, laptop của anh còn xài tốt hok."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Anh",
+        "body": "Đã hỗ trợ, động viên em trong thời gian qua, làm em cười thật nhiều (em còn nhớ cái vụ đổ nguyên cái set trà chiều á). Chúc anh luôn vui vẻ và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Anh Minh Quang thân mến",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "cthuy",
+      "profile": "friend",
+      "displayName": "Chị Như Thuý",
+      "intro": {
+        "eyebrow": "Hello chị",
+        "title": "Thuý",
+        "body": "Lâu lắm rồi mình không gặp nhau, chị vẫn khoẻ chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Em cảm ơn",
+        "title": "Chị",
+        "body": "Đã là một người bạn, một người đồng hành cùng em trong suốt thời gian qua. Chúc chị luôn vui vẻ, lạc quan, hạnh phúc và luôn mỉm cười trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Chị Như Thuý thân mến",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ctien",
+      "profile": "friend",
+      "displayName": "Chị Thuỷ Tiên",
+      "intro": {
+        "eyebrow": "Hello chị",
+        "title": "Tiên",
+        "body": "Lâu lắm rồi em hông gặp chị, chị còn nhớ em hông, chị có khoẻ hông?"
+      },
+      "thankYou": {
+        "eyebrow": "Em cảm ơn",
+        "title": "Chị",
+        "body": "Đã là một người chị vui vẻ, đồng hành cùng em trong suốt thời gian qua. Chúc chị thật nhiều sức khoẻ và hạnh phúc trong cuộc sống, luôn vui vẻ và lạc quan."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Chị Thuỷ Tiên thân mến",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "cyvan",
+      "profile": "friend",
+      "displayName": "Chị Yến Vân",
+      "intro": {
+        "eyebrow": "Hello chị",
+        "title": "Yến Vân",
+        "body": "Lâu lắm rồi em hông gặp chị, chị còn nhớ em hông, chị có khoẻ hôngg"
+      },
+      "thankYou": {
+        "eyebrow": "Em cảm ơn",
+        "title": "Chị",
+        "body": "Đã là một người chị vui vẻ, đồng hành cùng em trong suốt thời gian qua. Chúc chị thật nhiều sức khoẻ và hạnh phúc trong cuộc sống, luôn vui vẻ và lạc quan."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Chị Yến Vân thân mến",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "abkhanh",
+      "profile": "casual",
+      "displayName": "Anh Bảo Khanh",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Anh Bảo Khanh",
+        "body": "Gặp anh được vài lần. Anh còn nhớ em hông. Em tốt nghiệp rồi, anh tới thăm em nhé."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Anh Bảo Khanh",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "11:00",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ntchien",
+      "profile": "friend",
+      "displayName": "Bạn Tất Chiến",
+      "intro": {
+        "eyebrow": "Hello",
+        "title": "Chiến",
+        "body": "Bạn cùng bàn MFVMA, Mẫn tốt nghiệp rùi nèe."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Chiến",
+        "body": "Tuy chưa đồng hành cùng nhau nhiều nhưng là một người bạn tốt. Chúc Chiến thật nhiều niềm vui và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Bạn Tất Chiến",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ntklan",
+      "profile": "friend",
+      "displayName": "Chị Kim Lan",
+      "intro": {
+        "eyebrow": "Hello chị",
+        "title": "Lan",
+        "body": "Lớp trưởng MFVMA, 'bịch muối' của lớp mình ^.^"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn chị",
+        "title": "Lan",
+        "body": "Đã là một phần trong quá trình học tập của em, tuy không phải là thời cử nhân, nhưng cũng vô cùng ý nghĩa và đem lại nhiều niềm zui."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Chị Kim Lan",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "nlcm",
+      "profile": "friend",
+      "displayName": "Em Cao Minh",
+      "intro": {
+        "eyebrow": "Hello",
+        "title": "Minh",
+        "body": "'Đàn em' cấp 3, học chung trường Đại học, lâu rùi mình chưa gặp nhau nhỉ, em khoẻ chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Em",
+        "body": "Đã là một người bạn thân thiết, chia sẻ nhiều kỉ niệm với anh trong suốt thời gian qua. Chúc em hạnh phúc và thành công nhé."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Em Cao Minh",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "hbd",
+      "profile": "friend",
+      "displayName": "Em Bảo Định",
+      "intro": {
+        "eyebrow": "Hello",
+        "title": "Bảo Định",
+        "body": "Lâu rồi mình chưa gặp nhau nhỉ, em còn nhớ anh hông? Dạo này em học hành sao rùi..."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Em",
+        "body": "Đã là một người bạn thân thiết, cùng chia sẻ nhiều kỉ niệm đáng nhớ. Chúc em học hành chăm chỉ nhé."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Em Bảo Định",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "akhoi",
+      "profile": "casual",
+      "displayName": "Em Anh Khôi",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Em Anh Khôi",
+        "body": "Chưa gặp em được lần nào, nhung chắc em thấy anh rùi :> chúc em học giỏi nhée."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Em Anh Khôi",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "11:00",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "htm",
+      "profile": "friend",
+      "displayName": "Anh Trương Minh",
+      "intro": {
+        "eyebrow": "Hello",
+        "title": "Anh",
+        "body": "Lâu quá hông gặp, anh còn nhớ em k :v em đã tốt nghiệp rùii"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Anh",
+        "body": "Đã là một người bạn, đồng hành cùng em, chia sẻ nhiều kỉ niệm. Chúc anh thật nhiều sức khoẻ và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Anh Trương Minh",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "aduc",
+      "profile": "casual",
+      "displayName": "Anh Hữu Đức",
+      "intro": {
+        "eyebrow": "Chào",
+        "title": "Anh Đức",
+        "body": "Đồng nghiệp dạy học tại trung tâm của Cô Nga"
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Anh Đức",
+        "body": "Đến dự lễ tốt nghiệp của em Minh Mẫn.",
+        "time": "11:00",
+        "signature": ""
+      },
+      "notes": ""
+    },
+    {
+      "id": "ltq",
+      "profile": "friend",
+      "displayName": "Bạn Trọng Quang",
+      "intro": {
+        "eyebrow": "Hello lớp phó 22TTH2",
+        "title": "Quang",
+        "body": "Lâu rùi Mẫn chưa gặp Quang, Quang dạo này khoẻ chứ?"
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Quang",
+        "body": "Đã là một người bạn tốt thời Đại học của Mẫn. Chúc Quang thật nhiều sức khoẻ và thành công trong cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Quang",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
+    }
+  ]
+}

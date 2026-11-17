@@ -1,6 +1,6 @@
 # Portfolio — hướng dẫn chỉnh sửa
 
-Portfolio EN/VI dùng chung dữ liệu và template; JavaScript chia thành ES module. Blog và bài dự án viết bằng Markdown tiếng Việt. Eleventy tạo HTML tĩnh khi build, còn chatbot chạy qua Vercel Function `/api/chat`.
+Portfolio EN/VI dùng chung dữ liệu và template; JavaScript chia thành ES module. Blog và bài dự án viết bằng Markdown tiếng Việt. Eleventy tạo HTML tĩnh khi build; chatbot và thiệp tốt nghiệp cá nhân hóa chạy qua Vercel Function.
 
 ## 1. Chạy trên máy và đưa lên Vercel
 
@@ -20,7 +20,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-Preview ở `http://127.0.0.1:4173`. Hai server trên chỉ phục vụ trang tĩnh; **không chạy API Gemini**. Muốn thử chatbot thật trên máy, dùng Vercel CLI (`vercel dev`) và biến môi trường trong `.env.local`, tham khảo `.env.example`.
+Preview ở `http://127.0.0.1:4173`. Cả `npm run dev` và `npm run preview` chạy được API thiệp tốt nghiệp; **không chạy API Gemini**. Muốn thử chatbot thật trên máy, dùng Vercel CLI (`vercel dev`) và biến môi trường trong `.env.local`, tham khảo `.env.example`.
 
 | Thư mục/file | Vai trò |
 | --- | --- |
@@ -30,6 +30,7 @@ Preview ở `http://127.0.0.1:4173`. Hai server trên chỉ phục vụ trang t�
 | `src/styles/` | CSS dùng chung/trang chủ |
 | `public/` | Ảnh, nhạc; được copy nguyên đường dẫn vào website |
 | `api/chat.js`, `server/chat/` | Route API và logic chatbot phía server |
+| `api/invitation.js`, `server/ceremony/` | Route API và tra cứu nội dung của một khách mời |
 | `dist/` | Kết quả build tự sinh; có thể xóa rồi build lại |
 | `node_modules/` | Dependencies cài bằng `npm ci`; không đưa lên Git |
 
@@ -65,8 +66,31 @@ Deploy repo GitHub này vào Vercel với **Root Directory là gốc repo**, kh�
 | Nền riêng của tất cả trang bài viết | `src/modules/article/data.js`: `background` |
 | Nút Tóm tắt trong bài viết: nhãn/prompt hiển thị | `src/modules/article/data.js`: `summary` |
 | Thứ tự section, bật/tắt section | `src/_data/sections.js` |
+| Thiệp tốt nghiệp chung, thông tin buổi lễ và nhịp animation | `src/modules/ceremony/data.js` |
+| Tên, cách xưng hô và lời nhắn riêng từng người | `src/modules/ceremony/recipients.json` |
 
-Nội dung EN/VI đặt cạnh nhau trong **một file**, ví dụ:
+### Thiệp tốt nghiệp và link theo người nhận
+
+Nút **Graduation** trên thanh điều hướng mở `/ceremony/`, là thiệp chung. Link gửi riêng có dạng `/ceremony/?id=minh-anh` (thay bằng `id` đã điền trong JSON); ID rỗng, `null`, không tồn tại hoặc đã tắt đều an toàn quay về thiệp chung.
+
+- Chỉnh nội dung chung, chữ trên giao diện, thông tin buổi lễ, ảnh và mốc animation trong `src/modules/ceremony/data.js`. Các trường sự kiện đang để trống sẽ không tạo khung rỗng trên thiệp.
+- Chỉnh khách mời trong `src/modules/ceremony/recipients.json`. Mỗi cảnh `intro`, `thankYou`, `personalMessage`, `invitation` là một object gồm `eyebrow` (dòng nhỏ), `title` (chữ lớn), `body` (nội dung). Riêng `invitation.signature` là dòng ký tên và `invitation.body` còn dùng trên poster. `{name}` tự điền `displayName`. `profile: "casual"` có Dear/lời mời (17 giây); `"friend"` thêm cảm ơn (21,5 giây); `"close"` thêm hỏi thăm (25,5 giây). Bỏ field thì dùng mặc định; `body: ""` bỏ cả cảnh và rút ngắn clip. `id` dùng trong link; `aliases` là ID phụ; `enabled: false` tắt link; `notes` chỉ để ghi chú. Xem [hướng dẫn từng trường và ví dụ](src/modules/ceremony/README.md).
+- JSON không cho phép dấu phẩy thừa. Build sẽ báo lỗi nếu ID/alias bị trùng hoặc dữ liệu sai kiểu.
+- Ngày chung là **21/11/2026** (`data.js` → `event.date`). Thêm `"time": "09:00"` vào object `invitation` của từng người để đặt giờ đến riêng trên poster. Bỏ field hoặc để `""` thì chỉ hiện ngày; có thể bổ sung dần vào các thiệp đang viết.
+- Danh sách người nhận nằm phía server, không được copy vào `public/` hay bundle trình duyệt. API chỉ trả đúng nội dung của ID đang mở.
+
+Kiểm tra nhanh sau khi sửa:
+
+```text
+http://127.0.0.1:4173/ceremony/
+http://127.0.0.1:4173/ceremony/?id=minh-anh
+```
+
+Ảnh của thiệp đặt trong `public/ceremony/`; trong `data.js` dùng URL bắt đầu bằng `/ceremony/`. Muốn ẩn nút trên portfolio nhưng vẫn giữ trang thiệp, đặt `showInNavigation: false`. Dùng các object trong JSON làm mẫu, hoặc sao chép ví dụ trong hướng dẫn Ceremony; thay tên và nội dung trước khi gửi.
+
+Chi tiết các trường và ranh giới module nằm trong [hướng dẫn Ceremony](src/modules/ceremony/README.md). Chạy `npm test` để kiểm tra xử lý ID, API, dữ liệu cấu hình và đồng hồ animation; chạy `npm run build` để tạo bản production. Ceremony dùng entry/CSS riêng, không khởi tạo các tính năng chatbot, theme hay nhạc của trang chủ.
+
+Nội dung portfolio EN/VI đặt cạnh nhau trong **một file**, ví dụ:
 
 ```js
 heading: { en: 'About Me', vi: 'Về Tôi' }

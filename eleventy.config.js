@@ -8,11 +8,24 @@ import { buildClientConfig } from './src/lib/client-config.js';
 import { configureMarkdown } from './src/lib/markdown.js';
 import { articlePage } from './src/modules/article/presets.js';
 import { buildStyles } from './scripts/styles.mjs';
+import { buildCeremonyConfig } from './src/lib/ceremony.js';
+import { readRecipients } from './server/ceremony/recipients.js';
+import { createInvitationHandler } from './server/ceremony/handler.js';
 
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 const sourceRoot = path.join(projectRoot, 'src');
 
 export default function configure(eleventyConfig) {
+  // Validate private guest data too; it is never rendered into public assets.
+  const loadRecipients = () => readRecipients({ cwd: () => projectRoot });
+  loadRecipients();
+  const invitation = createInvitationHandler({ loadRecipients });
+  eleventyConfig.setServerOptions({
+    middleware: [(request, response, next) => {
+      const { pathname } = new URL(request.url, 'http://localhost');
+      return pathname === '/api/invitation' ? invitation(request, response) : next();
+    }],
+  });
   const environment = new nunjucks.Environment(
     new nunjucks.FileSystemLoader([path.join(sourceRoot, '_includes'), sourceRoot]),
     { autoescape: false, trimBlocks: false, lstripBlocks: false },
@@ -31,6 +44,7 @@ export default function configure(eleventyConfig) {
   environment.addFilter('localized', localized);
   environment.addGlobal('localized', localized);
   environment.addGlobal('clientConfig', buildClientConfig);
+  environment.addGlobal('ceremonyConfig', buildCeremonyConfig);
   environment.addGlobal('articlePage', articlePage);
   environment.addFilter('articleStyleUrl', (value) => `/assets/css/articles/${path.basename(value)}`);
   environment.addFilter('activeSections', activeSections);
@@ -46,6 +60,10 @@ export default function configure(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ public: '.' });
   eleventyConfig.addPassthroughCopy({ 'src/client': 'assets/js' });
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/modern-screenshot/dist/index.mjs': 'assets/js/vendor/modern-screenshot.js',
+    'node_modules/modern-screenshot/LICENSE': 'assets/js/vendor/modern-screenshot-LICENSE',
+  });
   eleventyConfig.addPassthroughCopy({ 'src/modules/blog/styles': 'assets/css/blog' });
   for (const kind of ['scripts', 'styles']) {
     const directory = path.join(sourceRoot, 'modules/article', kind);

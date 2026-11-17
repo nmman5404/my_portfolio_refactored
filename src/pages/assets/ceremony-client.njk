@@ -1,0 +1,6 @@
+---
+permalink: assets/js/ceremony-entry.js
+eleventyExcludeFromCollections: true
+---
+import { initCeremony } from './ceremony.js';
+initCeremony({{ ceremonyConfig(modules.ceremony) | jsonLiteral | safe }});
