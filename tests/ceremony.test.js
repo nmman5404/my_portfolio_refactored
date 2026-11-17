@@ -164,6 +164,9 @@ test('public config validates editable fields and excludes unknown invitation me
     (data) => { data.music.volume = 1.1; },
     (data) => { data.music.volume = -0.1; },
     (data) => { data.music.loop = 'true'; },
+    (data) => { data.event.phone = 901458842; },
+    (data) => { data.event.phone = 'javascript:alert(1)'; },
+    (data) => { data.event.phone = '0901458842" onclick="alert(1)'; },
   ]) {
     const invalid = structuredClone(ceremony);
     change(invalid);
@@ -195,7 +198,7 @@ test('event details render as escaped text only on the final poster', () => {
   const authored = structuredClone(ceremony);
   authored.event = {
     ...authored.event, date: '20/12/2026', venue: '<script>test</script>',
-    address: 'Hall A & B', mapUrl: 'https://example.com/map?a=1&b=2',
+    address: 'Hall A & B', phone: '+84901458842', mapUrl: 'https://example.com/map?a=1&b=2',
   };
   authored.invitation.invitation.time = '09:00';
   const html = environment.render('modules/ceremony/template.njk', { modules: { ceremony: authored } });
@@ -204,11 +207,12 @@ test('event details render as escaped text only on the final poster', () => {
   assert.ok(html.includes('&lt;script&gt;test&lt;/script&gt;'));
   assert.ok(html.includes('Hall A &amp; B'));
   assert.ok(html.includes('href="https://example.com/map?a=1&amp;b=2"'));
+  assert.ok(html.includes('href="tel:+84901458842"'));
   assert.equal(html.includes('<script>test</script>'), false);
   assert.ok(html.includes('id="poster-scene"'));
   const letter = html.match(/<section id="letter-scene"[\s\S]*?<\/section>/)?.[0];
   assert.ok(letter);
-  for (const detail of ['20/12/2026', '09:00', '&lt;script&gt;test&lt;/script&gt;', 'Hall A &amp; B', 'https://example.com/map']) {
+  for (const detail of ['20/12/2026', '09:00', '&lt;script&gt;test&lt;/script&gt;', 'Hall A &amp; B', '+84901458842', 'https://example.com/map']) {
     assert.equal(letter.includes(detail), false);
   }
   assert.equal(html.includes('id="pause-button"'), false);
@@ -223,12 +227,33 @@ test('the final poster omits empty time fields and preserves the supplied venue'
   authored.invitation.invitation.time = '   ';
   authored.event.address = '227 Nguyễn Văn Cừ';
   authored.event.note = 'Gửi xe ở NOWZONE — nội dung kiểm thử';
+  authored.event.phone = '';
   const html = environment.render('modules/ceremony/template.njk', { modules: { ceremony: authored } });
   assert.match(html, /id="poster-time" hidden/);
   assert.match(html, /id="poster-time-separator"[^>]* hidden/);
   assert.ok(html.includes('227 Nguyễn Văn Cừ'));
   assert.ok(html.includes('NOWZONE'));
   assert.ok(html.includes('id="poster-recipient"'));
+  assert.equal(html.includes('id="poster-contact"'), false);
+});
+
+test('contact alone keeps poster details visible and blank contact removes the whole row', () => {
+  const environment = new nunjucks.Environment(new nunjucks.FileSystemLoader(
+    fileURLToPath(new URL('../src/', import.meta.url)),
+  ), { autoescape: false });
+  const authored = structuredClone(ceremony);
+  for (const key of Object.keys(authored.event)) authored.event[key] = '';
+  authored.invitation.invitation.time = '';
+  authored.event.phone = ' 0901458842 ';
+  assert.doesNotThrow(() => validateCeremony(authored));
+  const html = environment.render('modules/ceremony/template.njk', { modules: { ceremony: authored } });
+  assert.match(html, /id="poster-details" class="poster-details">/);
+  assert.match(html, /id="poster-contact">[\s\S]*?<dt>Liên lạc<\/dt>[\s\S]*?href="tel:0901458842">0901458842<\/a>/);
+  authored.event.phone = '   ';
+  assert.doesNotThrow(() => validateCeremony(authored));
+  const blank = environment.render('modules/ceremony/template.njk', { modules: { ceremony: authored } });
+  assert.match(blank, /id="poster-details"[^>]* hidden/);
+  assert.equal(blank.includes('id="poster-contact"'), false);
 });
 
 test('empty shared copy leaves no empty event, map or decorative text blocks', () => {

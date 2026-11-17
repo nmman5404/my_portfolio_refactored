@@ -30,7 +30,7 @@ export function validateCeremony(data) {
       'soundOn', 'soundOff', 'soundEnded', 'unavailable', 'error',
       'generalLink', 'noScript', 'readyStatus', 'openStatus', 'endStatus'],
     poster: ['sceneLabel', 'eyebrow', 'title', 'hostPrefix', 'invitePrefix', 'timeLabel',
-      'placeLabel', 'parkingLabel', 'artCaption', 'footnote'],
+      'placeLabel', 'contactLabel', 'parkingLabel', 'artCaption', 'footnote'],
   };
   for (const [group, fields] of Object.entries(textGroups)) {
     for (const field of fields) {
@@ -61,8 +61,11 @@ export function validateCeremony(data) {
   }
   if (typeof data.music.loop !== 'boolean') throw new Error('Ceremony music.loop must be true or false.');
   for (const field of ['title', 'mapLabel']) requireText(data.event?.[field], `event.${field}`, { optional: true });
-  for (const field of ['date', 'venue', 'address', 'mapUrl', 'note']) {
+  for (const field of ['date', 'venue', 'address', 'phone', 'mapUrl', 'note']) {
     requireText(data.event?.[field], `event.${field}`, { optional: true });
+  }
+  if (data.event.phone.trim() && !/^\+?[0-9]{7,15}$/.test(data.event.phone.trim())) {
+    throw new Error('Ceremony event.phone must contain 7–15 digits with an optional leading +.');
   }
   if (data.event.mapUrl.trim()) {
     let url;

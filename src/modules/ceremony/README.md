@@ -107,13 +107,15 @@ Trong các thiệp mẫu, nội dung ghi trực tiếp vị trí hiển thị: d
 | `navigation`, `showInNavigation`, `href` | Nhãn menu, bật/tắt nút Graduation, đường dẫn trang |
 | `identity`, `page`, `hero` | Chủ thiệp, tiêu đề tab, chữ màn mở đầu |
 | `invitation` | Tên mặc định và các object cảnh mặc định, cùng cấu trúc với từng người |
-| `event`, `poster` | Ngày chung, địa điểm, link bản đồ, gửi xe và các nhãn của poster cuối; giờ riêng nằm trong `invitation.time` |
+| `event`, `poster` | Ngày chung, địa điểm, số điện thoại, link bản đồ, gửi xe và các nhãn của poster cuối; giờ riêng nằm trong `invitation.time` |
 | `ui` | Chữ nút và thông báo |
 | `animation` | Các mốc theo giây, giữ thứ tự tăng dần |
 | `music` | File nhạc local, âm lượng 0–1, `loop: false`; `src: ''` để ẩn nhạc/nút loa |
 | `media` | URL và kích thước bộ ảnh trong `public/ceremony/` |
 
 Ví dụ dòng “CÓ NHỮNG ĐIỀU LUÔN Ở LẠI” nằm ở `data.js` → `invitation.thankYou.eyebrow`. Muốn đổi cho một người, chỉnh `thankYou.eyebrow` của người đó trong `recipients.json`. Ngày, địa điểm, bản đồ và note gửi xe dùng chung trong `event`; để trống thì phần tương ứng không hiển thị trên poster. Giờ đến riêng dùng `invitation.time`.
+
+Số liên lạc dùng chung đặt ở `event.phone`, ví dụ `'0901458842'` (7–15 chữ số, có thể bắt đầu bằng `+`). Nhãn ở `poster.contactLabel`. Số hiện trên poster cuối và ảnh tải về; bấm vào để gọi. Để `event.phone: ''` thì ẩn cả dòng liên lạc.
 
 - `invitation.js` trong module: kiểm tra cấu trúc cảnh, áp dụng mặc định, thay `{name}`, lọc profile trước khi gửi ra trình duyệt.
 - `server/ceremony/`, `api/invitation.js`: tra cứu JSON; API chỉ trả nội dung của người đang mở.

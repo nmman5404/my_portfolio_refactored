@@ -51,6 +51,8 @@
 .poster-details dt { color: var(--gold); font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 .poster-details dd { margin: 0; color: var(--ivory); font-size: 14px; line-height: 1.6; }
 .poster-details address { margin-top: 3px; color: var(--muted); font-size: 12px; font-style: normal; }
+.poster-phone { display: inline-flex; align-items: center; min-height: 44px; color: var(--gold); text-decoration: underline; text-decoration-color: rgb(244 207 130 / 40%); text-underline-offset: 4px; font-variant-numeric: tabular-nums; }
+.poster-phone:hover { text-decoration-color: currentColor; }
 .poster-parking { display: flex; align-items: flex-start; gap: 10px; }
 .poster-parking-icon { display: grid; place-items: center; flex-shrink: 0; width: 25px; height: 25px; border: 1px solid #b8bec740; border-radius: 8px; color: var(--muted); font-size: 12px; }
 .poster-parking h3 { margin: 0 0 5px; color: #d3c9b8; font-size: 12px; font-weight: 500; }

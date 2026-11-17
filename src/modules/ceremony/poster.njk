@@ -2,6 +2,7 @@
 {% set arrivalTime = ceremony.invitation.invitation.time | trim %}
 {% set hasDate = event.date | trim %}
 {% set hasPlace = (event.venue | trim) or (event.address | trim) %}
+{% set phone = event.phone | trim %}
 <section id="poster-scene" class="poster-scene" aria-label="{{ ceremony.poster.sceneLabel | escape }}" aria-hidden="true" inert>
   <article class="graduation-poster">
     <div class="poster-art" aria-hidden="true">
@@ -21,7 +22,7 @@
       </header>
       <p class="poster-invite">{{ ceremony.poster.invitePrefix | escape }} <strong id="poster-recipient">{{ ceremony.invitation.displayName | escape }}</strong></p>
       <p id="poster-message" class="poster-message">{{ ceremony.invitation.invitation.body | escape }}</p>
-      <dl id="poster-details" class="poster-details"{% if not hasDate and not arrivalTime and not hasPlace %} hidden{% endif %}>
+      <dl id="poster-details" class="poster-details"{% if not hasDate and not arrivalTime and not hasPlace and not phone %} hidden{% endif %}>
         <div id="poster-time"{% if not hasDate and not arrivalTime %} hidden{% endif %}>
           {% if ceremony.poster.timeLabel | trim %}<dt>{{ ceremony.poster.timeLabel | escape }}</dt>{% endif %}
           <dd><span id="poster-date"{% if not hasDate %} hidden{% endif %}>{{ event.date | trim | escape }}</span><span id="poster-time-separator" aria-hidden="true"{% if not hasDate or not arrivalTime %} hidden{% endif %}> · </span><span id="poster-arrival-time"{% if not arrivalTime %} hidden{% endif %}>{{ arrivalTime | escape }}</span></dd>
@@ -30,6 +31,12 @@
         <div id="poster-place">
           {% if ceremony.poster.placeLabel | trim %}<dt>{{ ceremony.poster.placeLabel | escape }}</dt>{% endif %}
           <dd>{{ event.venue | escape }}{% if event.address | trim %}<address>{{ event.address | escape }}</address>{% endif %}</dd>
+        </div>
+        {% endif %}
+        {% if phone %}
+        <div id="poster-contact">
+          {% if ceremony.poster.contactLabel | trim %}<dt>{{ ceremony.poster.contactLabel | escape }}</dt>{% endif %}
+          <dd><a class="poster-phone" href="tel:{{ phone | escape }}">{{ phone | escape }}</a></dd>
         </div>
         {% endif %}
       </dl>

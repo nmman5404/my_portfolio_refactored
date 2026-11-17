@@ -659,6 +659,29 @@
         "signature": ""
       },
       "notes": ""
+    },
+    {
+      "id": "tmq",
+      "profile": "friend",
+      "displayName": "Bạn Minh Quân",
+      "intro": {
+        "eyebrow": "Hello",
+        "title": "Quân",
+        "body": "Bạn cùng bàn MFVMA, Quân quậy quá đi thuiii."
+      },
+      "thankYou": {
+        "eyebrow": "Cảm ơn",
+        "title": "Quân",
+        "body": "Là một người bạn tốt, vui tính, chúc Quân thành công trong học tập và cuộc sống."
+      },
+      "invitation": {
+        "eyebrow": "Mời",
+        "title": "Quân",
+        "body": "Đến dự lễ tốt nghiệp của Minh Mẫn.",
+        "time": "10:45",
+        "signature": ""
+      },
+      "notes": ""
     }
   ]
 }

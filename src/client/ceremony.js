@@ -200,7 +200,7 @@ export function initCeremony(config) {
       const hasTime = Boolean(data.invitation.time);
       get('poster-time-separator').hidden = !hasDate || !hasTime;
       get('poster-time').hidden = !hasDate && !hasTime;
-      get('poster-details').hidden = !hasDate && !hasTime && !get('poster-place');
+      get('poster-details').hidden = !hasDate && !hasTime && !get('poster-place') && !get('poster-contact');
       get('open-button').disabled = false;
       get('open-label').textContent = copy.open;
       get('status').textContent = formatMessage(copy.readyStatus, { open: copy.open });
